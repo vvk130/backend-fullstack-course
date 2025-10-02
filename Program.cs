@@ -8,21 +8,11 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.Use(async (context, next) =>
+if (app.Environment.IsDevelopment())
 {
-    if (context.Request.Path == "/" || context.Request.Path == "/index")
-    {
-        context.Response.Redirect("/swagger/index.html");
-        return;
-    }
-    await next();
-});
-;
-
-app.UseHttpsRedirection();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 var summaries = new[]
 {
