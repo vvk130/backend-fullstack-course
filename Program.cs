@@ -7,12 +7,22 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Set up Swagger endpoints and UI first
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// Then redirect from root to Swagger UI
+app.Use(async (context, next) =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    if (context.Request.Path == "/" || context.Request.Path == "/index")
+    {
+        context.Response.Redirect("/swagger/index.html");
+        return;
+    }
+    await next();
+});
+
+
 
 var summaries = new[]
 {
