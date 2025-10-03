@@ -7,11 +7,5 @@ public class AppDbContext : DbContext
     {
     }
 
-    // public DbSet<MyEntity> MyEntities { get; set; }
+    public DbSet<Horse> Horses { get; set; }
 }
-
-// public class MyEntity
-// {
-//     public int Id { get; set; }
-//     public required string Name { get; set; }
-// }
