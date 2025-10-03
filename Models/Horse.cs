@@ -26,6 +26,7 @@ public class Qualities
     public int Speed { get; set; }
     public int Intelligence { get; set; }
     public int Stamina { get; set; }
+    public int JumpingAbility { get; set; }
 }
 
 public enum Color
@@ -101,7 +102,7 @@ public enum FearType
     Trailer,
     ShetlandPony,
     Separation,
-    PlastigBag,
+    PlasticBag,
     Fillers,
     Balloons,
     Shadows,
