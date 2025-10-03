@@ -5,4 +5,5 @@
 | 2025-10-02 | 15:20  | 0,2h | Final restart of project in root, getting deployment to work: http://fullstackbackend.runasp.net/swagger/index.html |
 | 2025-10-02 | 15:55 | 0,5 | Add postgres database - start by creating db in Aiven, install packages, add env variabels, update dbcontext and program.cs file, add port to successfully connect to Aiven (not usual port for portgres) |
 | 2025-10-03 | 19:20 | 0,7h | Horse class |
+| 2025-10-03 | 20:20 | 0,25h | Horse class modifications, primary keys |
 

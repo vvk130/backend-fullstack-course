@@ -1,7 +1,8 @@
 namespace GameModel{
 
 public class Horse {
-    public Guid Id { get; set; } = new Guid();  
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();  
     public required string Name {get; set; }
     public required Color Color {get; set; }
     public required Gender Gender {get; set; }
@@ -63,6 +64,8 @@ public enum Breed
 
 public class Fear
 {
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();  
     public required bool Discovered { get; set; }
     public required FearType FearType { get; set; }
     public required int Severity { get; set; }
@@ -92,6 +95,8 @@ public enum FearType
 
 public class PersonalityTrait
 {
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();  
     public required PersonalityType Type { get; set; }
     public required int Severity { get; set; } 
     public required bool Discovered { get; set; }
