@@ -12,8 +12,20 @@ public class Horse {
     public required int Relationship { get; set; }
     public required int Energy { get; set; }
     public required int Height { get; set; }
+    public required Qualities Qualities { get; set; }
     public required List<Fear> Fears { get; set; } = new();
     public required List<PersonalityTrait> Personality { get; set; } = new();
+}
+
+[ComplexType]
+public class Qualities
+{
+    public int Strength { get; set; }
+    public int Agility { get; set; }
+    public int Endurance { get; set; }
+    public int Speed { get; set; }
+    public int Intelligence { get; set; }
+    public int Stamina { get; set; }
 }
 
 public enum Color
