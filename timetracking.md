@@ -7,4 +7,4 @@
 | 2025-10-03 | 19:20 | 0,7h | Horse class |
 | 2025-10-03 | 20:20 | 0,25h | Horse class modifications, primary keys |
 | 2025-10-03 | 20:35 | 0,2h | Studying difference between owned and complex types in Ef core, no collection support for Complex type so using Owned type for this class |
-
+| 2025-10-03 | 21:25 |  | |

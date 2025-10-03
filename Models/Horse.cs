@@ -2,12 +2,15 @@ namespace GameModel{
 
 public class Horse {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();  
+    public Guid Id { get; set; } = Guid.NewGuid(); 
+    public string? ImgUrl {get; set; }
     public required string Name {get; set; }
     public required Color Color {get; set; }
     public required Gender Gender {get; set; }
     public required Breed Breed {get; set; }
     public required int Capacity { get; set; }
+    public required int Relationship { get; set; }
+    public required int Energy { get; set; }
     public required int Height { get; set; }
     public required List<Fear> Fears { get; set; } = new();
     public required List<PersonalityTrait> Personality { get; set; } = new();
