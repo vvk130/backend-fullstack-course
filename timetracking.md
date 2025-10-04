@@ -15,5 +15,6 @@
 | 2025-10-04 | 12:14 | 0,5h | Studying default api result types in net and validators and differenced in the frontend when consuming the api based on apporach |
 | 2025-10-04 | 13:32 | 1h | Reading about bogus library, adding capitalization to name and removing colors that where in # format, creating random name generator with the library and creating the endpoint (maybe todo add gender overload?)|
 | 2025-10-04 | 19:00 | 1h | Random breed height for horse, Model, service, interface and added to HorsesController - not placed in db because the free instances can spin down or inactivate etc |
+| 2025-10-04 | 20:00 | 0,75h | Stable model, starting doing random horse creator |
 
-Total time spent: 7,63h
+Total time spent: 8,68h
