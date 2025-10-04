@@ -13,4 +13,4 @@
 | 2025-10-04 | 10:00 | 1h | Changing to owned types in personality and fears in horse model. Problem with owned types, they were mapped wrong studying how to map them, needed to create a new database to run the migration (chosen database did not give access to pgconsole etc), finding a new database host koyeb and setting up database |
 | 2025-10-04 | 11:04 | 0,25h | Starting horse creation service and interface for it |
 
-Total time spent: 4,83h
+Total time spent: 6,08h
