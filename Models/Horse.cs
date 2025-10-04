@@ -128,7 +128,8 @@ public enum PersonalityTrait
     Friendly,
     Reserved,
     Spooky,
-    Anxious
+    Anxious,
+    Careful
 }
 
 }

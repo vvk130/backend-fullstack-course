@@ -1,28 +1,28 @@
+using Bogus;
+namespace GameModel{
+
 public class HorseService : IHorseService
 {
-    private readonly AppDbContext _context;
+//     private readonly AppDbContext _context;
+    private readonly Faker _faker = new();
 
-    public HorseService(AppDbContext context)
+    public string GenerateRandomHorseName()
     {
-        _context = context;
+        var horseName = _faker.PickRandom(new[]
+        {
+            _faker.Commerce.ProductAdjective()
+        }) + " " +
+        _faker.PickRandom(new[]
+        {
+            _faker.Name.FirstName()
+        });
+
+        var capitalizedHorseName = char.ToUpper(horseName[0]) + horseName.Substring(1);
+
+        return capitalizedHorseName;
     }
 
-    public async Task<Horse?> GetByIdAsync(Guid id)
-    {
-        return await _context.Horses
-    }
-
-    public async Task<Horse> CreateAsync(Horse horse)
-    {
-        _context.Horses.Add(horse);
-    }
-
-    public async Task<bool> UpdateAsync(Horse horse)
-    {
-    }
-
-    public async Task<bool> DeleteAsync(Guid id)
-    {
-
-    }
 }
+}
+
+
