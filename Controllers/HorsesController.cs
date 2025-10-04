@@ -7,10 +7,12 @@ namespace YourNamespace.Controllers
     public class HorsesController : ControllerBase
     {
         private readonly IHorseService _horseService;
+        private readonly IHorseBreedService _horseBreedService;
 
-        public HorsesController(IHorseService horseService)
+        public HorsesController(IHorseService horseService, IHorseBreedService horseBreedService)
         {
             _horseService = horseService;
+            _horseBreedService = horseBreedService;
         }
 
         [HttpGet("random-name")]
@@ -18,6 +20,13 @@ namespace YourNamespace.Controllers
         {
             var name = _horseService.GenerateRandomHorseName();
             return Ok(new { horseName = name });
+        }
+
+        [HttpGet("height-by-breed")]
+        public IActionResult GetRandomHorseHeight([FromQuery] Breed breed)
+        {
+            var height = _horseBreedService.GetRandomHeightForBreed(breed);
+            return Ok(new { horseHeight = height });
         }
 
     }

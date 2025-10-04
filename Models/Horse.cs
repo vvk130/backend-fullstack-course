@@ -75,7 +75,8 @@ public enum Breed
     Icelandic,
     Fjord,
     AkhalTeke,
-    Lusitano
+    Lusitano,
+    Finnhorse
 }
 
 [Owned]
