@@ -13,8 +13,8 @@ public class Horse {
     public required int Energy { get; set; }
     public required int Height { get; set; }
     public required Qualities Qualities { get; set; }
-    public required List<Fear> Fears { get; set; } = new();
-    public required List<PersonalityTrait> Personality { get; set; } = new();
+    public required ICollection<FearType> Fears { get; set; } 
+    public required ICollection<PersonalityType> Personalities { get; set; }
 }
 
 [ComplexType]
@@ -78,16 +78,15 @@ public enum Breed
     Lusitano
 }
 
-public class Fear
+[Owned]
+public class FearType
 {
-    [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();  
+    public required FearItem FearItem { get; set; }
     public required bool Discovered { get; set; }
-    public required FearType FearType { get; set; }
     public required int Severity { get; set; }
 }
 
-public enum FearType
+public enum FearItem
 {
     Puddles,
     Thunder,
@@ -109,16 +108,15 @@ public enum FearType
     IndoorArenas
 }
 
-public class PersonalityTrait
+[Owned]
+public class PersonalityType
 {
-    [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();  
-    public required PersonalityType Type { get; set; }
+    public required PersonalityTrait PersonalityTrait { get; set; }
     public required int Severity { get; set; } 
     public required bool Discovered { get; set; }
 }
 
-public enum PersonalityType
+public enum PersonalityTrait
 {
     Bold,
     Shy,

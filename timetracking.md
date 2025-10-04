@@ -10,5 +10,6 @@
 | 2025-10-03 | 21:25 | 0,33h | Adjusting horse model, getting complex type to work, adding System.ComponentModel.DataAnnotations.Schema |
 | 2025-10-03 | 21:45 | 0,4h | Adding things to horse model, competition model, competition dto |
 | 2025-10-03 | 22:09 | 0,25h | Changing to controllers |
+| 2025-10-04 | 10:00 | 1h | Changing to owned types in personality and fears in horse model. Problem with owned types, they were mapped wrong studying how to map them, needed to create a new database to run the migration (chosen database did not give access to pgconsole etc), finding a new database host koyeb and setting up database |
 
-Total time spent: 4,58h
+Total time spent: 4,83h

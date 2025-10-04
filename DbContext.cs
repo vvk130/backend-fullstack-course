@@ -8,4 +8,15 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Horse> Horses { get; set; }
+    public DbSet<Competition> Competitions { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Horse>()
+                    .OwnsMany(h => h.Personalities);
+
+        modelBuilder.Entity<Horse>()
+                    .OwnsMany(h => h.Fears);
+    }
+
 }
