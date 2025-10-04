@@ -13,6 +13,6 @@
 | 2025-10-04 | 10:00 | 1h | Changing to owned types in personality and fears in horse model. Problem with owned types, they were mapped wrong studying how to map them, needed to create a new database to run the migration (chosen database did not give access to pgconsole etc), finding a new database host koyeb and setting up database |
 | 2025-10-04 | 11:04 | 0,25h | Starting horse creation service and interface for it |
 | 2025-10-04 | 12:14 | 0,5h | Studying default api result types in net and validators and differenced in the frontend when consuming the api based on apporach |
-| 2025-10-04 | 13:32 | 1h | Creating random name generator with Bogus library and creating the endpoint (maybe todo add gender overload?)|
+| 2025-10-04 | 13:32 | 1h | Reading about bogus library, adding capitalization to name and removing colors that where in # format, creating random name generator with the library and creating the endpoint (maybe todo add gender overload?)|
 
 Total time spent: 7,63h
