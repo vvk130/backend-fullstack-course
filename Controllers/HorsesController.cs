@@ -51,6 +51,13 @@ namespace YourNamespace.Controllers
             var horse = _horseService.CreateHorse();
             return Ok(new { horse }); 
         }
+
+        [HttpPost("update-horses-energy")]
+        public IActionResult EnergyUpdateHorses()
+        {
+            var horse = _horseService.BatchHorsesEnergyUpdate();
+            return Ok(new { message = "Horses energy updated" }); 
+        }
     }
 
 }

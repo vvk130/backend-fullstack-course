@@ -1,5 +1,4 @@
 using Bogus;
-using EFCore.BulkExtensions;
 
 namespace GameModel
 {
@@ -67,24 +66,25 @@ namespace GameModel
 
         return capitalizedHorseName;
     }
-    public bool BatchHorsesEnergyUpdate()
+    
+    public async Task<bool> BatchHorsesEnergyUpdate()
     {
         try
         {
-            _context.Horses.BatchUpdate(h => new Horse
-            {
-                Energy = 100
-            });
-            return true; 
+            await _context.Horses.ExecuteUpdateAsync(h =>
+                h.SetProperty(h => h.Energy, h => 10));
+
+
+            return true;
         }
         catch (Exception ex)
         {
-            return false; 
+            Console.WriteLine($"Error updating horse energy: {ex.Message}");
+            return false;
         }
-}
+    }
 
-
-}
+    }
 }
 
 
