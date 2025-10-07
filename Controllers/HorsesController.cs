@@ -45,7 +45,12 @@ namespace YourNamespace.Controllers
             return Ok(new { horses }); 
         }
 
-
+        [HttpPost("create-horse")]
+        public IActionResult CreateHorse()
+        {
+            var horse = _horseService.CreateHorse();
+            return Ok(new { horse }); 
+        }
     }
 
 }

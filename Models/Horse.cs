@@ -5,6 +5,7 @@ public class Horse {
     public Guid Id { get; set; } = Guid.NewGuid(); 
     public string? ImgUrl {get; set; }
     public required string Name {get; set; }
+    public required double Age {get; set; } = 0.0;
     public required Color Color {get; set; }
     public required Gender Gender {get; set; }
     public required Breed Breed {get; set; }
@@ -12,6 +13,7 @@ public class Horse {
     public required int Relationship { get; set; }
     public required int Energy { get; set; }
     public required int Height { get; set; }
+    public Guid? ownerId { get; set; }
     public required Qualities Qualities { get; set; }
     public required ICollection<FearType> Fears { get; set; } 
     public required ICollection<PersonalityType> Personalities { get; set; }

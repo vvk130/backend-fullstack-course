@@ -17,5 +17,6 @@
 | 2025-10-04 | 19:00 | 1h | Random breed height for horse, Model, service, interface and added to HorsesController - not placed in db because the free instances can spin down or inactivate etc |
 | 2025-10-04 | 20:00 | 0,75h | Stable model, starting doing random horse creator |
 | 2025-10-07 | 18:00-19:50 | 1,83h | Study Ef.BulkInsert, add package, fix db connection (since outside memory didn't and have to reset on pc), planning validators that are compatible with bulkinsert(attributes or will the library from fluentannotations work...), creating all horses (no pagination only development) endpoint, random color by brees endpoint, adding color data to horse breeds, horse creation and breed service updated |
+| 2025-10-07 | 19:50-20:40 | 0,83h | Add age to horsemodel, add ownerId, create random horse creator |
 
-Total time spent: 9,43h
+Total time spent: 11,99h
