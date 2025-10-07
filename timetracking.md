@@ -18,5 +18,6 @@
 | 2025-10-04 | 20:00 | 0,75h | Stable model, starting doing random horse creator |
 | 2025-10-07 | 18:00-19:50 | 1,83h | Study Ef.BulkInsert, add package, fix db connection (since outside memory didn't and have to reset on pc), planning validators that are compatible with bulkinsert(attributes or will the library from fluentannotations work...), creating all horses (no pagination only development) endpoint, random color by brees endpoint, adding color data to horse breeds, horse creation and breed service updated |
 | 2025-10-07 | 19:50-20:40 | 0,83h | Add age to horsemodel, add ownerId, create random horse creator |
+| 2025-10-07 | 20:40-21:45 | 1,08 | Add more randomness to horsemodel (needs refactoring!), starting up with the bulkinsertions problems with the package - maybe wrong project type? Not working |
 
-Total time spent: 11,99h
+Total time spent: 13,07h

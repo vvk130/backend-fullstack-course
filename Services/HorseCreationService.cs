@@ -1,4 +1,5 @@
 using Bogus;
+using EFCore.BulkExtensions;
 
 namespace GameModel
 {
@@ -7,6 +8,7 @@ namespace GameModel
         private readonly AppDbContext _context;
         private readonly IHorseBreedService _horseBreedService;
         private readonly Faker _faker = new();
+        private readonly Random _random = new();
 
         public HorseService(AppDbContext context, IHorseBreedService horseBreedService)
         {
@@ -16,31 +18,33 @@ namespace GameModel
 
     public List<Horse> GetAll() => _context.Horses.ToList();
 
+    public double RandomHorseAge() => Math.Round(_random.NextDouble() * (21.0 - 3.0) + 3.0, 1);
+
     public Horse CreateHorse(){
             var chosenBreed = _faker.PickRandom<Breed>();
 
             var horse = new Horse
             {
                 Name = GenerateRandomHorseName(),
-                Age = 10.00,
+                Age = RandomHorseAge(),
                 Breed = chosenBreed,       
                 Gender = _faker.PickRandom<Gender>(),       
                 Color = _horseBreedService.GetRandomColorForBreed(chosenBreed),           
-                Capacity = 150, 
+                Capacity = _random.Next(130,151), 
                 Relationship = 0,
                 Energy = 100,
                 Height = _horseBreedService.GetRandomHeightForBreed(chosenBreed),
-                Qualities = new Qualities { Strength = 10, Agility = 8, Endurance = 7, Speed = 9, Intelligence = 6, Stamina = 8, JumpingAbility = 7 },
+                Qualities = new Qualities { Strength = _random.Next(1,11), Agility = _random.Next(1,11), Endurance = _random.Next(1,11), Speed = _random.Next(1,11), Intelligence = _random.Next(1,11), Stamina = _random.Next(1,11), JumpingAbility = _random.Next(1,11) },
                 Fears = new List<FearType>
                 {
-                    new FearType { FearItem = FearItem.Puddles, Discovered = false, Severity = 5 },
-                    new FearType { FearItem = FearItem.Thunder, Discovered = true, Severity = 8 },
-                    new FearType { FearItem = FearItem.Crowds, Discovered = false, Severity = 3 }
+                    new FearType { FearItem = _faker.PickRandom<FearItem>(), Discovered = false, Severity = _random.Next(1,11) },
+                    new FearType { FearItem = _faker.PickRandom<FearItem>(), Discovered = true, Severity = _random.Next(1,11) },
+                    new FearType { FearItem = _faker.PickRandom<FearItem>(), Discovered = false, Severity = _random.Next(1,11) }
                 },
                 Personalities = new List<PersonalityType> { 
-                    new PersonalityType { PersonalityTrait = PersonalityTrait.Bold, Discovered = false, Severity = 5 },
-                    new PersonalityType { PersonalityTrait = PersonalityTrait.Cuddly, Discovered = true, Severity = 8 },
-                    new PersonalityType { PersonalityTrait = PersonalityTrait.Anxious, Discovered = false, Severity = 3 }
+                    new PersonalityType { PersonalityTrait = _faker.PickRandom<PersonalityTrait>(), Discovered = false, Severity = _random.Next(1,11) },
+                    new PersonalityType { PersonalityTrait = _faker.PickRandom<PersonalityTrait>(), Discovered = true, Severity = _random.Next(1,11) },
+                    new PersonalityType { PersonalityTrait = _faker.PickRandom<PersonalityTrait>(), Discovered = false, Severity = _random.Next(1,11) }
                 }
             };
             _context.Horses.Add(horse);
@@ -63,6 +67,22 @@ namespace GameModel
 
         return capitalizedHorseName;
     }
+    public bool BatchHorsesEnergyUpdate()
+    {
+        try
+        {
+            _context.Horses.BatchUpdate(h => new Horse
+            {
+                Energy = 100
+            });
+            return true; 
+        }
+        catch (Exception ex)
+        {
+            return false; 
+        }
+}
+
 
 }
 }
