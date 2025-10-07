@@ -7,6 +7,13 @@ public class HorseService : IHorseService
 
     private readonly Faker _faker = new();
 
+    public HorseService(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    public List<Horse> GetAll() => _context.Horses.ToList();
+
     public string GenerateRandomHorseName()
     {
         var horseName = _faker.PickRandom(new[]

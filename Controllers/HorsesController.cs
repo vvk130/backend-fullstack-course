@@ -22,12 +22,29 @@ namespace YourNamespace.Controllers
             return Ok(new { horseName = name });
         }
 
-        [HttpGet("height-by-breed")]
+        [HttpGet("random-height-for-breed")]
         public IActionResult GetRandomHorseHeight([FromQuery] Breed breed)
         {
             var height = _horseBreedService.GetRandomHeightForBreed(breed);
             return Ok(new { horseHeight = height });
         }
+
+        [HttpGet("random-color-for-breed")]
+        public IActionResult GetRandomHorseColor([FromQuery] Breed breed)
+        {
+            var color = _horseBreedService.GetRandomColorForBreed(breed);
+            return Ok(new { horseColor = color });
+        }
+
+        //for developement purposes
+        [HttpGet("all-horses")]
+        public IActionResult GetAll()
+        {
+            var horses = _horseService.GetAll();
+
+            return Ok(new { horses }); 
+        }
+
 
     }
 

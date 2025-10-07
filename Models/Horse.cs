@@ -43,8 +43,7 @@ public enum Color
     Perlino,
     Grullo,
     Pinto,
-    Appaloosa,
-    Other
+    Appaloosa
 }
 
 public enum Gender
