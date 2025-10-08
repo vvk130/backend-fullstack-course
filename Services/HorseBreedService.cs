@@ -99,7 +99,7 @@ private readonly List<HorseBreed> _breedHeights = new()
         MaxHeightCm = 185,
         PossibleColors = new List<Color>
         {
-            Color.Black, Color.Bay, Color.Gray
+            Color.Black, Color.Bay, Color.Gray, Color.Chestnut
         }
     },
     new HorseBreed {
@@ -108,7 +108,7 @@ private readonly List<HorseBreed> _breedHeights = new()
         MaxHeightCm = 170,
         PossibleColors = new List<Color>
         {
-            Color.Chestnut, Color.Roan
+            Color.Chestnut, Color.Roan, Color.Bay, Color.Black, Color.Gray
         }
     },
     new HorseBreed {
@@ -117,7 +117,7 @@ private readonly List<HorseBreed> _breedHeights = new()
         MaxHeightCm = 170,
         PossibleColors = new List<Color>
         {
-            Color.Black, Color.Gray
+            Color.Black, Color.Gray, Color.Chestnut, Color.Roan, Color.Bay
         }
     },
     new HorseBreed {

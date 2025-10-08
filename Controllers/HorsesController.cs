@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Hangfire;
 
 namespace YourNamespace.Controllers
 {
@@ -55,15 +56,15 @@ namespace YourNamespace.Controllers
         [HttpPatch("update-horses-energy")]
         public IActionResult EnergyUpdateHorses()
         {
-            _horseService.BatchHorsesEnergyUpdate();
-            return Ok(new { message = "Horses energy updated" }); 
+            BackgroundJob.Enqueue<IHorseService>(s => s.BatchHorsesAgeUpdate());
+            return Ok(new { message = "Horses energy updated" }); //Update not sure if update ran?
         }
 
         [HttpPatch("update-horses-age")]
         public IActionResult AgeUpdateHorses()
         {
-            _horseService.BatchHorsesAgeUpdate();
-            return Ok(new { message = "Horses age updated" }); 
+            BackgroundJob.Enqueue<IHorseService>(s => s.BatchHorsesAgeUpdate());
+            return Ok(new { message = "Horses age updated" }); //Update not sure if update ran?
         }
     }
 

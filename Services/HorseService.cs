@@ -123,36 +123,16 @@ namespace GameModel
         return capitalizedHorseName;
     }
     
-    public async Task<bool> BatchHorsesEnergyUpdate()
+    public void BatchHorsesEnergyUpdate()
     {
-        try
-        {
-            await _context.Horses.ExecuteUpdateAsync(h =>
-                h.SetProperty(h => h.Energy, h => 100));
-
-            return true;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error updating horse energy: {ex.Message}");
-            return false;
-        }
+        _context.Horses.ExecuteUpdateAsync(h =>
+            h.SetProperty(h => h.Energy, h => 100));
     }
 
-    public async Task<bool> BatchHorsesAgeUpdate()
+    public void BatchHorsesAgeUpdate()
     {
-        try
-        {
-            await _context.Horses.ExecuteUpdateAsync(h =>
-                h.SetProperty(h => h.Age, h => h.Age + 0.1));
-
-            return true;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error updating horse age: {ex.Message}");
-            return false;
-        }
+        _context.Horses.ExecuteUpdateAsync(h =>
+            h.SetProperty(h => h.Age, h => h.Age + 0.1));
     }
 
     }

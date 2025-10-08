@@ -23,8 +23,9 @@
 | 2025-10-07 | 22:45-23:00 | 0,25h | Using ExecuteUpdate for the batch update, since problems with the bulk library, controller and service function done|
 | 2025-10-08 | 11:30 | 2 | Add owner, sire, damId, add aging update (for worker task), FoalService, FoalController (needs refactoring), Foal Interface|
 | 2025-10-08 | 14:25 | 1,08 | FoalService to inherit some features from parents, breed, color, height, capacity inherited, age O, gender not gelding, corrected a mistake in the HorseBreedService GetRandomColorForBreed |
-| 2025-10-08 | 16:15 | 1h | Add env variables to the moster api hosting, Level Model, some refactoringm exposing horse aging endpoint, researching where to host celery for free, render does not seem to offer it |
+| 2025-10-08 | 16:15 | 1h | Add env variables to the moster api hosting, Level Model, some refactoring, exposing horse aging endpoint, researching where to host celery for free, render does not seem to offer it |
 | 2025-10-08 | 17:15 | 0,33h | Reading and reasearching background task hosting options that are free, Hangfire? |
+| 2025-10-08 | 19:51 | 1h | Adding colors to breeds, refactoring functions(removed async, naming issues etc), reading hangfire documentation, setting up hangfire background queue for horse aging and energy updates (due to the free hosting limitations on moster asp net, the functionality is similar to api, since the instance goes idle after 30 min, no recurring task would work with this hosting provider in free tier)  |
 
-Total time spent: 20.03h
+Total time spent: 21.03h
 17,5h per credit
