@@ -26,5 +26,5 @@
 | 2025-10-08 | 16:15 | 1h | Add env variables to the moster api hosting, Level Model, some refactoringm exposing horse aging endpoint, researching where to host celery for free, render does not seem to offer it |
 | 2025-10-08 | 17:15 | 0,33h | Reading and reasearching background task hosting options that are free, Hangfire? |
 
-Total time spent: 18.7h
+Total time spent: 20.03h
 17,5h per credit
