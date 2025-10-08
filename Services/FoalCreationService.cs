@@ -18,15 +18,15 @@ namespace GameModel
             _horseService = horseService;
         }
 
-        public async Task<OperationResult<Horse>> FoalTaskHandler(Horse foalSire, Horse foalDam){
+        public async Task<OperationResult<Horse>> FoalTaskHandler(Guid SireId, Guid DamId){
             var result = new OperationResult<Horse>();
             
             // Breed determined in the FoalGenerator, can be crossbred
             // TODO Check previous foal - is it too soon
             // TODO Create FoalingEvent db 
 
-            var sire = await _context.Horses.FindAsync(foalSire.Id);
-            var dam = await _context.Horses.FindAsync(foalDam.Id);
+            var sire = await _context.Horses.FindAsync(SireId);
+            var dam = await _context.Horses.FindAsync(DamId);
 
             if (sire == null)
                 result.AddError(nameof(sire.Id), "Sire not found.");
@@ -35,16 +35,16 @@ namespace GameModel
                 result.AddError(nameof(dam.Id), "Dam not found.");
 
             if (sire?.Gender != Gender.Stallion)
-                result.AddError(nameof(sire.Id), "Sire must be a stallion.");
+                result.AddError(nameof(sire.Gender), "Sire must be a stallion.");
 
             if (dam?.Gender != Gender.Mare)
-                result.AddError(nameof(dam.Id), "Dam must be a mare.");
+                result.AddError(nameof(dam.Gender), "Dam must be a mare.");
 
             if (sire?.Age < 3.0)
-                result.AddError(nameof(sire.Id), "Sire must be at least 3 years old.");
+                result.AddError(nameof(sire.Age), "Sire must be at least 3 years old.");
 
             if (dam?.Age < 3.0)
-                result.AddError(nameof(dam.Id), "Dam must be at least 3 years old.");
+                result.AddError(nameof(dam.Age), "Dam must be at least 3 years old.");
 
             if (_random.Next(0,101) > 90)
                 result.AddError("Foaling", "Foaling was unsuccessful due to natural/random failure.");
@@ -52,14 +52,10 @@ namespace GameModel
             if (!result.Success)
                 return result;
 
-            var foal = _horseService.CreateHorse();
+            var foal = _horseService.CreateFoal(sire,dam);
 
             result.Value = foal;
             return result;
         }
-
-        // public Horse FoalGenerator(){
-        //     return _horseService.CreateHorse();
-        // }
     }
 }

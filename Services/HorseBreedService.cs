@@ -5,7 +5,7 @@ private readonly List<HorseBreed> _breedHeights = new()
 {
     new HorseBreed { 
         Breed = Breed.Unknown, 
-        MinHeightCm = 125, 
+        MinHeightCm = 100, 
         MaxHeightCm = 185, 
         PossibleColors = new List<Color> 
         { 
@@ -209,18 +209,15 @@ private readonly List<HorseBreed> _breedHeights = new()
     {
         var breedColors = _breedHeights
             .Where(b => b.Breed == breed)
-            .Select(b => b.PossibleColors)
-            .FirstOrDefault();
+            .SelectMany(b => b.PossibleColors)
+            .ToList();
 
         if (breedColors == null || breedColors.Count == 0)
         {
-            return Color.Black; 
+            return Color.Chestnut; 
         }
 
-        var colorList = breedColors.ToList();
-
-        var randomColor = colorList[_random.Next(colorList.Count)];
-
+        var randomColor = breedColors[_random.Next(breedColors.Count)];
         return randomColor;
     }
 

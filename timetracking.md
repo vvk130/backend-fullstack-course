@@ -22,6 +22,7 @@
 | 2025-10-07 | 21:45-22:45 | 1h | Reading documentation for the bulk update, trying a few things and reading documentation. Unclear if it will work with this hosted db type|
 | 2025-10-07 | 22:45-23:00 | 0,25h | Using ExecuteUpdate for the batch update, since problems with the bulk library, controller and service function done|
 | 2025-10-08 | 11:30 | 2 | Add owner, sire, damId, add aging update (for worker task), FoalService, FoalController (needs refactoring), Foal Interface|
+| 2025-10-08 | 14:25 | 1,08 | FoalService to inherit some features from parents, breed, color, height, capacity inherited, age O, gender not gelding, corrected a mistake in the HorseBreedService GetRandomColorForBreed |
 
-Total time spent: 14,07h
+Total time spent: 18.7h
 17,5h per credit
