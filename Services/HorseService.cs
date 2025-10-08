@@ -21,13 +21,14 @@ namespace GameModel
 
     public Horse CreateHorse(){
             var chosenBreed = _faker.PickRandom<Breed>();
-
+                //RandomHorseAge()
+                                // _faker.PickRandom<Gender>() 
             var horse = new Horse
             {
                 Name = GenerateRandomHorseName(),
-                Age = RandomHorseAge(),
-                Breed = chosenBreed,       
-                Gender = _faker.PickRandom<Gender>(),       
+                Age = 0.0,
+                Breed = chosenBreed,  
+                Gender = Gender.Stallion,       
                 Color = _horseBreedService.GetRandomColorForBreed(chosenBreed),           
                 Capacity = _random.Next(130,151), 
                 Relationship = 0,
@@ -72,14 +73,29 @@ namespace GameModel
         try
         {
             await _context.Horses.ExecuteUpdateAsync(h =>
-                h.SetProperty(h => h.Energy, h => 10));
-
+                h.SetProperty(h => h.Energy, h => 100));
 
             return true;
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error updating horse energy: {ex.Message}");
+            return false;
+        }
+    }
+
+    public async Task<bool> BatchHorsesAgeUpdate()
+    {
+        try
+        {
+            await _context.Horses.ExecuteUpdateAsync(h =>
+                h.SetProperty(h => h.Age, h => h.Age + 0.1));
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating horse age: {ex.Message}");
             return false;
         }
     }

@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IHorseService, HorseService>();
 builder.Services.AddScoped<IHorseBreedService, HorseBreedService>();
+builder.Services.AddScoped<IFoalCreationService, FoalCreationService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
