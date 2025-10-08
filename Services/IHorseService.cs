@@ -6,5 +6,6 @@ public interface IHorseService
    Horse CreateHorse();
    Horse CreateFoal(Horse sire, Horse dam);
    Task<bool> BatchHorsesEnergyUpdate();
+   Task<bool> BatchHorsesAgeUpdate();
 }
 }

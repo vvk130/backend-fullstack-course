@@ -52,11 +52,18 @@ namespace YourNamespace.Controllers
             return Ok(new { horse }); 
         }
 
-        [HttpPost("update-horses-energy")]
+        [HttpPatch("update-horses-energy")]
         public IActionResult EnergyUpdateHorses()
         {
-            var horse = _horseService.BatchHorsesEnergyUpdate();
+            _horseService.BatchHorsesEnergyUpdate();
             return Ok(new { message = "Horses energy updated" }); 
+        }
+
+        [HttpPatch("update-horses-age")]
+        public IActionResult AgeUpdateHorses()
+        {
+            _horseService.BatchHorsesAgeUpdate();
+            return Ok(new { message = "Horses age updated" }); 
         }
     }
 
