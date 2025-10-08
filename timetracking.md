@@ -26,6 +26,7 @@
 | 2025-10-08 | 16:15 | 1h | Add env variables to the moster api hosting, Level Model, some refactoring, exposing horse aging endpoint, researching where to host celery for free, render does not seem to offer it |
 | 2025-10-08 | 17:15 | 0,33h | Reading and reasearching background task hosting options that are free, Hangfire? |
 | 2025-10-08 | 19:51 | 1h | Adding colors to breeds, refactoring functions(removed async, naming issues etc), reading hangfire documentation, setting up hangfire background queue for horse aging and energy updates (due to the free hosting limitations on moster asp net, the functionality is similar to api, since the instance goes idle after 30 min, no recurring task would work with this hosting provider in free tier)  |
+| 2025-10-08 | 21:30 | 1h | Studying LavinMQ and Cloudinary ImageUpload |
 
-Total time spent: 21.03h
+Total time spent: 22.13h
 17,5h per credit
