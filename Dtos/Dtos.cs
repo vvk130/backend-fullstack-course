@@ -10,4 +10,11 @@ public record class FileUploadRequestDto
     public IFormFile File { get; init; }
 }
 
+public record HorseFilterDto(
+    List<Gender>? Genders = null,
+    List<Breed>? Breeds = null,
+    double? MinAge = null,
+    double? MaxAge = null
+);
+
 }

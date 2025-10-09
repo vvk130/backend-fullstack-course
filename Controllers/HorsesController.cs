@@ -1,19 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using Hangfire;
+using GameModel;
+using System.Linq.Expressions;
 
 namespace YourNamespace.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class HorsesController : ControllerBase
-    {
+[ApiController]
+[Route("api/[controller]")]
+public class HorsesController : GenericController<Horse>
+{
         private readonly IHorseService _horseService;
         private readonly IHorseBreedService _horseBreedService;
+        private readonly IGenericService<Horse> _genericService;
 
-        public HorsesController(IHorseService horseService, IHorseBreedService horseBreedService)
+        public HorsesController(
+            IHorseService horseService,
+            IHorseBreedService horseBreedService,
+            IGenericService<Horse> genericService)
+            : base(genericService) 
         {
             _horseService = horseService;
             _horseBreedService = horseBreedService;
+            _genericService = genericService;
         }
 
         [HttpGet("random-name")]
@@ -77,6 +85,22 @@ namespace YourNamespace.Controllers
             return Ok(result);
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchHorses([FromQuery] HorseFilterDto filter)
+        {
+            // if (!ModelState.IsValid)
+            //     return BadRequest(ModelState);
+
+            Expression<Func<Horse, bool>> predicate = h =>
+                (filter.Genders == null || filter.Genders.Contains(h.Gender)) &&
+                (filter.Breeds == null || filter.Breeds.Contains(h.Breed)) &&
+                (!filter.MinAge.HasValue || h.Age >= filter.MinAge) &&
+                (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge);
+
+            var result = await _genericService.FindAsync(predicate);
+            return Ok(result);
+        }
     }
 
 }
+

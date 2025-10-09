@@ -48,6 +48,10 @@ builder.Services.AddScoped<IHorseService, HorseService>();
 builder.Services.AddScoped<IHorseBreedService, HorseBreedService>();
 builder.Services.AddScoped<IFoalCreationService, FoalCreationService>();
 
+builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

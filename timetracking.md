@@ -28,6 +28,8 @@
 | 2025-10-08 | 19:51 | 1h | Adding colors to breeds, refactoring functions(removed async, naming issues etc), reading hangfire documentation, setting up hangfire background queue for horse aging and energy updates (due to the free hosting limitations on moster asp net, the functionality is similar to api, since the instance goes idle after 30 min, no recurring task would work with this hosting provider in free tier)  |
 | 2025-10-08 | 21:30 | 1h | Studying LavinMQ and Cloudinary ImageUpload |
 | 2025-10-08 | 17:20 | 1,5h | Cloudinary ImageUpload Ready |
+| 2025-10-08 | 20:25 | 1h | GenericRepo and Interface |
+| 2025-10-08 | 21:25 | 2h | GenericService and Interface, Controller for Horse Searching, Generic Controller |
 
 Total time spent: 23.53h
 17,5h per credit
