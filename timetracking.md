@@ -27,6 +27,7 @@
 | 2025-10-08 | 17:15 | 0,33h | Reading and reasearching background task hosting options that are free, Hangfire? |
 | 2025-10-08 | 19:51 | 1h | Adding colors to breeds, refactoring functions(removed async, naming issues etc), reading hangfire documentation, setting up hangfire background queue for horse aging and energy updates (due to the free hosting limitations on moster asp net, the functionality is similar to api, since the instance goes idle after 30 min, no recurring task would work with this hosting provider in free tier)  |
 | 2025-10-08 | 21:30 | 1h | Studying LavinMQ and Cloudinary ImageUpload |
+| 2025-10-08 | 17:20 | 1,5h | Cloudinary ImageUpload Ready |
 
 Total time spent: 22.13h
 17,5h per credit

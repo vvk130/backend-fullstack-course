@@ -66,6 +66,17 @@ namespace YourNamespace.Controllers
             BackgroundJob.Enqueue<IHorseService>(s => s.BatchHorsesAgeUpdate());
             return Ok(new { message = "Horses age updated" }); //Update not sure if update ran?
         }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadImage([FromForm] FileUploadRequestDto request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _horseService.UploadImageAsync(request.File);
+            return Ok(result);
+        }
+
     }
 
 }
