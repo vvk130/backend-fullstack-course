@@ -29,5 +29,5 @@
 | 2025-10-08 | 21:30 | 1h | Studying LavinMQ and Cloudinary ImageUpload |
 | 2025-10-08 | 17:20 | 1,5h | Cloudinary ImageUpload Ready |
 
-Total time spent: 22.13h
+Total time spent: 23.53h
 17,5h per credit
