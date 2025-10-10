@@ -44,6 +44,5 @@ public class FoalsController : ControllerBase
 
         return Ok(foal);
     }
-
 }
 }

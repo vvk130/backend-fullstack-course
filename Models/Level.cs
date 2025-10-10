@@ -1,7 +1,8 @@
 namespace GameModel{
 
-[Index(nameof(LevelNumber), IsUnique = true)]
 public class Level {
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid(); 
     public required int LevelNumber { get; set; } 
     public required int EntryPoints { get; set; } 
     public required Stable Stable { get; set; } 
@@ -10,7 +11,6 @@ public class Level {
 [ComplexType]
 public class Stable
 {
-    public int StableSlots { get; set; }
     public string ImgUrl { get; set; }
     public string Description { get; set; }
     public StableType StableType { get; set; }

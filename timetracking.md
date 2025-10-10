@@ -30,6 +30,7 @@
 | 2025-10-08 | 17:20 | 1,5h | Cloudinary ImageUpload Ready |
 | 2025-10-08 | 20:25 | 1h | GenericRepo and Interface |
 | 2025-10-08 | 21:25 | 2h | GenericService and Interface, Controller for Horse Searching, Generic Controller |
+| 2025-10-09 | 14:15 | 2,5h | Studying generic controller, adding generic controller, moving horse breeds to db, adding sire/damid/image to foalCreate(), adjusting models to use Guid because I'm too lazy to overload the Generic Find Id method (better to use UID etc), removing by overriding the delete methods from some models, adding images to use the models in front end, Starting Validators for Level and HorseBreed |
 
 Total time spent: 23.53h
 17,5h per credit

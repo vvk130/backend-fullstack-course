@@ -86,6 +86,7 @@ namespace GameModel
             var horse = new Horse
             {
                 Name = GenerateRandomHorseName(),
+                ImgUrl = "https://res.cloudinary.com/dn4bwpln0/image/upload/v1760099887/foal_a8kxhz.jpg",
                 Age = 0.0,
                 Breed = chosenBreed,  
                 Gender = PickRandomEnumValue(new[] { Gender.Stallion, Gender.Mare }),       
@@ -94,6 +95,8 @@ namespace GameModel
                 Relationship = 0,
                 Energy = 100,
                 Height = SafeRandomNext(sire.Height, dam.Height),
+                SireId = sire.Id,
+                DamId = dam.Id,
                 Qualities = new Qualities { Strength = _random.Next(1,11), Agility = _random.Next(1,11), Endurance = _random.Next(1,11), Speed = _random.Next(1,11), Intelligence = _random.Next(1,11), Stamina = _random.Next(1,11), JumpingAbility = _random.Next(1,11) },
                 Fears = new List<FearType>
                 {

@@ -9,6 +9,8 @@ public class AppDbContext : DbContext
 
     public DbSet<Horse> Horses { get; set; }
     public DbSet<Competition> Competitions { get; set; }
+    public DbSet<HorseBreed> HorseBreeds { get; set; }
+    public DbSet<Level> Levels { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

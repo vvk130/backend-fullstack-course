@@ -1,8 +1,9 @@
 namespace GameModel{
 
-[Index(nameof(Breed), IsUnique = true)]
 public class HorseBreed
 {
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid(); 
     public required Breed Breed { get; set; }
     public required int MinHeightCm { get; set; }
     public required int MaxHeightCm { get; set; }

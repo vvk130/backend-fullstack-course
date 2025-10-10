@@ -21,7 +21,7 @@ public class GenericController<TEntity> : ControllerBase where TEntity : class
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<TEntity>> GetById(object id)
+    public async Task<ActionResult<TEntity>> GetById(Guid id)
     {
         var entity = await _genericService.GetByIdAsync(id);
         if (entity == null) return NotFound();
@@ -36,7 +36,7 @@ public class GenericController<TEntity> : ControllerBase where TEntity : class
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(object id)
+    public virtual async Task<IActionResult> Delete(Guid id)
     {
         var entity = await _genericService.GetByIdAsync(id);
         if (entity == null) return NotFound();

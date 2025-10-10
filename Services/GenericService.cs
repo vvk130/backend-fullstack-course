@@ -11,7 +11,7 @@ public class GenericService<T> : IGenericService<T> where T : class
         _repository = repository;
     }
     
-    public async Task<T?> GetByIdAsync(object id)
+    public async Task<T?> GetByIdAsync(Guid id)
         => await _repository.GetByIdAsync(id);
     
     public async Task<IEnumerable<T>> GetAllAsync()
@@ -38,7 +38,7 @@ public class GenericService<T> : IGenericService<T> where T : class
         await _repository.SaveChangesAsync();
     }
     
-    public async Task RemoveAsync(T entity)
+    public virtual async Task RemoveAsync(T entity)
     {
         _repository.Remove(entity);
         await _repository.SaveChangesAsync();

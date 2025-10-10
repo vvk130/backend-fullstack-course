@@ -37,6 +37,8 @@ builder.Services.AddControllers()
     .AddFluentValidation();
 
 builder.Services.AddValidatorsFromAssemblyContaining<FileUploadRequestDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<HorseBreedValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<LevelValidator>();
 
 builder.Services.AddHangfire(config =>
 {

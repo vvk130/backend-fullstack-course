@@ -18,7 +18,7 @@ namespace GameModel
             _dbSet = context.Set<T>();
         }
 
-        public async Task<T?> GetByIdAsync(object id)
+        public async Task<T?> GetByIdAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);
         }
