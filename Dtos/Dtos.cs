@@ -17,4 +17,9 @@ public record HorseFilterDto(
     double? MaxAge = null
 );
 
+public record ItemCreatedEvent(
+    Guid ItemId,
+    string ItemName
+);
+
 }

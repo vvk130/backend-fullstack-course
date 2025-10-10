@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MassTransit;
 
 namespace YourNamespace.Controllers
 {
@@ -8,11 +9,13 @@ public class FoalsController : ControllerBase
 {
     private readonly IFoalCreationService _foalCreationService;
     private readonly AppDbContext _context;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public FoalsController(IFoalCreationService foalCreationService, AppDbContext context)
+    public FoalsController(IFoalCreationService foalCreationService, AppDbContext context, IPublishEndpoint publishEndpoint)
     {
         _foalCreationService = foalCreationService;
        _context = context;
+       _publishEndpoint = publishEndpoint;
     }
 
     [HttpPost]
@@ -28,6 +31,13 @@ public class FoalsController : ControllerBase
                 Status = StatusCodes.Status400BadRequest
             });
         }
+
+        var @event = new ItemCreatedEvent(
+        result.Value!.Id,
+        result.Value!.Name
+        );
+
+        await _publishEndpoint.Publish(@event);
 
         return CreatedAtAction(
         nameof(GetFoal),

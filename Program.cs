@@ -3,6 +3,7 @@ using Hangfire.PostgreSql;
 using CloudinaryDotNet;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MassTransit;
 
 DotNetEnv.Env.Load();
 
@@ -32,6 +33,42 @@ builder.Services.AddSingleton(provider =>
 
     return new Cloudinary(account);
 });
+
+var host = Environment.GetEnvironmentVariable("RABBITMQ_HOST");
+var vhost = Environment.GetEnvironmentVariable("RABBITMQ_VHOST");
+var username = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME");
+var password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD");
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<ItemCreatedConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(host, vhost, h =>
+        {
+            h.Username(username);
+            h.Password(password);
+        });
+
+        cfg.ReceiveEndpoint("item-created-event", e =>
+        {
+            e.ConfigureConsumer<ItemCreatedConsumer>(context);
+        });
+    });
+});
+
+builder.Services.AddMassTransitHostedService();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowRabbitMQ", policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            // ONLY TESTING
+    });
+});
+
 
 builder.Services.AddControllers()
     .AddFluentValidation();
