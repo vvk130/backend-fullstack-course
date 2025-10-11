@@ -27,13 +27,13 @@
 | 2025-10-08 | 17:15 | 0,33h | Reading and reasearching background task hosting options that are free, Hangfire? |
 | 2025-10-08 | 19:51 | 1h | Adding colors to breeds, refactoring functions(removed async, naming issues etc), reading hangfire documentation, setting up hangfire background queue for horse aging and energy updates (due to the free hosting limitations on moster asp net, the functionality is similar to api, since the instance goes idle after 30 min, no recurring task would work with this hosting provider in free tier)  |
 | 2025-10-08 | 21:30 | 1h | Studying LavinMQ and Cloudinary ImageUpload |
-| 2025-10-08 | 17:20 | 1,5h | Cloudinary ImageUpload Ready |
-| 2025-10-08 | 20:25 | 1h | GenericRepo and Interface |
-| 2025-10-08 | 21:25 | 2h | GenericService and Interface, Controller for Horse Searching, Generic Controller |
-| 2025-10-09 | 14:15 | 2,5h | Studying generic controller, adding generic controller, moving horse breeds to db, adding sire/damid/image to foalCreate(), adjusting models to use Guid because I'm too lazy to overload the Generic Find Id method (better to use UID etc), removing by overriding the delete methods from some models, adding images to use the models in front end, Starting Validators for Level and HorseBreed |
-| 2025-10-09 | 18:25 | 2,5h | Studying and seetting up RabbitMQ CLOUDAMQP for foal notifications |
+| 2025-10-09 | 17:20 | 1,5h | Cloudinary ImageUpload Ready |
+| 2025-10-09 | 20:25 | 1h | GenericRepo and Interface |
+| 2025-10-09 | 21:25 | 2h | GenericService and Interface, Controller for Horse Searching, Generic Controller |
+| 2025-10-10 | 14:15 | 2,5h | Studying generic controller, adding generic controller, moving horse breeds to db, adding sire/damid/image to foalCreate(), adjusting models to use Guid because I'm too lazy to overload the Generic Find Id method (better to use UID etc), removing by overriding the delete methods from some models, adding images to use the models in front end, Starting Validators for Level and HorseBreed |
+| 2025-10-10 | 18:25 | 2,5h | Studying and seetting up RabbitMQ CLOUDAMQP for foal notifications |
 | 2025-10-11 | 9:13 | 1h | Changing to db because free instance ran out, first option did not work with ef core, second only on www and maybe not localhost still need to set up an local db |
-
+| 2025-10-11 | 10:15 | 1,75h | Install docker, do a local database with docker | 
 
 //wrong day in timetracking change
 Total time spent: 23.53h

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace backend_fullstack_course.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangeFearsAndpersonalitytraitsMapping3 : Migration
+    public partial class migr1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,12 +27,28 @@ namespace backend_fullstack_course.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HorseBreeds",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Breed = table.Column<int>(type: "integer", nullable: false),
+                    MinHeightCm = table.Column<int>(type: "integer", nullable: false),
+                    MaxHeightCm = table.Column<int>(type: "integer", nullable: false),
+                    PossibleColors = table.Column<int[]>(type: "integer[]", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HorseBreeds", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Horses",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ImgUrl = table.Column<string>(type: "text", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    Age = table.Column<double>(type: "double precision", nullable: false),
                     Color = table.Column<int>(type: "integer", nullable: false),
                     Gender = table.Column<int>(type: "integer", nullable: false),
                     Breed = table.Column<int>(type: "integer", nullable: false),
@@ -40,6 +56,9 @@ namespace backend_fullstack_course.Migrations
                     Relationship = table.Column<int>(type: "integer", nullable: false),
                     Energy = table.Column<int>(type: "integer", nullable: false),
                     Height = table.Column<int>(type: "integer", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    SireId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DamId = table.Column<Guid>(type: "uuid", nullable: true),
                     Qualities_Agility = table.Column<int>(type: "integer", nullable: false),
                     Qualities_Endurance = table.Column<int>(type: "integer", nullable: false),
                     Qualities_Intelligence = table.Column<int>(type: "integer", nullable: false),
@@ -51,6 +70,25 @@ namespace backend_fullstack_course.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Horses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Levels",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    LevelNumber = table.Column<int>(type: "integer", nullable: false),
+                    EntryPoints = table.Column<int>(type: "integer", nullable: false),
+                    Stable_Cleanleness = table.Column<int>(type: "integer", nullable: false),
+                    Stable_Description = table.Column<string>(type: "text", nullable: false),
+                    Stable_EnvironmentScore = table.Column<int>(type: "integer", nullable: false),
+                    Stable_ImgUrl = table.Column<string>(type: "text", nullable: false),
+                    Stable_StableAmount = table.Column<int>(type: "integer", nullable: false),
+                    Stable_StableType = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Levels", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -127,7 +165,13 @@ namespace backend_fullstack_course.Migrations
                 name: "Competitions_ScaryObject");
 
             migrationBuilder.DropTable(
+                name: "HorseBreeds");
+
+            migrationBuilder.DropTable(
                 name: "Horses_Fears");
+
+            migrationBuilder.DropTable(
+                name: "Levels");
 
             migrationBuilder.DropTable(
                 name: "PersonalityType");
