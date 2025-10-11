@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,13 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace backend_fullstack_course.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251011063451_InitiaLcreate2")]
+    partial class InitiaLcreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("public")
+                .HasDefaultSchema("HorseGame_doingdugat")
                 .HasAnnotation("ProductVersion", "9.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -40,7 +43,7 @@ namespace backend_fullstack_course.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Competitions", "public");
+                    b.ToTable("Competitions", "HorseGame_doingdugat");
                 });
 
             modelBuilder.Entity("GameModel.Horse", b =>
@@ -117,7 +120,7 @@ namespace backend_fullstack_course.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Horses", "public");
+                    b.ToTable("Horses", "HorseGame_doingdugat");
                 });
 
             modelBuilder.Entity("GameModel.HorseBreed", b =>
@@ -141,7 +144,7 @@ namespace backend_fullstack_course.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HorseBreeds", "public");
+                    b.ToTable("HorseBreeds", "HorseGame_doingdugat");
                 });
 
             modelBuilder.Entity("GameModel.Level", b =>
@@ -183,7 +186,7 @@ namespace backend_fullstack_course.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Levels", "public");
+                    b.ToTable("Levels", "HorseGame_doingdugat");
                 });
 
             modelBuilder.Entity("GameModel.Competition", b =>
@@ -210,7 +213,7 @@ namespace backend_fullstack_course.Migrations
 
                             b1.HasKey("CompetitionId", "Id");
 
-                            b1.ToTable("Competitions_ScaryObject", "public");
+                            b1.ToTable("Competitions_ScaryObject", "HorseGame_doingdugat");
 
                             b1.WithOwner()
                                 .HasForeignKey("CompetitionId");
@@ -243,7 +246,7 @@ namespace backend_fullstack_course.Migrations
 
                             b1.HasKey("HorseId", "Id");
 
-                            b1.ToTable("Horses_Fears", "public");
+                            b1.ToTable("Horses_Fears", "HorseGame_doingdugat");
 
                             b1.WithOwner()
                                 .HasForeignKey("HorseId");
@@ -271,7 +274,7 @@ namespace backend_fullstack_course.Migrations
 
                             b1.HasKey("HorseId", "Id");
 
-                            b1.ToTable("PersonalityType", "public");
+                            b1.ToTable("PersonalityType", "HorseGame_doingdugat");
 
                             b1.WithOwner()
                                 .HasForeignKey("HorseId");

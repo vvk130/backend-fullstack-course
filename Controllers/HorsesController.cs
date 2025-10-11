@@ -61,19 +61,19 @@ public class HorsesController : GenericController<Horse>
             return Ok(new { horse }); 
         }
 
-        [HttpPatch("update-horses-energy")]
-        public IActionResult EnergyUpdateHorses()
-        {
-            BackgroundJob.Enqueue<IHorseService>(s => s.BatchHorsesAgeUpdate());
-            return Ok(new { message = "Horses energy updated" }); //Update not sure if update ran?
-        }
+        // [HttpPatch("update-horses-energy")]
+        // public IActionResult EnergyUpdateHorses()
+        // {
+        //     BackgroundJob.Enqueue<IHorseService>(s => s.BatchHorsesAgeUpdate());
+        //     return Ok(new { message = "Horses energy updated" }); //Update not sure if update ran?
+        // }
 
-        [HttpPatch("update-horses-age")]
-        public IActionResult AgeUpdateHorses()
-        {
-            BackgroundJob.Enqueue<IHorseService>(s => s.BatchHorsesAgeUpdate());
-            return Ok(new { message = "Horses age updated" }); //Update not sure if update ran?
-        }
+        // [HttpPatch("update-horses-age")]
+        // public IActionResult AgeUpdateHorses()
+        // {
+        //     BackgroundJob.Enqueue<IHorseService>(s => s.BatchHorsesAgeUpdate());
+        //     return Ok(new { message = "Horses age updated" }); //Update not sure if update ran?
+        // }
 
         [HttpPost("upload")]
         public async Task<IActionResult> UploadImage([FromForm] FileUploadRequestDto request)

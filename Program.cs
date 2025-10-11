@@ -10,7 +10,10 @@ DotNetEnv.Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddSingleton(provider =>
 {
@@ -77,11 +80,11 @@ builder.Services.AddValidatorsFromAssemblyContaining<FileUploadRequestDtoValidat
 builder.Services.AddValidatorsFromAssemblyContaining<HorseBreedValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<LevelValidator>();
 
-builder.Services.AddHangfire(config =>
-{
-    config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-builder.Services.AddHangfireServer();
+// builder.Services.AddHangfire(config =>
+// {
+//     config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("Default"));
+// });
+// builder.Services.AddHangfireServer();
 
 builder.Services.AddScoped<IHorseService, HorseService>();
 builder.Services.AddScoped<IHorseBreedService, HorseBreedService>();
@@ -96,8 +99,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseHangfireDashboard();
-app.UseHangfireServer();
+// app.UseHangfireDashboard();
+// app.UseHangfireServer();
 app.UseSwagger();
 app.UseSwaggerUI();
 
