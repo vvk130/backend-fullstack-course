@@ -10,6 +10,7 @@ public class MappingProfile : Profile
         CreateMap<Competition, CompetitionDto>();
         CreateMap<Breed, BreedShortDto>();
         CreateMap<Level, LevelShortDto>();
+        CreateMap<PuzzleAnswer, PuzzleAnswerShortDto>();
     }
 }
 }

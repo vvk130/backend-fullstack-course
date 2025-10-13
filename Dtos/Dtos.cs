@@ -28,4 +28,11 @@ public record ItemCreatedEvent(
 
 public record PaginationRequest(int PageNumber = 1, int PageSize = 10);
 
+public record PuzzleAnswerShortDto(Guid Id);
+
+public record PuzzleCorrectionRequest(Guid Id, List<PuzzlePiece> Pieces);
+
+public record PuzzleUnsolved(Guid Id, List<ImgUrl> Pieces);
+
+public record PuzzlePiece(int XCoordinate, int YCoordinate, string ImgUrl);
 }
