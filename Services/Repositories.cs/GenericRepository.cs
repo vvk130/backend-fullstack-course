@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameModel
 {
@@ -11,11 +14,13 @@ namespace GameModel
     {
         private readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;
+        private readonly IMapper _mapper;
 
-        public GenericRepository(AppDbContext context)
+        public GenericRepository(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _dbSet = context.Set<T>();
+            _mapper = mapper;
         }
 
         public async Task<T?> GetByIdAsync(Guid id)
@@ -61,6 +66,21 @@ namespace GameModel
         public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+        
+        public async Task<PaginatedResult<TDto>> GetPaginatedAsync<TDto>(PaginationRequest request)
+        {
+            var query = _context.Set<T>().AsNoTracking();
+
+            int totalCount = await query.CountAsync();
+
+            var items = await query
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ProjectTo<TDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return new PaginatedResult<TDto>(items, totalCount, request.PageNumber, request.PageSize);
         }
     }
 }

@@ -1,7 +1,11 @@
 namespace GameModel{
 public record HorseShortDto(Guid Id, string Name, string ImgUrl);
 
-public record CompetitionDto(Guid Id, string Name, CompetitionType CompetitionType, DateTime EndTime);
+public record CompetitionDto(Guid Id, CompetitionType CompetitionType, DateTime EndTime);
+
+public record BreedShortDto(Breed Breed);
+
+public record LevelShortDto(int LevelNumber, int EntryPoints);
 
 public record FoalHorseRequestDto(Guid SireId, Guid DamId);
 
@@ -21,5 +25,7 @@ public record ItemCreatedEvent(
     Guid ItemId,
     string ItemName
 );
+
+public record PaginationRequest(int PageNumber = 1, int PageSize = 10);
 
 }

@@ -4,13 +4,20 @@ using System.Threading.Tasks;
 
 [ApiController]
 [Route("api/[controller]")]
-public class GenericController<TEntity> : ControllerBase where TEntity : class
+public class GenericController<TEntity, TDto> : ControllerBase where TEntity : class
 {
     private readonly IGenericService<TEntity> _genericService;
 
     public GenericController(IGenericService<TEntity> genericService)
     {
         _genericService = genericService;
+    }
+
+    [HttpGet("paginated")]
+    public virtual async Task<IActionResult> GetPaginated([FromQuery] PaginationRequest pagination)
+    {
+        var result = await _genericService.GetPaginatedAsync<TDto>(pagination);
+        return Ok(result);
     }
 
     [HttpGet]

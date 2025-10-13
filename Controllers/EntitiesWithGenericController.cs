@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace YourProject.Controllers
 {
     [Route("api/competitions")]
-    public class CompetitionsController : GenericController<Competition>
+    [Authorize(Roles = "Admin")]
+    public class CompetitionsController : GenericController<Competition, CompetitionDto>
     {
         public CompetitionsController(IGenericService<Competition> service) : base(service) { }
 
@@ -16,7 +17,7 @@ namespace YourProject.Controllers
     }
 
     [Route("api/horsebreeds")]
-    public class HorseBreedsController : GenericController<HorseBreed>
+    public class HorseBreedsController : GenericController<HorseBreed, BreedShortDto>
     {
         public HorseBreedsController(IGenericService<HorseBreed> service) : base(service) {}
 
@@ -29,7 +30,7 @@ namespace YourProject.Controllers
     }
 
     [Route("api/levels")]
-    public class LevelsController : GenericController<Level>
+    public class LevelsController : GenericController<Level, LevelShortDto>
     {
         public LevelsController(IGenericService<Level> service) : base(service) { }
 

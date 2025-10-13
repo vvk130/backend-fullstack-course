@@ -6,30 +6,15 @@ using FluentValidation.AspNetCore;
 using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection; 
-// using MinimalApis.Identity;
 
 DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddDbContext<AppDbContext>(options =>
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = IdentityConstants.ApplicationScheme;
-})
-.AddCookie(IdentityConstants.ApplicationScheme, options =>
-{
-    options.LoginPath = "/login"; 
-    options.ExpireTimeSpan = TimeSpan.FromHours(12);
-    options.SlidingExpiration = true;
-})
-.AddBearerToken(IdentityConstants.BearerScheme);
-
+builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddAuthorizationBuilder();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options =>
@@ -41,11 +26,9 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = true;
 })
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<AppDbContext>()
-// .AddDefaultTokenProviders();
 .AddApiEndpoints();
-
-// builder.Services.AddIdentityApiEndpoints<ApplicationUser>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -134,12 +117,33 @@ builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(typeof(MappingProfile)); 
+
 var app = builder.Build();
 
 // app.UseHangfireDashboard();
 // app.UseHangfireServer();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapIdentityApi<ApplicationUser>();
+
+app.Lifetime.ApplicationStarted.Register(async () =>
+{
+    using var scope = app.Services.CreateScope();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    
+    string[] roles = [ "Admin", "User" ];
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+});
+
 
 app.UseSwagger();
 app.UseSwaggerUI();
