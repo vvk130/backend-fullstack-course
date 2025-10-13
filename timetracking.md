@@ -34,7 +34,8 @@
 | 2025-10-10 | 18:25 | 2,5h | Studying and seetting up RabbitMQ CLOUDAMQP for foal notifications |
 | 2025-10-11 | 9:13 | 1h | Changing to db because free instance ran out, first option did not work with ef core, second only on www and maybe not localhost still need to set up an local db |
 | 2025-10-11 | 10:15 | 1,75h | Install docker, do a local database with docker | 
+| 2025-10-13 | 10:30 | 2,5h | Login endpoints |
 
 //wrong day in timetracking change
-Total time spent: 23.53h
+Total time spent: 36.18 + 3.5 = ✅ **39.68 hours**
 17,5h per credit

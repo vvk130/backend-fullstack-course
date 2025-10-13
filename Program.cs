@@ -4,6 +4,9 @@ using CloudinaryDotNet;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MassTransit;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection; 
+// using MinimalApis.Identity;
 
 DotNetEnv.Env.Load();
 
@@ -14,6 +17,41 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+})
+.AddCookie(IdentityConstants.ApplicationScheme, options =>
+{
+    options.LoginPath = "/login"; 
+    options.ExpireTimeSpan = TimeSpan.FromHours(12);
+    options.SlidingExpiration = true;
+})
+.AddBearerToken(IdentityConstants.BearerScheme);
+
+builder.Services.AddAuthorizationBuilder();
+
+builder.Services.AddIdentityCore<ApplicationUser>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = false;
+    options.Password.RequiredLength = 12;
+    options.Password.RequireDigit = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+})
+.AddEntityFrameworkStores<AppDbContext>()
+// .AddDefaultTokenProviders();
+.AddApiEndpoints();
+
+// builder.Services.AddIdentityApiEndpoints<ApplicationUser>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromHours(12); 
+    options.SlidingExpiration = true;                
+});
 
 builder.Services.AddSingleton(provider =>
 {
@@ -93,7 +131,6 @@ builder.Services.AddScoped<IFoalCreationService, FoalCreationService>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -101,8 +138,17 @@ var app = builder.Build();
 
 // app.UseHangfireDashboard();
 // app.UseHangfireServer();
+
+app.MapIdentityApi<ApplicationUser>();
+
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.MapPost("/logout", async (SignInManager<ApplicationUser> signInManager) =>
+{
+    await signInManager.SignOutAsync();
+    return Results.Ok("Logged out");
+});
 
 app.Use(async (context, next) =>
 {
