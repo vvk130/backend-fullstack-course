@@ -12,6 +12,7 @@ public record FoalHorseRequestDto(Guid SireId, Guid DamId);
 public record class FileUploadRequestDto
 {
     public IFormFile File { get; init; }
+    public string FolderName { get; init; }
 }
 
 public record HorseFilterDto(
@@ -32,7 +33,7 @@ public record PuzzleAnswerShortDto(Guid Id);
 
 public record PuzzleCorrectionRequest(Guid Id, List<PuzzlePiece> Pieces);
 
-public record PuzzleUnsolved(Guid Id, List<ImgUrl> Pieces);
+public record PuzzleUnsolved(Guid Id, List<string> Pieces);
 
 public record PuzzlePiece(int XCoordinate, int YCoordinate, string ImgUrl);
 }

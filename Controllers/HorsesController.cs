@@ -10,18 +10,21 @@ namespace YourNamespace.Controllers
 public class HorsesController : GenericController<Horse, HorseShortDto>
 {
         private readonly IHorseService _horseService;
+        private readonly IImageService _imageService;
         private readonly IHorseBreedService _horseBreedService;
         private readonly IGenericService<Horse> _genericService;
 
         public HorsesController(
             IHorseService horseService,
             IHorseBreedService horseBreedService,
-            IGenericService<Horse> genericService)
+            IGenericService<Horse> genericService,
+            IImageService imageService)
             : base(genericService) 
         {
             _horseService = horseService;
             _horseBreedService = horseBreedService;
             _genericService = genericService;
+            _imageService = imageService;
         }
 
         [HttpGet("random-name")]
@@ -82,7 +85,7 @@ public class HorsesController : GenericController<Horse, HorseShortDto>
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _horseService.UploadImageAsync(request.File);
+            var result = await _imageService.UploadImageAsync(request.File, request.folderName);
             return Ok(result);
         }
 

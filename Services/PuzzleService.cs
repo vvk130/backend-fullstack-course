@@ -1,10 +1,11 @@
 public class PuzzleService : IPuzzleService
 {
     private readonly List<PuzzlePiece> _puzzleAnswers;
+    private readonly IImageService _imageService;
 
-    public PuzzleService()
+    public PuzzleService(IImageService imageService)
     {
-        _puzzleAnswers = GeneratePuzzlePieces(); 
+        _imageService = imageService;
     }
 
     public bool CheckAllPieces(PuzzleCorrectionRequest request)
@@ -19,37 +20,54 @@ public class PuzzleService : IPuzzleService
             var piece = puzzleAnswer.FirstOrDefault(p => p.ImgUrl == requestPiece.ImgUrl);
 
             if (piece == null || piece.XCoordinate != requestPiece.XCoordinate || piece.YCoordinate != requestPiece.YCoordinate)
-            {
                 return false; 
-            }
         }
 
         return true; 
     }
 
-    // public PuzzleGenerator(){
-    // PuzzleImageResizer() --to 500x500
-    // GeneratePuzzlePieces(string ImgUrl)
-    // }
-    // public PuzzleImageResizer()
+    public async Task<OperationResult<PuzzleUnsolved>> PuzzleGenerator(string originalImgUrl)
+    {
+        var result = new OperationResult<string>();
 
-    private List<PuzzlePiece> GeneratePuzzlePieces(string ImgUrl)
-    {
-    for (int i = 0; i < 10; i++) 
-    {
-        for (int j = 0; j < 10; j++) 
+        var resizeResult = imageService.ImageResizer(originalImgUrl, 500, 500);
+
+        if(!resizeResult.Success)
         {
-            var x = j * 50; 
-            var y = i * 50;  
+            result.AddError("file", "Image not found");
+            return result;
+        }
 
-            var imgUrl = cloudinary.Api.UrlImgUp.Transform(new Transformation()
-                .Width(50)   
-                .Height(50)  
-                .X(x)        
-                .Y(y)       
-                .Crop("crop") 
-            ).BuildImageTag($"{ImgUrl}");
+        var resizedImgUrl = resizeResult.Value;
+
+        var pieces = GeneratePuzzlePieces(string resizedImgUrl);
+
+        var puzzle = new PuzzleUnsolved(Guid.NewGuid(), pieces);
+
+        return puzzle;
+    }
+
+    private List<string> GeneratePuzzlePieces(string originalImgUrl)
+    {
+        List<string> PuzzlePieces = new();        
+        
+        for (int i = 0; i < 10; i++) 
+        {
+            for (int j = 0; j < 10; j++) 
+            {
+                var x = j * 50; 
+                var y = i * 50;  
+
+                var imgUrl = cloudinary.Api.UrlImgUp.Transform(new Transformation()
+                    .Width(50)   
+                    .Height(50)  
+                    .X(x)        
+                    .Y(y)       
+                    .Crop("crop") 
+                ).BuildImageTag($"{originalImgUrl}");
+
+                PuzzlePieces.Add(imgUrl);
+            }
         }
     }
-}
 }

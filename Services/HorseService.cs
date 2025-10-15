@@ -11,13 +11,11 @@ namespace GameModel
         private readonly IHorseBreedService _horseBreedService;
         private readonly Faker _faker = new();
         private readonly Random _random = new();
-        private readonly Cloudinary _cloudinary;
 
-        public HorseService(AppDbContext context, IHorseBreedService horseBreedService, Cloudinary cloudinary)
+        public HorseService(AppDbContext context, IHorseBreedService horseBreedService)
         {
             _context = context;
             _horseBreedService = horseBreedService;
-            _cloudinary = cloudinary;
         }
 
     public List<Horse> GetAll() => _context.Horses.ToList();
@@ -141,39 +139,6 @@ namespace GameModel
     {
         _context.Horses.ExecuteUpdateAsync(h =>
             h.SetProperty(h => h.Age, h => h.Age + 0.1));
-    }
-
-    public async Task<OperationResult<string>> UploadImageAsync(IFormFile file)
-    {
-        var result = new OperationResult<string>();
-
-        if (file == null || file.Length == 0)
-        {
-            result.AddError("file", "No file uploaded.");
-            return result;
-        }
-
-        await using var stream = file.OpenReadStream();
-
-        var uploadParams = new ImageUploadParams
-        {
-            File = new FileDescription(file.FileName, stream),
-            UseFilename = true,
-            UniqueFilename = true,
-            Overwrite = true,
-            Folder = "horses"
-        };
-
-        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-
-        if (uploadResult.StatusCode != HttpStatusCode.OK || uploadResult.SecureUrl == null)
-        {
-            result.AddError("upload", "Image upload failed.");
-            return result;
-        }
-
-        result.Value = uploadResult.SecureUrl.AbsoluteUri;
-        return result;
     }
 
     }

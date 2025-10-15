@@ -14,5 +14,8 @@ public class FileUploadRequestDtoValidator : AbstractValidator<FileUploadRequest
             .WithMessage("Only JPEG allowed.")
             .Must(file => file.Length <= MaxFileSizeBytes)
             .WithMessage($"File must not exceed {MaxFileSizeKB}KB.");
+
+        RuleFor(x => x.FolderName)
+            .NotEmpty();
     }
 }
