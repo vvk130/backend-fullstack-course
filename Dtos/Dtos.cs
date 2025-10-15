@@ -39,8 +39,12 @@ public record PuzzlePieceDto(int XCoordinate, int YCoordinate, string ImgUrl);
 
 public record CompetitionRequest(Guid CompetitionId, List<Guid> HorseIds);
 
-public record RankedHorse(int Rank, HorseShortDto Horse);
+public record RankedHorse(int Rank, HorseShortDto Horse, Guid? OwnerId);
 
 public record CompetitionResult(List<RankedHorse> Results);
+
+public record WalletDto(Guid id, int Balance);
+
+public record Winner(int Rank, Guid HorseId, Guid? OwnerId);
 
 }

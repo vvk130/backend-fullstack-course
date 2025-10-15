@@ -12,7 +12,7 @@ public class CompetitionRequestValidator : AbstractValidator<CompetitionRequest>
         RuleFor(x => x.HorseIds)
             .NotNull().WithMessage("HorseIds list cannot be null.")
             .Must(horses => horses.Count >= 2 && horses.Count <= 10)
-            .WithMessage("You must provide between 2 and 10 horse IDs.");
+            .WithMessage("You must provide between 3 and 10 horse IDs.");
 
         RuleForEach(x => x.HorseIds)
             .NotEmpty().WithMessage("Horse ID must not be empty GUID.");

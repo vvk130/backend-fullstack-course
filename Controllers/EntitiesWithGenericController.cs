@@ -56,4 +56,17 @@ namespace YourProject.Controllers
             return BadRequest("Delete operation is not allowed for this entity.");
         }
     }
+
+    [Route("api/wallet")]
+    public class WalletController : GenericController<Wallet, WalletDto>
+    {
+        public WalletController(IGenericService<Wallet> service) : base(service) {}
+
+            [HttpDelete("{id}")]
+            public override async Task<IActionResult> Delete(Guid id)
+            {
+                return BadRequest("Delete operation is not allowed for this entity.");
+            }
+
+    }
 }

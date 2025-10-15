@@ -5,18 +5,14 @@ namespace GameModel
 {
     public class CompetitionService : ICompetitionService
     {
-        private readonly AppDbContext _context;
-        private readonly IHorseBreedService _horseBreedService; 
-        private readonly Faker _faker = new();
-        private readonly Random _random = new();
         private readonly IGenericService<Horse> _horseService;
         private readonly IGenericService<Competition> _competitionService;
+        private readonly IGenericService<Wallet> _walletService;
         
-        public CompetitionService(AppDbContext context, IHorseBreedService horseBreedService, IGenericService<Horse> horseService,
-        IGenericService<Competition> competitionService)
+        public CompetitionService(IGenericService<Horse> horseService,
+        IGenericService<Competition> competitionService, IGenericService<Wallet> walletService)
         {
-            _context = context;
-            _horseBreedService = horseBreedService;
+            _walletService = walletService;
             _horseService = horseService;
             _competitionService = competitionService;
         }
@@ -41,12 +37,36 @@ namespace GameModel
                 .OrderByDescending(h => h.Capacity)
                 .Select((h, index) => new RankedHorse(
                     index + 1,
-                    new HorseShortDto(h.Id, h.Name, h.ImgUrl)
+                    new HorseShortDto(h.Id, h.Name, h.ImgUrl),
+                    h.OwnerId
                 ))
                 .ToList();
 
+            var winners = rankedHorses
+                            .Take(3)
+                            .ToList();
+
+            await PayWinners(winners);
+
             result.Value = new CompetitionResult(rankedHorses);
             return result;
+        }
+
+        public async Task PayWinners(List<RankedHorse> winners)
+        {
+            foreach (var winner in winners)
+            {
+                if (winner.OwnerId is not null)
+                {
+                    var wallet = (await _walletService.FindAsync(w => w.OwnerId == winner.OwnerId)).FirstOrDefault();
+                    if (wallet is not null)
+                    {
+                        wallet.Balance += 100;
+                        await _walletService.SaveChangesAsync();
+                    }
+                }
+            }
+
         }
     }
 

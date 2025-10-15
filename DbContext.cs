@@ -13,6 +13,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<HorseBreed> HorseBreeds { get; set; }
     public DbSet<Level> Levels { get; set; }
     public DbSet<PuzzleAnswer> PuzzleAnswers { get; set; }
+    public DbSet<Wallet> Wallets { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
