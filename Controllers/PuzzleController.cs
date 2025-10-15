@@ -1,23 +1,23 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
+
 [ApiController]
 [Route("api/[controller]")]
 public class PuzzleController : GenericController<PuzzleAnswer, PuzzleAnswerShortDto>
 {
     private readonly IPuzzleService _puzzleService;
 
-    public PuzzleController(IPuzzleService puzzleService)
+    public PuzzleController(IPuzzleService puzzleService, IGenericService<PuzzleAnswer> genericService): base(genericService) 
     {
         _puzzleService = puzzleService;
     }
 
-    //TODO create puzzle
-
-
     [HttpGet("check-all-pieces")]
-    public IActionResult CheckAllPieces([FromBody] PuzzleCorrectionRequest request)
+    public async Task<IActionResult> CheckAllPieces([FromBody] PuzzleCorrectionRequest request)
     {
         //request.id check!
         
-        var isCorrect = _puzzleService.CheckAllPieces(request);
+        var isCorrect = await _puzzleService.CheckAllPieces(request);
 
         if (isCorrect)
         {

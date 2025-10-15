@@ -85,7 +85,7 @@ public class HorsesController : GenericController<Horse, HorseShortDto>
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _imageService.UploadImageAsync(request.File, request.folderName);
+            var result = await _imageService.UploadImageAsync(request.File, request.FolderName);
             return Ok(result);
         }
 

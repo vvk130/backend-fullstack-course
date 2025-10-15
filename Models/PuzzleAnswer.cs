@@ -1,6 +1,7 @@
 namespace GameModel{
 public class PuzzleAnswer
 {
+    [Key]
     public Guid Id { get; set; } = Guid.NewGuid(); 
     public required ICollection<PuzzlePiece> PuzzlePieces { get; set; }
 

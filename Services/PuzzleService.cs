@@ -1,23 +1,30 @@
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using System.Net;
+
 public class PuzzleService : IPuzzleService
 {
-    private readonly List<PuzzlePiece> _puzzleAnswers;
     private readonly IImageService _imageService;
+    private readonly Cloudinary _cloudinary;
+    private readonly AppDbContext _context;
 
-    public PuzzleService(IImageService imageService)
+    public PuzzleService(IImageService imageService, Cloudinary cloudinary, AppDbContext context)
     {
         _imageService = imageService;
+        _cloudinary = cloudinary;
+        _context = context;
     }
 
-    public bool CheckAllPieces(PuzzleCorrectionRequest request)
+    public async Task<bool> CheckAllPieces(PuzzleCorrectionRequest request)
     {
         
-        var puzzleAnswer = _puzzleAnswers.FirstOrDefault(p => p.Id == request.Id);
+        var puzzleAnswer = await _context.PuzzleAnswers.FindAsync(request.Id);
         if (puzzleAnswer == null)
             return false; 
         
         foreach (var requestPiece in request.Pieces)
         {
-            var piece = puzzleAnswer.FirstOrDefault(p => p.ImgUrl == requestPiece.ImgUrl);
+            var piece = request.Pieces.FirstOrDefault(p => p.ImgUrl == requestPiece.ImgUrl);
 
             if (piece == null || piece.XCoordinate != requestPiece.XCoordinate || piece.YCoordinate != requestPiece.YCoordinate)
                 return false; 
@@ -28,9 +35,9 @@ public class PuzzleService : IPuzzleService
 
     public async Task<OperationResult<PuzzleUnsolved>> PuzzleGenerator(string originalImgUrl)
     {
-        var result = new OperationResult<string>();
+        var result = new OperationResult<PuzzleUnsolved>();
 
-        var resizeResult = imageService.ImageResizer(originalImgUrl, 500, 500);
+        var resizeResult = await _imageService.ResizeImageAsync(originalImgUrl, 500, 500);
 
         if(!resizeResult.Success)
         {
@@ -40,11 +47,12 @@ public class PuzzleService : IPuzzleService
 
         var resizedImgUrl = resizeResult.Value;
 
-        var pieces = GeneratePuzzlePieces(string resizedImgUrl);
+        var pieces = GeneratePuzzlePieces(resizedImgUrl);
 
         var puzzle = new PuzzleUnsolved(Guid.NewGuid(), pieces);
+        result.Value = puzzle;
 
-        return puzzle;
+        return result;
     }
 
     private List<string> GeneratePuzzlePieces(string originalImgUrl)
@@ -58,16 +66,18 @@ public class PuzzleService : IPuzzleService
                 var x = j * 50; 
                 var y = i * 50;  
 
-                var imgUrl = cloudinary.Api.UrlImgUp.Transform(new Transformation()
+                var imgUrl = _cloudinary.Api.UrlImgUp.Transform(new Transformation()
                     .Width(50)   
                     .Height(50)  
                     .X(x)        
                     .Y(y)       
                     .Crop("crop") 
-                ).BuildImageTag($"{originalImgUrl}");
+                ).BuildImageTag(originalImgUrl);
 
                 PuzzlePieces.Add(imgUrl);
             }
         }
+
+        return PuzzlePieces;
     }
 }

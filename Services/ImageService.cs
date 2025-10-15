@@ -1,3 +1,7 @@
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using System.Net;
+
 public class ImageService : IImageService
 {
     private readonly Cloudinary _cloudinary;
@@ -11,15 +15,15 @@ public class ImageService : IImageService
     {
         var result = new OperationResult<string>();
 
-        if (!await cloudinary.ImageExistsAsync($"{url}"))
-        {
-            result.AddError("file", "Image not found");
-            return result;
-        }
+        // if (!await _cloudinary.ImageExistsAsync($"{url}"))
+        // {
+        //     result.AddError("file", "Image not found");
+        //     return result;
+        // }
 
         result.Value = _cloudinary.Api.UrlImgUp
                             .Transform(new Transformation().Width(width).Height(height).Crop("fill"))
-                            .BuildUrl(publicId);
+                            .BuildUrl(url);
 
         return result;
 

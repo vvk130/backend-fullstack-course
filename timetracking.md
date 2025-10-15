@@ -38,7 +38,7 @@
 | 2025-10-13 | 13:30 | 2h | Adding roles, problem mix up with the login endpoints, not getting the right status code, finally fixed |
 | 2025-10-13 | 15:30 | 2h | Generic mapping with automapper, getting an error (In the end resolved different package versions causing an error) |
 | 2025-10-13 | 17:35 | 2h | Puzzle |
-| 2025-10-15 | 11:30 | 2h | Puzzle and refactoring |
+| 2025-10-15 | 11:30 | 2,5h | Puzzle and refactoring |
 
 //wrong day in timetracking change
 Total time spent: 41.4 + 3.5 = ✅ **44.9 hours**

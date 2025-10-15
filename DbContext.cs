@@ -12,6 +12,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Competition> Competitions { get; set; }
     public DbSet<HorseBreed> HorseBreeds { get; set; }
     public DbSet<Level> Levels { get; set; }
+    public DbSet<PuzzleAnswer> PuzzleAnswers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
