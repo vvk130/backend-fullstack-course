@@ -42,6 +42,7 @@
 | 2025-10-15 | 15:00 | 1,5h | Puzzle and refactoring |
 | 2025-10-15 | 17:30 | 2h | Competition service, endpoint |
 | 2025-10-15 | 19:30 | 1,5 | Wallet service, pay comptition winners |
+| 2025-10-15 | 21:30 | 1 | Refactoring, starting SalesAd, doing Wallet, thinking about the mapping types of FKs, thinking about best way to extract the user Id when using IdentityCore |
 
 //wrong day in timetracking change
 Total time spent: 41.4 + 3.5 = ✅ **44.9 hours**

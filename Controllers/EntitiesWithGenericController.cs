@@ -69,4 +69,27 @@ namespace YourProject.Controllers
             }
 
     }
+
+    [Route("api/salesad")]
+    public class SalesAdController : GenericController<SalesAd, SalesAdDto>
+    {
+        public SalesAdController(IGenericService<SalesAd> service) : base(service) {}
+
+            [HttpPost("compete-horses")]
+            public async Task<IActionResult> CompeteHorses([FromBody] CompetitionRequest request)
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _competitionService.GetCompetitionResult(request.CompetitionId, request.HorseIds);
+                return Ok(result);
+            }
+
+            [HttpDelete("{id}")]
+            public override async Task<IActionResult> Delete(Guid id)
+            {
+                return BadRequest("Delete operation is not allowed for this entity.");
+            }
+
+    }
 }
