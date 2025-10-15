@@ -37,34 +37,46 @@ public class PuzzleService : IPuzzleService
     {
         var result = new OperationResult<PuzzleUnsolved>();
 
-        var resizeResult = await _imageService.ResizeImageAsync(originalImgUrl, 500, 500);
+        // var resizeResult = await _imageService.ResizeImageAsync(originalImgUrl, 500, 500);
 
-        if(!resizeResult.Success)
+        // if(!resizeResult.Success)
+        // {
+        //     result.AddError("file", "Image not found");
+        //     return result;
+        // }
+
+        // var resizedImgUrl = resizeResult.Value;
+
+        var pieces = GeneratePuzzlePieces(originalImgUrl);
+
+        var puzzleAnswer = new PuzzleAnswer
         {
-            result.AddError("file", "Image not found");
-            return result;
-        }
+            PuzzlePieces = pieces
+        };
 
-        var resizedImgUrl = resizeResult.Value;
+        _context.PuzzleAnswers.Add(puzzleAnswer);
+        await _context.SaveChangesAsync();
 
-        var pieces = GeneratePuzzlePieces(resizedImgUrl);
+        var puzzleUnsolved = new PuzzleUnsolved(
+                puzzleAnswer.Id,
+                puzzleAnswer.PuzzlePieces.Select(p => p.ImgUrl).ToList()
+            );
 
-        var puzzle = new PuzzleUnsolved(Guid.NewGuid(), pieces);
-        result.Value = puzzle;
+        result.Value = puzzleUnsolved;
 
         return result;
     }
 
-    private List<string> GeneratePuzzlePieces(string originalImgUrl)
+    private List<PuzzleAnswer.PuzzlePiece> GeneratePuzzlePieces(string originalImgUrl)
     {
-        List<string> PuzzlePieces = new();        
+        List<PuzzleAnswer.PuzzlePiece> puzzlePieces = new();        
         
         for (int i = 0; i < 10; i++) 
         {
             for (int j = 0; j < 10; j++) 
             {
                 var x = j * 50; 
-                var y = i * 50;  
+                var y = i * 50;
 
                 var imgUrl = _cloudinary.Api.UrlImgUp.Transform(new Transformation()
                     .Width(50)   
@@ -74,10 +86,15 @@ public class PuzzleService : IPuzzleService
                     .Crop("crop") 
                 ).BuildImageTag(originalImgUrl);
 
-                PuzzlePieces.Add(imgUrl);
+                puzzlePieces.Add(new PuzzleAnswer.PuzzlePiece
+                {
+                    XCoordinate = x,
+                    YCoordinate = y,
+                    ImgUrl = imgUrl
+                });
             }
         }
 
-        return PuzzlePieces;
+        return puzzlePieces;
     }
 }

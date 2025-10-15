@@ -12,7 +12,21 @@ public class PuzzleController : GenericController<PuzzleAnswer, PuzzleAnswerShor
         _puzzleService = puzzleService;
     }
 
-    [HttpGet("check-all-pieces")]
+    [HttpPost("generate-puzzle")]
+    public async Task<IActionResult> CreatePuzzle([FromBody] string imgUrl)
+    {
+        var result = await _puzzleService.PuzzleGenerator(imgUrl);
+
+        if (!result.Success)
+        {
+            return BadRequest(result.ValidationErrors);
+        }
+
+        return Ok(result.Value);
+    }
+
+
+    [HttpPost("check-all-pieces")]
     public async Task<IActionResult> CheckAllPieces([FromBody] PuzzleCorrectionRequest request)
     {
         //request.id check!

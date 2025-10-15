@@ -110,6 +110,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<LevelValidator>();
 builder.Services.AddScoped<IHorseService, HorseService>();
 builder.Services.AddScoped<IHorseBreedService, HorseBreedService>();
 builder.Services.AddScoped<IFoalCreationService, FoalCreationService>();
+builder.Services.AddScoped<IPuzzleService, PuzzleService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));

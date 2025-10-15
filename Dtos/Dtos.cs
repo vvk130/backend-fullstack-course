@@ -31,9 +31,9 @@ public record PaginationRequest(int PageNumber = 1, int PageSize = 10);
 
 public record PuzzleAnswerShortDto(Guid Id);
 
-public record PuzzleCorrectionRequest(Guid Id, List<PuzzlePiece> Pieces);
+public record PuzzleCorrectionRequest(Guid Id, List<PuzzlePieceDto> Pieces);
 
 public record PuzzleUnsolved(Guid Id, List<string> Pieces);
 
-public record PuzzlePiece(int XCoordinate, int YCoordinate, string ImgUrl);
+public record PuzzlePieceDto(int XCoordinate, int YCoordinate, string ImgUrl);
 }

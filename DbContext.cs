@@ -23,6 +23,9 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<Horse>()
                     .OwnsMany(h => h.Fears);
+
+        modelBuilder.Entity<PuzzleAnswer>()
+                    .OwnsMany(p => p.PuzzlePieces);
     }
 
 }
