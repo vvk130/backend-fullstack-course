@@ -36,4 +36,11 @@ public record PuzzleCorrectionRequest(Guid Id, List<PuzzlePieceDto> Pieces);
 public record PuzzleUnsolved(Guid Id, List<string> Pieces);
 
 public record PuzzlePieceDto(int XCoordinate, int YCoordinate, string ImgUrl);
+
+public record CompetitionRequest(Guid CompetitionId, List<Guid> HorseIds);
+
+public record RankedHorse(int Rank, HorseShortDto Horse);
+
+public record CompetitionResult(List<RankedHorse> Results);
+
 }

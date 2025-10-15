@@ -1,12 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
+using GameModel;
 
 namespace YourProject.Controllers
 {
     [Route("api/competitions")]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public class CompetitionsController : GenericController<Competition, CompetitionDto>
     {
-        public CompetitionsController(IGenericService<Competition> service) : base(service) { }
+        private readonly ICompetitionService _competitionService;
+
+        public CompetitionsController(ICompetitionService competitionService, IGenericService<Competition> service) : base(service) 
+        { 
+            _competitionService = competitionService;
+        }
+
+            [HttpPost("compete-horses")]
+            public async Task<IActionResult> CompeteHorses([FromBody] CompetitionRequest request)
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _competitionService.GetCompetitionResult(request.CompetitionId, request.HorseIds);
+                return Ok(result);
+            }
 
             [HttpDelete("{id}")]
             public override async Task<IActionResult> Delete(Guid id)

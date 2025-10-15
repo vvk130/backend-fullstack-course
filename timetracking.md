@@ -40,6 +40,7 @@
 | 2025-10-13 | 17:35 | 2h | Puzzle |
 | 2025-10-15 | 11:30 | 2,5h | Puzzle and refactoring |
 | 2025-10-15 | 15:00 | 1,5h | Puzzle and refactoring |
+| 2025-10-15 | 17:30 | 2h | Competition service, endpoint |
 
 //wrong day in timetracking change
 Total time spent: 41.4 + 3.5 = ✅ **44.9 hours**
