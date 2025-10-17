@@ -6,6 +6,7 @@ using FluentValidation.AspNetCore;
 using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection; 
+// using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 DotNetEnv.Env.Load();
 
@@ -13,9 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
-builder.Services.AddAuthorizationBuilder();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options =>
 {
@@ -29,6 +27,17 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<AppDbContext>()
 .AddApiEndpoints();
+
+builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+
+// builder.Services.Configure<Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions>(
+//     IdentityConstants.BearerScheme,
+//     options => {
+//         options.RequireHttpsMetadata = false;
+//     });
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -100,6 +109,7 @@ builder.Services.AddControllers()
 builder.Services.AddValidatorsFromAssemblyContaining<FileUploadRequestDtoValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<HorseBreedValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<LevelValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<SalesAdRequestValidator>();
 
 // builder.Services.AddHangfire(config =>
 // {
@@ -126,10 +136,10 @@ var app = builder.Build();
 
 // app.UseHangfireDashboard();
 // app.UseHangfireServer();
+app.MapIdentityApi<ApplicationUser>();
+
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapIdentityApi<ApplicationUser>();
 
 app.Lifetime.ApplicationStarted.Register(async () =>
 {
@@ -146,7 +156,6 @@ app.Lifetime.ApplicationStarted.Register(async () =>
         }
     }
 });
-
 
 app.UseSwagger();
 app.UseSwaggerUI();

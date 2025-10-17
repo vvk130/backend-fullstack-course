@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using GameModel;
+using System.Security.Claims;
 
 namespace YourProject.Controllers
 {
@@ -71,19 +72,50 @@ namespace YourProject.Controllers
     }
 
     [Route("api/salesad")]
+    [Authorize]
     public class SalesAdController : GenericController<SalesAd, SalesAdDto>
     {
-        public SalesAdController(IGenericService<SalesAd> service) : base(service) {}
+            private readonly IGenericService<SalesAd> _adService;
+            private readonly IGenericService<Horse> _horseService;
 
-            [HttpPost("compete-horses")]
-            public async Task<IActionResult> CompeteHorses([FromBody] CompetitionRequest request)
+            public SalesAdController(
+                IGenericService<SalesAd> adService,
+                IGenericService<Horse> horseService) : base(adService)
+            {
+                _adService = adService;
+                _horseService = horseService;
+            }
+
+            [HttpPost("create-sales-ad")]
+            public async Task<IActionResult> Create([FromBody] SalesAdRequest request)
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _competitionService.GetCompetitionResult(request.CompetitionId, request.HorseIds);
-                return Ok(result);
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                var ownerId = Guid.Parse(userId);
+
+                var horse = await _horseService.FindAsync(h =>
+                    h.Id == request.HorseId && h.OwnerId == ownerId);
+
+                if (horse is null)
+                    return Forbid("You don't own this horse.");
+
+                var ad = new SalesAd
+                {
+                    HorseId = request.HorseId,
+                    OwnerId = ownerId,
+                    Price = request.Price,
+                    StartTime = DateTime.UtcNow,
+                    EndTime = request.EndTime,
+                    AdType = request.AdType
+                };
+
+                await _adService.AddAsync(ad);
+                return Ok();
             }
+
 
             [HttpDelete("{id}")]
             public override async Task<IActionResult> Delete(Guid id)

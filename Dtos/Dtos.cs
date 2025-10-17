@@ -47,5 +47,5 @@ public record WalletDto(Guid Id, int Balance);
 
 public record SalesAdDto(int Price, DateTime EndDate, Guid HorseId, Guid OwnerId);
 
-public record SalesAdRequest(int Price, AdType AdType, DateTime EndDate, Guid HorseId, Guid OwnerId);
+public record SalesAdRequest(int Price, AdType AdType, DateTime EndTime, Guid HorseId, Guid OwnerId);
 }

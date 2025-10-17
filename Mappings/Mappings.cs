@@ -11,6 +11,7 @@ public class MappingProfile : Profile
         CreateMap<Breed, BreedShortDto>();
         CreateMap<Level, LevelShortDto>();
         CreateMap<PuzzleAnswer, PuzzleAnswerShortDto>();
+        CreateMap<SalesAd, SalesAdDto>();
     }
 }
 }
