@@ -29,6 +29,12 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 .AddApiEndpoints();
 
 builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+// .AddJwtBearer(jwtOptions => 
+// {
+//     jwtOptions.Authority = ""
+//     jwtOptions.Audience = ""
+// });
+// 
 
 // builder.Services.Configure<Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions>(
 //     IdentityConstants.BearerScheme,
@@ -102,7 +108,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-
 builder.Services.AddControllers()
     .AddFluentValidation();
 
@@ -133,6 +138,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile)); 
 
 var app = builder.Build();
+
+app.UseCors("AllowRabbitMQ");
 
 // app.UseHangfireDashboard();
 // app.UseHangfireServer();

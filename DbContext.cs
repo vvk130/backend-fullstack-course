@@ -15,6 +15,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<PuzzleAnswer> PuzzleAnswers { get; set; }
     public DbSet<Wallet> Wallets { get; set; }
     public DbSet<SalesAd> SalesAds { get; set; }
+    public DbSet<CompResult> CompResults { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

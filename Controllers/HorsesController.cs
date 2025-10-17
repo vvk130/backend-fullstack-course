@@ -58,7 +58,6 @@ public class HorsesController : GenericController<Horse, HorseShortDto>
         }
 
         [HttpPost("create-horse")]
-        [Authorize]
         public IActionResult CreateHorse()
         {
             var horse = _horseService.CreateHorse();

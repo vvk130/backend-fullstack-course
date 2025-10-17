@@ -39,7 +39,7 @@ public record PuzzlePieceDto(int XCoordinate, int YCoordinate, string ImgUrl);
 
 public record CompetitionRequest(Guid CompetitionId, List<Guid> HorseIds);
 
-public record RankedHorse(int Rank, HorseShortDto Horse, Guid? OwnerId);
+public record RankedHorse(int Ranking, HorseShortDto Horse, Guid? OwnerId, Guid CompetitionId, int MoneyWon);
 
 public record CompetitionResult(List<RankedHorse> Results);
 
@@ -48,4 +48,10 @@ public record WalletDto(Guid Id, int Balance);
 public record SalesAdDto(int Price, DateTime EndDate, Guid HorseId, Guid OwnerId);
 
 public record SalesAdRequest(int Price, AdType AdType, DateTime EndTime, Guid HorseId, Guid OwnerId);
+
+public record CompResultDto(Guid Id, Guid HorseId, string HorseName, int Ranking, double MoneyWon);
+
+public record CompResultStatisticsRequest(Guid HorseId);
+
+public record CompResultStatisticsDto(double TotalMoneyWon, double AverageRanking, double BestRanking);
 }
