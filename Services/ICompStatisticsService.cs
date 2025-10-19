@@ -1,6 +1,7 @@
 namespace GameModel{
 public interface ICompStatisticsService
 {
-    Task<CompResultStatisticsDto> CreateCompResultStatistics(Guid horseId);
+    Task<OperationResult<CompResultStatisticsDto>> CreateCompResultStatistics(Guid horseId);
+    Task<PaginatedResult<CompResultStatisticsDto>> GetPaginatedAsync(PaginationRequest request);
 }
 }

@@ -20,4 +20,11 @@ public class CompStatisticsController : ControllerBase
         return Ok(statistics);
     }
 
+    [HttpGet("statistics-paginated")]
+    public async Task<IActionResult> GetStatisticsById([FromQuery] PaginationRequest request)
+    {
+        var result = await _compStatisticsService.GetPaginatedAsync(request);
+        return Ok(result);
+    }
+
 }
