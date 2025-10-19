@@ -45,6 +45,7 @@
 | 2025-10-15 | 21:30 | 1 | Refactoring, starting SalesAd, doing Wallet, thinking about the mapping types of FKs, thinking about best way to extract the user Id when using IdentityCore |
 | 2025-10-17 | 13:30 | 3 | SalesAd bug, get set missing, trying to solve problems with the login hadling
 | 2025-10-17 | 22:10 | 1,25 | CompetitionService adding complexity
+| 2025-10-17 | 22:10 | 1,25 | CompStats |
 
 //wrong day in timetracking change
 Total time spent: 41.4 + 3.5 = ✅ **44.9 hours**

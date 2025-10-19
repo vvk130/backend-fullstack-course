@@ -53,5 +53,5 @@ public record CompResultDto(Guid Id, Guid HorseId, string HorseName, int Ranking
 
 public record CompResultStatisticsRequest(Guid HorseId);
 
-public record CompResultStatisticsDto(double TotalMoneyWon, double AverageRanking, double BestRanking);
+public record CompResultStatisticsDto(double TotalMoneyWon, double AverageRanking, double BestRanking, int CompEntriesCount);
 }

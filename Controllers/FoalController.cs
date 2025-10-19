@@ -14,8 +14,8 @@ public class FoalsController : ControllerBase
     public FoalsController(IFoalCreationService foalCreationService, AppDbContext context, IPublishEndpoint publishEndpoint)
     {
         _foalCreationService = foalCreationService;
-       _context = context;
-       _publishEndpoint = publishEndpoint;
+        _context = context;
+        _publishEndpoint = publishEndpoint;
     }
 
     [HttpPost]

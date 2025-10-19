@@ -1,5 +1,6 @@
 using Bogus;
 using GameModel;
+using System.Linq;
 
 namespace GameModel
 {
@@ -9,14 +10,19 @@ namespace GameModel
         private readonly IGenericService<Competition> _competitionService;
         private readonly IGenericService<Wallet> _walletService;
         private readonly IGenericService<CompResult> _compResultService;
+        private readonly AppDbContext _context;
         
         public CompetitionService(IGenericService<Horse> horseService,
-        IGenericService<Competition> competitionService, IGenericService<Wallet> walletService, IGenericService<CompResult> compResultService)
+        IGenericService<Competition> competitionService, 
+        IGenericService<Wallet> walletService, 
+        IGenericService<CompResult> compResultService,
+        AppDbContext context)
         {
             _walletService = walletService;
             _horseService = horseService;
             _competitionService = competitionService;
             _compResultService = compResultService;
+            _context = context;
         }
 
         public async Task<OperationResult<CompetitionResult>> GetCompetitionResult(Guid competitionId, List<Guid> horseIds)
@@ -32,6 +38,9 @@ namespace GameModel
 
             if (DateTime.UtcNow > competition.EndTime)
                 result.AddError(nameof(competition.EndTime), "Competition has ended.");
+
+            if (!result.Success)
+                return result;
 
             var horseEntities = await _horseService.FindAsync(h => horseIds.Contains(h.Id));
 
@@ -99,11 +108,6 @@ namespace GameModel
 
             await _compResultService.AddRangeAsync(compResults);
         }
-
-        // public async Task CreateCompResultStatistics(Guid HorseId)
-        // {
-            
-        // }
     }
 
 }
