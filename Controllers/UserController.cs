@@ -6,7 +6,7 @@ using System.Security.Claims;
 [ApiController]
 public class UserController : ControllerBase
 {
-    [Authorize]
+    // [Authorize]
     [HttpGet("me")]
     public IActionResult GetCurrentUserId()
     {

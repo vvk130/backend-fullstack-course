@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using GameModel;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace YourProject.Controllers
 {
@@ -51,6 +53,12 @@ namespace YourProject.Controllers
     {
         public LevelsController(IGenericService<Level> service) : base(service) { }
 
+        // [HttpPut("clean-stable")]
+        // public override async Task<IActionResult> CleanStable(Guid userId)
+        // {
+            
+        // }
+
         [HttpDelete("{id}")]
         public override async Task<IActionResult> Delete(Guid id)
         {
@@ -72,18 +80,26 @@ namespace YourProject.Controllers
     }
 
     [Route("api/salesad")]
-    [Authorize]
     public class SalesAdController : GenericController<SalesAd, SalesAdDto>
     {
             private readonly IGenericService<SalesAd> _adService;
             private readonly IGenericService<Horse> _horseService;
+            private readonly IGenericService<Wallet> _walletService;
+            private readonly AppDbContext _context;
+            private readonly UserManager<ApplicationUser> _userManager;
 
             public SalesAdController(
+                AppDbContext context,
+                UserManager<ApplicationUser> userManager,
                 IGenericService<SalesAd> adService,
+                IGenericService<Wallet> walletService,
                 IGenericService<Horse> horseService) : base(adService)
             {
                 _adService = adService;
                 _horseService = horseService;
+                _walletService = walletService;
+                _context = context;
+                _userManager = userManager;
             }
 
             [HttpPost("create-sales-ad")]
@@ -92,12 +108,8 @@ namespace YourProject.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                var ownerId = Guid.Parse(userId);
-
                 var horse = await _horseService.FindAsync(h =>
-                    h.Id == request.HorseId && h.OwnerId == ownerId);
+                    h.Id == request.HorseId && h.OwnerId == request.OwnerId);
 
                 if (horse is null)
                     return Forbid("You don't own this horse.");
@@ -105,7 +117,7 @@ namespace YourProject.Controllers
                 var ad = new SalesAd
                 {
                     HorseId = request.HorseId,
-                    OwnerId = ownerId,
+                    OwnerId = request.OwnerId,
                     Price = request.Price,
                     StartTime = DateTime.UtcNow,
                     EndTime = request.EndTime,
@@ -113,9 +125,54 @@ namespace YourProject.Controllers
                 };
 
                 await _adService.AddAsync(ad);
-                return Ok();
+                return Ok(ad);
             }
 
+            [HttpPost("buy-horse")]
+            public async Task<IActionResult> BuyHorse([FromBody] BuyRequest request)
+            {
+                await using var transaction = await _context.Database.BeginTransactionAsync();
+                try
+                {
+                    var ad = await _context.SalesAds.FindAsync(request.AdId);
+                    if (ad is null)
+                        return BadRequest("Add not found.");
+
+                    var user = await _userManager.FindByIdAsync(request.BuyerId.ToString());
+                    if (user is null)
+                        return BadRequest("User not found.");
+
+                    var wallet = await _context.Wallets.Where(w => w.OwnerId == request.BuyerId).FirstOrDefaultAsync();
+                    if (wallet is null)
+                    {
+                        wallet = new Wallet {
+                            OwnerId = request.BuyerId,
+                            Balance = 5000,
+                        };
+                        await _walletService.AddAsync(wallet);
+                    }
+                    if (ad.Price > wallet.Balance)
+                        return BadRequest("Insufficient funds");
+
+                    var horse = await _context.Horses.FindAsync(ad.HorseId);
+                    if (horse is null)
+                        return BadRequest("Horse not found.");
+        
+                    horse.OwnerId = request.BuyerId;
+                    wallet.Balance -= ad.Price;
+                    if(wallet.Balance < 0)
+                    {
+                        return BadRequest("Insufficient funds");
+                    }
+                    _context.SalesAds.Remove(ad);
+                    await transaction.CommitAsync();
+                    return Ok($"You bought horse with id {ad.HorseId}");
+                }
+                catch (Exception)
+                {
+                    return BadRequest("Transaction failed");
+                }
+            }
 
             [HttpDelete("{id}")]
             public override async Task<IActionResult> Delete(Guid id)

@@ -1,16 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 
 [ApiController]
 [Route("api/[controller]")]
 public class GenericController<TEntity, TDto> : ControllerBase where TEntity : class
 {
     private readonly IGenericService<TEntity> _genericService;
+    // private readonly IMapper _mapper;
 
     public GenericController(IGenericService<TEntity> genericService)
     {
         _genericService = genericService;
+        // _mapper = mapper;
     }
 
     [HttpGet("paginated")]
@@ -18,13 +21,6 @@ public class GenericController<TEntity, TDto> : ControllerBase where TEntity : c
     {
         var result = await _genericService.GetPaginatedAsync<TDto>(pagination);
         return Ok(result);
-    }
-
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<TEntity>>> GetAll()
-    {
-        var entities = await _genericService.GetAllAsync();
-        return Ok(entities);
     }
 
     [HttpGet("{id}")]
@@ -38,9 +34,33 @@ public class GenericController<TEntity, TDto> : ControllerBase where TEntity : c
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] TEntity entity)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         await _genericService.AddAsync(entity);
         return CreatedAtAction(nameof(GetById), new { id = entity.GetType().GetProperty("Id")?.GetValue(entity) }, entity);
     }
+
+    // [HttpPut]
+    // public async Task<IActionResult> Update([FromBody] TEntity entity)
+    // {
+    //     if (!ModelState.IsValid)
+    //         return BadRequest(ModelState);
+
+    //     var id = entity.GetType().GetProperty("Id")?.GetValue(entity);
+    //     if (id == null) 
+    //         return NotFound();
+        
+    //     var existingEntity = await _genericService.GetByIdAsync(id);
+    //     if (existingEntity == null) 
+    //         return NotFound();
+
+    //     _mapper.Map(entity, existingEntity);
+        
+    //     await _genericService.UpdateAsync(existingEntity);
+
+    //     return Ok(id);
+    // }
 
     [HttpDelete("{id}")]
     public virtual async Task<IActionResult> Delete(Guid id)

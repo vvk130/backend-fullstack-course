@@ -12,6 +12,9 @@ public class MappingProfile : Profile
         CreateMap<Level, LevelShortDto>();
         CreateMap<PuzzleAnswer, PuzzleAnswerShortDto>();
         CreateMap<SalesAd, SalesAdDto>();
+        CreateMap<Wallet, WalletDto>();
+        // CreateMap<TEntity, TEntity>()
+        //     .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null)); 
     }
 }
 }

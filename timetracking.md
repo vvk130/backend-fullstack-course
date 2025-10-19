@@ -47,7 +47,8 @@
 | 2025-10-17 | 22:10 | 1,25 | CompetitionService adding complexity
 | 2025-10-19 | | 3 | CompStats |
 | 2025-10-19 | | 2 | CompStats Pagination, problems with the anonym type mapping |
+| 2025-10-19 | | 3 | Buy horse endpoint |
 
 //wrong day in timetracking change
-Total time spent: 41.4 + 3.5 = ✅ **44.9 hours**
+Total time spent: 69,7h
 17,5h per credit

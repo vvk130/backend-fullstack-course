@@ -43,7 +43,7 @@ public record RankedHorse(int Ranking, HorseShortDto Horse, Guid? OwnerId, Guid 
 
 public record CompetitionResult(List<RankedHorse> Results);
 
-public record WalletDto(Guid Id, int Balance);
+public record WalletDto(Guid Id, int Balance, Guid OwnerId);
 
 public record SalesAdDto(int Price, DateTime EndDate, Guid HorseId, Guid OwnerId);
 
@@ -54,4 +54,6 @@ public record CompResultDto(Guid Id, Guid HorseId, string HorseName, int Ranking
 public record CompResultStatisticsRequest(Guid HorseId);
 
 public record CompResultStatisticsDto(Guid HorseId, double TotalMoneyWon, double AverageRanking, double BestRanking, int CompEntriesCount);
+
+public record BuyRequest(Guid BuyerId, Guid AdId);
 }
