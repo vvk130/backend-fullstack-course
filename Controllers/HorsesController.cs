@@ -48,15 +48,6 @@ public class HorsesController : GenericController<Horse, HorseShortDto>
             return Ok(new { horseColor = color });
         }
 
-        //for developement purposes
-        [HttpGet("all-horses")]
-        public IActionResult GetAll()
-        {
-            var horses = _horseService.GetAll();
-
-            return Ok(new { horses }); 
-        }
-
         [HttpPost("create-horse")]
         public IActionResult CreateHorse()
         {
@@ -89,16 +80,17 @@ public class HorsesController : GenericController<Horse, HorseShortDto>
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> SearchHorses([FromQuery] HorseFilterDto filter)
+        public async Task<IActionResult> SearchHorses([FromQuery] PaginationSearchRequest filter)
         {
             // if (!ModelState.IsValid)
-            //     return BadRequest(ModelState);
+            //     return BadRequest(ModelState); 
 
             Expression<Func<Horse, bool>> predicate = h =>
                 (filter.Genders == null || filter.Genders.Contains(h.Gender)) &&
                 (filter.Breeds == null || filter.Breeds.Contains(h.Breed)) &&
                 (!filter.MinAge.HasValue || h.Age >= filter.MinAge) &&
-                (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge);
+                (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge) &&
+                (!filter.OwnerId.HasValue || h.OwnerId == filter.OwnerId);
 
             var result = await _genericService.FindAsync(predicate);
             return Ok(result);

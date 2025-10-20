@@ -18,7 +18,28 @@ namespace GameModel
             _horseBreedService = horseBreedService;
         }
 
-    public List<Horse> GetAll() => _context.Horses.ToList();
+        public async Task<PaginatedResult<HorseShortDto>> FindAsync(
+        Expression<Func<Horse, bool>> predicate,
+        int pageNumber = 1,
+        int pageSize = 10)
+        {
+        if (pageNumber < 1) pageNumber = 1;
+        if (pageSize < 1) pageSize = 10;
+
+        // Get the total count of matching records
+        var totalCount = await _repository.CountAsync(predicate);
+
+        // Get the paginated data and project it to HorseShortDto directly in the query
+        var horseShortDtos = await _repository
+            .Where(predicate) // Apply the predicate filter
+            .Skip((pageNumber - 1) * pageSize) // Skip previous pages
+            .Take(pageSize) // Take the page size
+            .ProjectTo<HorseShortDto>(_mapper.ConfigurationProvider) // Project to DTO
+            .ToListAsync(); // Execute the query and fetch results
+
+        // Return the paginated result with the mapped DTOs
+        return new PaginatedResult<HorseShortDto>(horseShortDtos, totalCount, pageNumber, pageSize);
+        }
 
     public double RandomHorseAge() => Math.Round(_random.NextDouble() * (21.0 - 3.0) + 3.0, 1);
 

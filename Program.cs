@@ -115,6 +115,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<FileUploadRequestDtoValidat
 builder.Services.AddValidatorsFromAssemblyContaining<HorseBreedValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<LevelValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<SalesAdRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<HorseFilterDtoValidator>();
 
 // builder.Services.AddHangfire(config =>
 // {

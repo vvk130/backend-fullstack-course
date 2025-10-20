@@ -48,6 +48,7 @@
 | 2025-10-19 | | 3 | CompStats |
 | 2025-10-19 | | 2 | CompStats Pagination, problems with the anonym type mapping |
 | 2025-10-19 | | 3 | Buy horse endpoint |
+|20-10-2025 | | 1 | Filtering pagination 
 
 //wrong day in timetracking change
 Total time spent: 69,7h

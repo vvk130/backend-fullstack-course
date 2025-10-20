@@ -19,7 +19,8 @@ public record HorseFilterDto(
     List<Gender>? Genders = null,
     List<Breed>? Breeds = null,
     double? MinAge = null,
-    double? MaxAge = null
+    double? MaxAge = null,
+    Guid? OwnerId = null,
 );
 
 public record ItemCreatedEvent(
@@ -28,6 +29,8 @@ public record ItemCreatedEvent(
 );
 
 public record PaginationRequest(int PageNumber = 1, int PageSize = 10);
+
+public record PaginationSearchRequest(HorseFilterDto filter, int PageNumber = 1, int PageSize = 10);
 
 public record PuzzleAnswerShortDto(Guid Id);
 
