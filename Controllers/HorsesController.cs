@@ -28,9 +28,9 @@ public class HorsesController : GenericController<Horse, HorseShortDto>
         }
 
         [HttpGet("random-name")]
-        public IActionResult GetRandomHorseName()
+        public IActionResult GetRandomHorseName(Gender gender)
         {
-            var name = _horseService.GenerateRandomHorseName();
+            var name = _horseService.GenerateRandomHorseName(gender);
             return Ok(new { horseName = name });
         }
 
@@ -51,7 +51,9 @@ public class HorsesController : GenericController<Horse, HorseShortDto>
         [HttpPost("create-horse")]
         public IActionResult CreateHorse()
         {
+            
             var horse = _horseService.CreateHorse();
+
             return Ok(new { horse }); 
         }
 
@@ -79,22 +81,22 @@ public class HorsesController : GenericController<Horse, HorseShortDto>
             return Ok(result);
         }
 
-        [HttpGet("search")]
-        public async Task<IActionResult> SearchHorses([FromQuery] PaginationSearchRequest filter)
-        {
-            // if (!ModelState.IsValid)
-            //     return BadRequest(ModelState); 
+        // [HttpGet("search")]
+        // public async Task<IActionResult> SearchHorses([FromQuery] PaginationSearchRequest filter)
+        // {
+        //     // if (!ModelState.IsValid)
+        //     //     return BadRequest(ModelState); 
 
-            Expression<Func<Horse, bool>> predicate = h =>
-                (filter.Genders == null || filter.Genders.Contains(h.Gender)) &&
-                (filter.Breeds == null || filter.Breeds.Contains(h.Breed)) &&
-                (!filter.MinAge.HasValue || h.Age >= filter.MinAge) &&
-                (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge) &&
-                (!filter.OwnerId.HasValue || h.OwnerId == filter.OwnerId);
+        //     Expression<Func<Horse, bool>> predicate = h =>
+        //         (filter.Genders == null || filter.Genders.Contains(h.Gender)) &&
+        //         (filter.Breeds == null || filter.Breeds.Contains(h.Breed)) &&
+        //         (!filter.MinAge.HasValue || h.Age >= filter.MinAge) &&
+        //         (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge) &&
+        //         (!filter.OwnerId.HasValue || h.OwnerId == filter.OwnerId);
 
-            var result = await _genericService.FindAsync(predicate);
-            return Ok(result);
-        }
+        //     var result = await _genericService.FindAsync(predicate);
+        //     return Ok(result);
+        // }
     }
 
 }

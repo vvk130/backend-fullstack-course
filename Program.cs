@@ -15,7 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentityCore<ApplicationUser>(options =>
+builder.Services.AddAuthorization();
+
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedEmail = false;
     options.Password.RequiredLength = 12;
@@ -24,11 +26,11 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = true;
 })
-.AddRoles<IdentityRole>()
-.AddEntityFrameworkStores<AppDbContext>()
-.AddApiEndpoints();
+// .AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<AppDbContext>();
+// .AddApiEndpoints();
 
-builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+// builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
 // .AddJwtBearer(jwtOptions => 
 // {
 //     jwtOptions.Authority = ""
@@ -42,14 +44,13 @@ builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerSche
 //         options.RequireHttpsMetadata = false;
 //     });
 
-builder.Services.AddAuthorization();
-builder.Services.AddAuthorizationBuilder();
+// builder.Services.AddAuthorizationBuilder();
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.ExpireTimeSpan = TimeSpan.FromHours(12); 
-    options.SlidingExpiration = true;                
-});
+// builder.Services.ConfigureApplicationCookie(options =>
+// {
+//     options.ExpireTimeSpan = TimeSpan.FromHours(12); 
+//     options.SlidingExpiration = true;                
+// });
 
 builder.Services.AddSingleton(provider =>
 {
@@ -115,7 +116,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<FileUploadRequestDtoValidat
 builder.Services.AddValidatorsFromAssemblyContaining<HorseBreedValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<LevelValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<SalesAdRequestValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<HorseFilterDtoValidator>();
+// builder.Services.AddValidatorsFromAssemblyContaining<HorseFilterDtoValidator>();
 
 // builder.Services.AddHangfire(config =>
 // {
@@ -150,21 +151,59 @@ app.MapIdentityApi<ApplicationUser>();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.Lifetime.ApplicationStarted.Register(async () =>
-{
-    using var scope = app.Services.CreateScope();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+// app.Lifetime.ApplicationStarted.Register(async () =>
+// {
+//     using var scope = app.Services.CreateScope();
+//     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+//     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     
-    string[] roles = [ "Admin", "User" ];
+//     string[] roles = [ "Admin", "User" ];
 
-    foreach (var role in roles)
-    {
-        if (!await roleManager.RoleExistsAsync(role))
-        {
-            await roleManager.CreateAsync(new IdentityRole(role));
-        }
-    }
-});
+//     foreach (var role in roles)
+//     {
+//         if (!await roleManager.RoleExistsAsync(role))
+//         {
+//             await roleManager.CreateAsync(new IdentityRole(role));
+//         }
+//     }
+
+//     var adminEmail = "admin@example.com";
+//     var adminPassword = "VeryVeryGoodPassword123!"; 
+
+//     var adminUser = await userManager.FindByEmailAsync(adminEmail);
+//     if (adminUser == null)
+//     {
+//         adminUser = new ApplicationUser
+//         {
+//             UserName = adminEmail,
+//             Email = adminEmail,
+//             EmailConfirmed = true
+//         };
+
+//         var result = await userManager.CreateAsync(adminUser, adminPassword);
+//         if (result.Succeeded)
+//         {
+//             await userManager.AddToRoleAsync(adminUser, "Admin");
+//         }
+//         }
+//         else
+//         {
+//             if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+//             {
+//                 await userManager.AddToRoleAsync(adminUser, "Admin");
+//             }
+//         }
+
+//         var basicUser = await userManager.FindByEmailAsync("my@email.com");
+
+//         // var allUsers = userManager.Users.ToList();
+
+//         if (!await userManager.IsInRoleAsync(basicUser, "User"))
+//         {
+//             await userManager.AddToRoleAsync(basicUser, "User");
+//         }
+
+// });
 
 app.UseSwagger();
 app.UseSwaggerUI();

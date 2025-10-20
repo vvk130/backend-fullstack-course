@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>backend_fullstack_course</RootNamespace>
+    <UserSecretsId>ef2be251-59c7-4f03-8218-cc42cb4916a5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

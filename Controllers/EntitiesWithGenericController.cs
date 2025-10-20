@@ -3,11 +3,13 @@ using GameModel;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace YourProject.Controllers
 {
     [Route("api/competitions")]
-    // [Authorize(Roles = "Admin")]
+    [Authorize]
     public class CompetitionsController : GenericController<Competition, CompetitionDto>
     {
         private readonly ICompetitionService _competitionService;
@@ -102,14 +104,22 @@ namespace YourProject.Controllers
                 _userManager = userManager;
             }
 
+            [Authorize]
             [HttpPost("create-sales-ad")]
             public async Task<IActionResult> Create([FromBody] SalesAdRequest request)
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
+                var user = await _userManager.GetUserAsync(User);
+
+                if (user is null)
+                    Forbid("User not found.");
+
+                var userId = user.Id;
+
                 var horse = await _horseService.FindAsync(h =>
-                    h.Id == request.HorseId && h.OwnerId == request.OwnerId);
+                    h.Id == request.HorseId && h.OwnerId == Guid.Parse(userId));
 
                 if (horse is null)
                     return Forbid("You don't own this horse.");

@@ -20,6 +20,7 @@ public class CompStatisticsController : ControllerBase
         return Ok(statistics);
     }
 
+    [Authorize]
     [HttpGet("statistics-paginated")]
     public async Task<IActionResult> GetStatisticsById([FromQuery] PaginationRequest request)
     {

@@ -18,39 +18,40 @@ namespace GameModel
             _horseBreedService = horseBreedService;
         }
 
-        public async Task<PaginatedResult<HorseShortDto>> FindAsync(
-        Expression<Func<Horse, bool>> predicate,
-        int pageNumber = 1,
-        int pageSize = 10)
-        {
-        if (pageNumber < 1) pageNumber = 1;
-        if (pageSize < 1) pageSize = 10;
+        // public async Task<PaginatedResult<HorseShortDto>> FindAsync(
+        // Expression<Func<Horse, bool>> predicate,
+        // int pageNumber = 1,
+        // int pageSize = 10)
+        // {
+        // if (pageNumber < 1) pageNumber = 1;
+        // if (pageSize < 1) pageSize = 10;
 
-        // Get the total count of matching records
-        var totalCount = await _repository.CountAsync(predicate);
+        // // Get the total count of matching records
+        // var totalCount = await _repository.CountAsync(predicate);
 
-        // Get the paginated data and project it to HorseShortDto directly in the query
-        var horseShortDtos = await _repository
-            .Where(predicate) // Apply the predicate filter
-            .Skip((pageNumber - 1) * pageSize) // Skip previous pages
-            .Take(pageSize) // Take the page size
-            .ProjectTo<HorseShortDto>(_mapper.ConfigurationProvider) // Project to DTO
-            .ToListAsync(); // Execute the query and fetch results
+        // // Get the paginated data and project it to HorseShortDto directly in the query
+        // var horseShortDtos = await _repository
+        //     .Where(predicate) // Apply the predicate filter
+        //     .Skip((pageNumber - 1) * pageSize) // Skip previous pages
+        //     .Take(pageSize) // Take the page size
+        //     .ProjectTo<HorseShortDto>(_mapper.ConfigurationProvider) // Project to DTO
+        //     .ToListAsync(); // Execute the query and fetch results
 
-        // Return the paginated result with the mapped DTOs
-        return new PaginatedResult<HorseShortDto>(horseShortDtos, totalCount, pageNumber, pageSize);
-        }
+        // // Return the paginated result with the mapped DTOs
+        // return new PaginatedResult<HorseShortDto>(horseShortDtos, totalCount, pageNumber, pageSize);
+        // }
 
     public double RandomHorseAge() => Math.Round(_random.NextDouble() * (21.0 - 3.0) + 3.0, 1);
 
     public Horse CreateHorse(){
             var chosenBreed = _faker.PickRandom<Breed>();
+            var chosenGender =_faker.PickRandom<Gender>();
             var horse = new Horse
             {
-                Name = GenerateRandomHorseName(),
+                Name = GenerateRandomHorseName(chosenGender),
                 Age = RandomHorseAge(),
                 Breed = chosenBreed,  
-                Gender = _faker.PickRandom<Gender>(),       
+                Gender = chosenGender,       
                 Color = _horseBreedService.GetRandomColorForBreed(chosenBreed),           
                 Capacity = _random.Next(130,151), 
                 Relationship = 0,
@@ -98,17 +99,19 @@ namespace GameModel
                             ? sire.Breed 
                             : Breed.Unknown;
 
+            var chosenGender = PickRandomEnumValue(new[] { Gender.Stallion, Gender.Mare });
+
             var chosenColor = chosenBreed != Breed.Unknown
                 ? PickRandomEnumValue(new[] { sire.Color, dam.Color })
                 : _horseBreedService.GetRandomColorForBreed(chosenBreed);
 
             var horse = new Horse
             {
-                Name = GenerateRandomHorseName(),
+                Name = GenerateRandomHorseName(chosenGender),
                 ImgUrl = "https://res.cloudinary.com/dn4bwpln0/image/upload/v1760099887/foal_a8kxhz.jpg",
                 Age = 0.0,
                 Breed = chosenBreed,  
-                Gender = PickRandomEnumValue(new[] { Gender.Stallion, Gender.Mare }),       
+                Gender = chosenGender,       
                 Color = chosenColor,           
                 Capacity = SafeRandomNext(sire.Capacity, dam.Capacity), 
                 Relationship = 0,
@@ -134,21 +137,27 @@ namespace GameModel
         return horse;
     }
 
-    public string GenerateRandomHorseName()
+    public string GenerateRandomHorseName(Gender gender)
     {
-        var horseName = _faker.PickRandom(new[]
-        {
-            _faker.Commerce.ProductAdjective()
-        }) + " " +
-        _faker.PickRandom(new[]
-        {
-            _faker.Name.FirstName()
-        });
+        var fakerGender = MapToFakerGender(gender);
+
+        var horseName = _faker.Commerce.ProductAdjective() + " " + _faker.Name.FirstName(fakerGender);
 
         var capitalizedHorseName = char.ToUpper(horseName[0]) + horseName.Substring(1);
 
         return capitalizedHorseName;
     }
+
+    private Bogus.DataSets.Name.Gender MapToFakerGender(Gender gender)
+    {
+        return gender switch
+        {
+            Gender.Mare => Bogus.DataSets.Name.Gender.Female,
+            Gender.Stallion => Bogus.DataSets.Name.Gender.Male,
+            Gender.Gelding => Bogus.DataSets.Name.Gender.Male
+        };
+    }
+
     
     public void BatchHorsesEnergyUpdate()
     {
@@ -164,13 +173,3 @@ namespace GameModel
 
     }
 }
-
-
-// public (Horse horse, IList<ValidationResult> validationResults) GenerateHorseByLevel(Int Level)
-// {
-//     var context = new ValidationContext(horse);
-//     var validationResults = new List<ValidationResult>();
-//     Validator.TryValidateObject(horse, context, validationResults, true);
-
-//     return (horse, validationResults);
-// }

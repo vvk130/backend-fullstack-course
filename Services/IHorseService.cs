@@ -1,8 +1,7 @@
 namespace GameModel{
 public interface IHorseService
 {
-   string GenerateRandomHorseName();
-   List<Horse> GetAll();
+   string GenerateRandomHorseName(Gender gender);
    Horse CreateHorse();
    Horse CreateFoal(Horse sire, Horse dam);
    void BatchHorsesEnergyUpdate();
