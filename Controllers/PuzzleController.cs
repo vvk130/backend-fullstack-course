@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
+using AutoMapper;
 
 [ApiController]
 [Route("api/[controller]")]
 public class PuzzleController : GenericController<PuzzleAnswer, PuzzleAnswerShortDto>
 {
     private readonly IPuzzleService _puzzleService;
+    private readonly IMapper _mapper;
 
-    public PuzzleController(IPuzzleService puzzleService, IGenericService<PuzzleAnswer> genericService): base(genericService) 
+    public PuzzleController(IPuzzleService puzzleService, IGenericService<PuzzleAnswer> genericService, IMapper mapper): base(genericService, mapper) 
     {
         _puzzleService = puzzleService;
     }

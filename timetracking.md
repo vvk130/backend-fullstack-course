@@ -50,6 +50,7 @@
 | 2025-10-19 | | 3 | Buy horse endpoint |
 | 20-10-2025 | | 1 | Filtering pagination 
 | 20-10-2025 | | 3 | Auth problem, wrong config (?), has worked sometimes, "restart" the db or change system
+| 20-10-2025 | | 1 | Generic Update Endpoint |
 
 //wrong day in timetracking change
 Total time spent: 69,7h

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hangfire;
 using GameModel;
 using System.Linq.Expressions;
+using AutoMapper;
 
 namespace YourNamespace.Controllers
 {
@@ -13,13 +14,15 @@ public class HorsesController : GenericController<Horse, HorseShortDto>
         private readonly IImageService _imageService;
         private readonly IHorseBreedService _horseBreedService;
         private readonly IGenericService<Horse> _genericService;
+        private readonly IMapper _mapper;
 
         public HorsesController(
             IHorseService horseService,
             IHorseBreedService horseBreedService,
             IGenericService<Horse> genericService,
-            IImageService imageService)
-            : base(genericService) 
+            IImageService imageService,
+            IMapper mapper)
+            : base(genericService, mapper) 
         {
             _horseService = horseService;
             _horseBreedService = horseBreedService;
