@@ -16,6 +16,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Wallet> Wallets { get; set; }
     public DbSet<SalesAd> SalesAds { get; set; }
     public DbSet<CompResult> CompResults { get; set; }
+    public DbSet<Question> Questions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,6 +30,9 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<PuzzleAnswer>()
                     .OwnsMany(p => p.PuzzlePieces);
+
+        modelBuilder.Entity<Question>()
+                    .OwnsMany(p => p.Options);
 }
 
 }

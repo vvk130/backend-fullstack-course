@@ -201,4 +201,27 @@ namespace YourProject.Controllers
             }
 
     }
+
+    [Route("api/question")]
+    public class QuestionController : GenericController<Question, QuestionDto>
+    {
+            private readonly IGenericService<Question> _adService;
+            // private readonly AppDbContext _context;
+            // private readonly UserManager<ApplicationUser> _userManager;
+            private readonly IMapper _mapper;
+
+            public QuestionController(
+                AppDbContext context,
+                // UserManager<ApplicationUser> userManager,
+                IGenericService<Question> adService,
+                IMapper mapper) : base(adService, mapper)
+            {
+                // _adService = adService;
+                // _horseService = horseService;
+                // _walletService = walletService;
+                // _context = context;
+                // _userManager = userManager;
+            }
+
+    }
 }

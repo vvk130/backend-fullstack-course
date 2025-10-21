@@ -1,4 +1,5 @@
 namespace GameModel{
+
 public record HorseShortDto(Guid Id, string Name, string ImgUrl);
 
 public record CompetitionDto(Guid Id, CompetitionType CompetitionType, DateTime EndTime);
@@ -59,4 +60,9 @@ public record CompResultStatisticsRequest(Guid HorseId);
 public record CompResultStatisticsDto(Guid HorseId, double TotalMoneyWon, double AverageRanking, double BestRanking, int CompEntriesCount);
 
 public record BuyRequest(Guid BuyerId, Guid AdId);
+
+public record OptionDto(string Text, bool IsRightAnswer);
+
+public record QuestionDto(Guid Id, string QuestionSentence, IList<OptionDto> Options, int Difficulty);
+
 }

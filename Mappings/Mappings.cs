@@ -13,6 +13,8 @@ public class MappingProfile : Profile
         CreateMap<PuzzleAnswer, PuzzleAnswerShortDto>().ReverseMap();
         CreateMap<SalesAd, SalesAdDto>().ReverseMap();
         CreateMap<Wallet, WalletDto>().ReverseMap();
+        CreateMap<Question, QuestionDto>().ReverseMap();
+        CreateMap<Option, OptionDto>().ReverseMap();
     }
 }
 }
