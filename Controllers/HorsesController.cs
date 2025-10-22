@@ -8,7 +8,7 @@ namespace YourNamespace.Controllers
 {
 [ApiController]
 [Route("api/[controller]")]
-public class HorsesController : GenericController<Horse, HorseShortDto>
+public class HorsesController : GenericController<Horse, HorseCreateDto, HorseShortDto>
 {
         private readonly IHorseService _horseService;
         private readonly IImageService _imageService;

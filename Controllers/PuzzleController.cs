@@ -4,7 +4,7 @@ using AutoMapper;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PuzzleController : GenericController<PuzzleAnswer, PuzzleAnswerShortDto>
+public class PuzzleController : GenericController<PuzzleAnswer, PuzzleAnswerCreateDto, PuzzleAnswerShortDto>
 {
     private readonly IPuzzleService _puzzleService;
     private readonly IMapper _mapper;

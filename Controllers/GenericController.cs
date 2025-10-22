@@ -5,7 +5,10 @@ using AutoMapper;
 
 [ApiController]
 [Route("api/[controller]")]
-public class GenericController<TEntity, TDto> : ControllerBase where TEntity : class where TDto : class 
+public class GenericController<TEntity, TCreateDto, TDto> : ControllerBase 
+    where TEntity : class 
+    where TDto : class 
+    where TCreateDto : class
 {
     private readonly IGenericService<TEntity> _genericService;
     private readonly IMapper _mapper;
@@ -32,17 +35,18 @@ public class GenericController<TEntity, TDto> : ControllerBase where TEntity : c
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] TEntity entity)
+    public async Task<IActionResult> Create([FromBody] TCreateDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
-        
+
+        var entity = _mapper.Map<TEntity>(dto);       
         await _genericService.AddAsync(entity);
         return CreatedAtAction(nameof(GetById), new { id = entity.GetType().GetProperty("Id")?.GetValue(entity) }, entity);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] TDto dto)
+    public async Task<IActionResult> Update(Guid id, [FromBody] TCreateDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

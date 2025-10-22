@@ -5,7 +5,9 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using MassTransit;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection; 
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+
 // using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 DotNetEnv.Env.Load();
@@ -112,10 +114,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers()
     .AddFluentValidation();
 
-builder.Services.AddValidatorsFromAssemblyContaining<FileUploadRequestDtoValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<HorseBreedValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<LevelValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<SalesAdRequestValidator>();
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+// builder.Services.AddValidatorsFromAssemblyContaining<FileUploadRequestDtoValidator>();
+// builder.Services.AddValidatorsFromAssemblyContaining<HorseBreedValidator>();
+// builder.Services.AddValidatorsFromAssemblyContaining<LevelValidator>();
+// builder.Services.AddValidatorsFromAssemblyContaining<SalesAdRequestValidator>();
 // builder.Services.AddValidatorsFromAssemblyContaining<HorseFilterDtoValidator>();
 
 // builder.Services.AddHangfire(config =>

@@ -1,8 +1,10 @@
 namespace GameModel{
 
 public record HorseShortDto(Guid Id, string Name, string ImgUrl);
+public record HorseCreateDto(string Name, string ImgUrl);
 
 public record CompetitionDto(Guid Id, CompetitionType CompetitionType, DateTime EndTime);
+public record CompetitionCreateDto(CompetitionType CompetitionType, IList<FearItem> ScaryObject, DateTime StartTime, DateTime EndTime);
 
 public record BreedShortDto(Breed Breed);
 
@@ -29,11 +31,8 @@ public record ItemCreatedEvent(
     string ItemName
 );
 
-public record PaginationRequest(int PageNumber = 1, int PageSize = 10);
-
-// public record PaginationSearchRequest(HorseFilterDto filter, int PageNumber = 1, int PageSize = 10);
-
 public record PuzzleAnswerShortDto(Guid Id);
+public record PuzzleAnswerCreateDto(List<PuzzlePieceDto> Pieces);
 
 public record PuzzleCorrectionRequest(Guid Id, List<PuzzlePieceDto> Pieces);
 
@@ -41,28 +40,23 @@ public record PuzzleUnsolved(Guid Id, List<string> Pieces);
 
 public record PuzzlePieceDto(int XCoordinate, int YCoordinate, string ImgUrl);
 
-public record CompetitionRequest(Guid CompetitionId, List<Guid> HorseIds);
-
 public record RankedHorse(int Ranking, HorseShortDto Horse, Guid? OwnerId, Guid CompetitionId, int MoneyWon);
 
 public record CompetitionResult(List<RankedHorse> Results);
 
 public record WalletDto(Guid Id, int Balance, Guid OwnerId);
+public record WalletCreateDto(int Balance, Guid OwnerId);
 
-public record SalesAdDto(int Price, DateTime EndDate, Guid HorseId, Guid OwnerId);
-
-public record SalesAdRequest(int Price, AdType AdType, DateTime EndTime, Guid HorseId, Guid OwnerId);
+public record SalesAdDto(Guid Id, int Price, DateTime EndDate, Guid HorseId, Guid OwnerId);
+public record SalesAdCreateDto(int Price, DateTime EndDate, Guid HorseId, Guid OwnerId);
 
 public record CompResultDto(Guid Id, Guid HorseId, string HorseName, int Ranking, double MoneyWon);
 
-public record CompResultStatisticsRequest(Guid HorseId);
-
 public record CompResultStatisticsDto(Guid HorseId, double TotalMoneyWon, double AverageRanking, double BestRanking, int CompEntriesCount);
-
-public record BuyRequest(Guid BuyerId, Guid AdId);
 
 public record OptionDto(string Text, bool IsRightAnswer);
 
 public record QuestionDto(Guid Id, string QuestionSentence, IList<OptionDto> Options, int Difficulty);
+public record QuestionCreateDto(string QuestionSentence, IList<OptionDto> Options, int Difficulty);
 
 }

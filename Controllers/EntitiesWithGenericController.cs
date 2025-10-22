@@ -11,7 +11,7 @@ namespace YourProject.Controllers
 {
     [Route("api/competitions")]
     [Authorize]
-    public class CompetitionsController : GenericController<Competition, CompetitionDto>
+    public class CompetitionsController : GenericController<Competition, CompetitionCreateDto, CompetitionDto>
     {
         private readonly ICompetitionService _competitionService;
         private readonly IMapper _mapper;
@@ -39,43 +39,43 @@ namespace YourProject.Controllers
 
     }
 
-    [Route("api/horsebreeds")]
-    public class HorseBreedsController : GenericController<HorseBreed, BreedShortDto>
-    {
-        private readonly IMapper _mapper;
+    // [Route("api/horsebreeds")]
+    // public class HorseBreedsController : GenericController<HorseBreed, HorseCreateBreed, BreedShortDto>
+    // {
+    //     private readonly IMapper _mapper;
 
-        public HorseBreedsController(IGenericService<HorseBreed> service, IMapper mapper) : base(service, mapper) {}
+    //     public HorseBreedsController(IGenericService<HorseBreed> service, IMapper mapper) : base(service, mapper) {}
 
-            [HttpDelete("{id}")]
-            public override async Task<IActionResult> Delete(Guid id)
-            {
-                return BadRequest("Delete operation is not allowed for this entity.");
-            }
+    //         [HttpDelete("{id}")]
+    //         public override async Task<IActionResult> Delete(Guid id)
+    //         {
+    //             return BadRequest("Delete operation is not allowed for this entity.");
+    //         }
 
-    }
+    // }
 
-    [Route("api/levels")]
-    public class LevelsController : GenericController<Level, LevelShortDto>
-    {
-        private readonly IMapper _mapper;
+    // [Route("api/levels")]
+    // public class LevelsController : GenericController<Level, LevelCreateDto, LevelShortDto>
+    // {
+    //     private readonly IMapper _mapper;
         
-        public LevelsController(IGenericService<Level> service, IMapper mapper) : base(service, mapper) { }
+    //     public LevelsController(IGenericService<Level> service, IMapper mapper) : base(service, mapper) { }
 
-        // [HttpPut("clean-stable")]
-        // public override async Task<IActionResult> CleanStable(Guid userId)
-        // {
+    //     // [HttpPut("clean-stable")]
+    //     // public override async Task<IActionResult> CleanStable(Guid userId)
+    //     // {
             
-        // }
+    //     // }
 
-        [HttpDelete("{id}")]
-        public override async Task<IActionResult> Delete(Guid id)
-        {
-            return BadRequest("Delete operation is not allowed for this entity.");
-        }
-    }
+    //     [HttpDelete("{id}")]
+    //     public override async Task<IActionResult> Delete(Guid id)
+    //     {
+    //         return BadRequest("Delete operation is not allowed for this entity.");
+    //     }
+    // }
 
     [Route("api/wallet")]
-    public class WalletController : GenericController<Wallet, WalletDto>
+    public class WalletController : GenericController<Wallet, WalletCreateDto, WalletDto>
     {
         private readonly IMapper _mapper;
 
@@ -90,7 +90,7 @@ namespace YourProject.Controllers
     }
 
     [Route("api/salesad")]
-    public class SalesAdController : GenericController<SalesAd, SalesAdDto>
+    public class SalesAdController : GenericController<SalesAd, SalesAdCreateDto, SalesAdDto>
     {
             private readonly IGenericService<SalesAd> _adService;
             private readonly IGenericService<Horse> _horseService;
@@ -203,7 +203,7 @@ namespace YourProject.Controllers
     }
 
     [Route("api/question")]
-    public class QuestionController : GenericController<Question, QuestionDto>
+    public class QuestionController : GenericController<Question, QuestionCreateDto, QuestionDto>
     {
             private readonly IGenericService<Question> _adService;
             // private readonly AppDbContext _context;
