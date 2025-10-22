@@ -56,7 +56,7 @@
 | 22-10-2025 |  | 3 | Add CancellationToken CompetitionService, Ordering in pagination, refactoring
 | 22-10-2025 | | 1 | Horse search, refactoring
 | 22-10-2025 | | 1 | ImgStock
-
+| 22-10-2025 | | 0,75 | Fixing bugs in code
 
 Total time spent: 69,7h
 17,5h per credit

@@ -52,10 +52,9 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
         }
 
         [HttpPost("create-horse")]
-        public IActionResult CreateHorse()
+        public IActionResult CreateHorse(Guid id)
         {
-            
-            var horse = _horseService.CreateHorse();
+            var horse = _horseService.CreateHorse(id);
 
             return Ok(new { horse }); 
         }

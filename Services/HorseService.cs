@@ -43,7 +43,7 @@ namespace GameModel
 
     public double RandomHorseAge() => Math.Round(_random.NextDouble() * (21.0 - 3.0) + 3.0, 1);
 
-    public Horse CreateHorse(){
+    public Horse CreateHorse(Guid id){
             var chosenBreed = _faker.PickRandom<Breed>();
             var chosenGender =_faker.PickRandom<Gender>();
             var horse = new Horse
@@ -55,6 +55,7 @@ namespace GameModel
                 Color = _horseBreedService.GetRandomColorForBreed(chosenBreed),           
                 Capacity = _random.Next(130,151), 
                 Relationship = 0,
+                OwnerId = id,
                 Energy = 100,
                 Height = _horseBreedService.GetRandomHeightForBreed(chosenBreed),
                 Qualities = new Qualities { Strength = _random.Next(1,11), Agility = _random.Next(1,11), Endurance = _random.Next(1,11), Speed = _random.Next(1,11), Intelligence = _random.Next(1,11), Stamina = _random.Next(1,11), JumpingAbility = _random.Next(1,11) },

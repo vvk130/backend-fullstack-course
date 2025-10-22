@@ -97,25 +97,30 @@ namespace YourProject.Controllers
                 _userManager = userManager;
             }
 
-            [Authorize]
             [HttpPost("create-sales-ad")]
             public async Task<IActionResult> Create([FromBody] SalesAdRequest request)
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var user = await _userManager.GetUserAsync(User);
+                // var user = await _userManager.GetUserAsync(User);
 
-                if (user is null)
-                    Forbid("User not found.");
+                // if (user is null)
+                //     Forbid("User not found.");
 
-                var userId = user.Id;
+                // var userId = user.Id;
 
                 var horse = await _horseService.FindAsync(h =>
-                    h.Id == request.HorseId && h.OwnerId == Guid.Parse(userId));
+                    h.Id == request.HorseId && h.OwnerId == request.OwnerId);
 
                 if (horse is null)
                     return Forbid("You don't own this horse.");
+
+                var ad = await _adService.FindAsync(a =>
+                    a.Id == request.HorseId && a.EndTime > DateTime.UtcNow);
+
+                if (ad is not null)
+                    return BadRequest("This horse is already for sale, go to modify ad instead.");
 
                 var ad = new SalesAd
                 {
