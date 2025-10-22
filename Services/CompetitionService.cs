@@ -31,17 +31,19 @@ namespace GameModel
 
             var competition = await _competitionService.GetByIdAsync(competitionId);
             if (competition == null)
+            {
                 result.AddError(nameof(competition.Id), "Competition not found.");
-
-            if (DateTime.UtcNow < competition.StartTime)
-                result.AddError(nameof(competition.StartTime), "Competition has not started yet.");
-
-            if (DateTime.UtcNow > competition.EndTime)
-                result.AddError(nameof(competition.EndTime), "Competition has ended.");
-
-            if (!result.Success)
                 return result;
-
+            }
+            if (DateTime.UtcNow < competition.StartTime){
+                result.AddError(nameof(competition.StartTime), "Competition has not started yet.");
+                return result;
+            }
+            if (DateTime.UtcNow > competition.EndTime){
+                result.AddError(nameof(competition.EndTime), "Competition has ended.");
+                return result;      
+            }
+          
             var horseEntities = await _horseService.FindAsync(h => horseIds.Contains(h.Id));
 
             var rankedHorses = horseEntities

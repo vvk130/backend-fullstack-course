@@ -50,9 +50,6 @@ public class GenericController<TEntity, TCreateDto, TDto> : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
-
-        if (id == null) 
-            return NotFound();
         
         var existingEntity = await _genericService.GetByIdAsync(id);
         if (existingEntity == null) 

@@ -76,9 +76,13 @@ namespace GameModel
             return await _context.SaveChangesAsync();
         }
         
-        public async Task<PaginatedResult<TDto>> GetPaginatedAsync<TDto>(PaginationRequest request)
+        public async Task<PaginatedResult<TDto>> GetPaginatedAsync<TDto>(PaginationRequest request, Expression<Func<T, bool>>? predicate = null)
         {
             var query = _context.Set<T>().AsNoTracking();
+
+            if (predicate is not null){
+                query = query.Where(predicate);
+            }
 
             int totalCount = await query.CountAsync();
 

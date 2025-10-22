@@ -11,12 +11,12 @@ public class Level {
 [ComplexType]
 public class Stable
 {
-    public string ImgUrl { get; set; }
-    public string Description { get; set; }
-    public StableType StableType { get; set; }
-    public int StableAmount { get; set; }
-    public int EnvironmentScore { get; set; }
-    public int Cleanleness { get; set; } 
+    public required string ImgUrl { get; set; }
+    public required string Description { get; set; }
+    public required StableType StableType { get; set; }
+    public required int StableAmount { get; set; }
+    public required int EnvironmentScore { get; set; }
+    public required int Cleanleness { get; set; } 
 }
 
 public enum StableType{

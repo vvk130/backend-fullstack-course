@@ -84,22 +84,24 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
             return Ok(result);
         }
 
-        // [HttpGet("search")]
-        // public async Task<IActionResult> SearchHorses([FromQuery] PaginationSearchRequest filter)
-        // {
-        //     // if (!ModelState.IsValid)
-        //     //     return BadRequest(ModelState); 
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchHorses([FromQuery] PaginationSearchRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState); 
 
-        //     Expression<Func<Horse, bool>> predicate = h =>
-        //         (filter.Genders == null || filter.Genders.Contains(h.Gender)) &&
-        //         (filter.Breeds == null || filter.Breeds.Contains(h.Breed)) &&
-        //         (!filter.MinAge.HasValue || h.Age >= filter.MinAge) &&
-        //         (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge) &&
-        //         (!filter.OwnerId.HasValue || h.OwnerId == filter.OwnerId);
+            var filter = request.Filter;
 
-        //     var result = await _genericService.FindAsync(predicate);
-        //     return Ok(result);
-        // }
+            Expression<Func<Horse, bool>> predicate = h =>
+                (filter.Genders == null || filter.Genders.Contains(h.Gender)) &&
+                (filter.Breeds == null || filter.Breeds.Contains(h.Breed)) &&
+                (!filter.MinAge.HasValue || h.Age >= filter.MinAge) &&
+                (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge) &&
+                (!filter.OwnerId.HasValue || h.OwnerId == filter.OwnerId);
+
+            var result = await _genericService.GetPaginatedAsync<HorseShortDto>(request.Pagination, predicate);
+            return Ok(result);
+        }
     }
 
 }

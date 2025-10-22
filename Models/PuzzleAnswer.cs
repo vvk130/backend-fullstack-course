@@ -8,9 +8,9 @@ public class PuzzleAnswer
     [Owned]
     public class PuzzlePiece
     {
-    public int XCoordinate { get; set; } 
-    public int YCoordinate { get; set; } 
-    public string ImgUrl { get; set; }
+    public required int XCoordinate { get; set; } 
+    public required int YCoordinate { get; set; } 
+    public required string ImgUrl { get; set; }
     }
 }
 }

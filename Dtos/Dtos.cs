@@ -14,17 +14,32 @@ public record FoalHorseRequestDto(Guid SireId, Guid DamId);
 
 public record class FileUploadRequestDto
 {
-    public IFormFile File { get; init; }
-    public string FolderName { get; init; }
+    public required IFormFile File { get; init; }
+    public required string FolderName { get; init; }
 }
 
-// public record HorseFilterDto(
-//     List<Gender>? Genders = null,
-//     List<Breed>? Breeds = null,
-//     double? MinAge = null,
-//     double? MaxAge = null,
-//     Guid? OwnerId = null,
-// );
+public record HorseFilterDto
+{
+    public List<Gender>? Genders { get; init; }
+    public List<Breed>? Breeds { get; init; }
+    public double? MinAge { get; init; }
+    public double? MaxAge { get; init; }
+    public Guid? OwnerId { get; init; }
+}
+
+// public record CompFilterDto
+// {
+//     public List<Gender>? Genders { get; init; }
+//     public List<Breed>? Breeds { get; init; }
+//     public double? MinAge { get; init; }
+//     public double? MaxAge { get; init; }
+//     public Guid? OwnerId { get; init; }
+// }
+
+// public record SalesAdFilterDto
+// {
+
+// }
 
 public record ItemCreatedEvent(
     Guid ItemId,

@@ -52,8 +52,9 @@
 | 20-10-2025 | | 3 | Auth problem, wrong config (?), has worked sometimes, "restart" the db or change system |
 | 21-10-2025 | | 1 | Generic Update Endpoint |
 | 21-10-2025 | | 2 | Studying mapping, adding Questions |
-| 21-10-2025 | 13:30 | 2,5 | CreateEntityDtos withoutId field, validation for Questions, refactoring
-| 21-10-2025 |  | 3 | Add CancellationToken CompetitionService, Ordering in pagination, refactoring
+| 22-10-2025 | 13:30 | 2,5 | CreateEntityDtos withoutId field, validation for Questions, refactoring
+| 22-10-2025 |  | 3 | Add CancellationToken CompetitionService, Ordering in pagination, refactoring
+| 22-10-2025 | | 1 | Horse search, refactoring
 
 
 Total time spent: 69,7h
@@ -61,7 +62,7 @@ Total time spent: 69,7h
 
 # TODO
 
-- [ ] Filtering paginated response
+- [X] Filtering paginated response
 - [ ] Suppress null errors
 - [x] Ordering in pagination (Upgrade version?) ✅
 - [ ] Competition service overfetching fix (fetches whole horse model?)
