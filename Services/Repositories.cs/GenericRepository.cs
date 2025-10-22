@@ -38,6 +38,9 @@ namespace GameModel
             return await _dbSet.Where(predicate).ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, CancellationToken ct)
+            => await _dbSet.Where(predicate).ToListAsync(ct);
+
         public async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
@@ -46,6 +49,11 @@ namespace GameModel
         public async Task AddRangeAsync(IEnumerable<T> entities)
         {
             await _dbSet.AddRangeAsync(entities);
+        }
+
+        public async Task AddRangeAsync(IEnumerable<T> entities, CancellationToken ct)
+        {
+            await _dbSet.AddRangeAsync(entities, ct);
         }
 
         public void Update(T entity)
@@ -75,6 +83,7 @@ namespace GameModel
             int totalCount = await query.CountAsync();
 
             var items = await query
+                .OrderBy(e => EF.Property<object>(e, "Id"))
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ProjectTo<TDto>(_mapper.ConfigurationProvider)

@@ -22,19 +22,13 @@ namespace YourProject.Controllers
         }
 
             [HttpPost("compete-horses")]
-            public async Task<IActionResult> CompeteHorses([FromBody] CompetitionRequest request)
+            public async Task<IActionResult> CompeteHorses([FromBody] CompetitionRequest request, CancellationToken ct)
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _competitionService.GetCompetitionResult(request.CompetitionId, request.HorseIds);
+                var result = await _competitionService.GetCompetitionResult(request.CompetitionId, request.HorseIds, ct);
                 return Ok(result);
-            }
-
-            [HttpDelete("{id}")]
-            public override async Task<IActionResult> Delete(Guid id)
-            {
-                return BadRequest("Delete operation is not allowed for this entity.");
             }
 
     }
@@ -45,12 +39,6 @@ namespace YourProject.Controllers
     //     private readonly IMapper _mapper;
 
     //     public HorseBreedsController(IGenericService<HorseBreed> service, IMapper mapper) : base(service, mapper) {}
-
-    //         [HttpDelete("{id}")]
-    //         public override async Task<IActionResult> Delete(Guid id)
-    //         {
-    //             return BadRequest("Delete operation is not allowed for this entity.");
-    //         }
 
     // }
 
@@ -66,12 +54,6 @@ namespace YourProject.Controllers
     //     // {
             
     //     // }
-
-    //     [HttpDelete("{id}")]
-    //     public override async Task<IActionResult> Delete(Guid id)
-    //     {
-    //         return BadRequest("Delete operation is not allowed for this entity.");
-    //     }
     // }
 
     [Route("api/wallet")]
@@ -81,11 +63,12 @@ namespace YourProject.Controllers
 
         public WalletController(IGenericService<Wallet> service, IMapper mapper) : base(service, mapper) {}
 
-            [HttpDelete("{id}")]
-            public override async Task<IActionResult> Delete(Guid id)
-            {
-                return BadRequest("Delete operation is not allowed for this entity.");
-            }
+        [HttpDelete("{id}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override async Task<IActionResult> Delete(Guid id)
+        {
+            return BadRequest("Delete operation is not allowed for this entity.");
+        }
 
     }
 
@@ -193,13 +176,6 @@ namespace YourProject.Controllers
                     return BadRequest("Transaction failed");
                 }
             }
-
-            [HttpDelete("{id}")]
-            public override async Task<IActionResult> Delete(Guid id)
-            {
-                return BadRequest("Delete operation is not allowed for this entity.");
-            }
-
     }
 
     [Route("api/question")]

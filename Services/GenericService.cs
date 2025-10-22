@@ -19,6 +19,9 @@ public class GenericService<T> : IGenericService<T> where T : class
     
     public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         => await _repository.FindAsync(predicate);
+
+    public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, CancellationToken ct)
+        => await _repository.FindAsync(predicate, ct);
     
     public async Task AddAsync(T entity)
     {
@@ -26,9 +29,9 @@ public class GenericService<T> : IGenericService<T> where T : class
         await _repository.SaveChangesAsync();
     }
     
-    public async Task AddRangeAsync(IEnumerable<T> entities)
+    public async Task AddRangeAsync(IEnumerable<T> entities, CancellationToken ct)
     {
-        await _repository.AddRangeAsync(entities);
+        await _repository.AddRangeAsync(entities, ct);
         await _repository.SaveChangesAsync();
     }
     
@@ -51,8 +54,7 @@ public class GenericService<T> : IGenericService<T> where T : class
     }
     
     public async Task<int> SaveChangesAsync()
-        => await _repository.SaveChangesAsync();
-    
+        => await _repository.SaveChangesAsync();    
     
     public async Task<PaginatedResult<TDto>> GetPaginatedAsync<TDto>(PaginationRequest request)
         => await _repository.GetPaginatedAsync<TDto>(request);

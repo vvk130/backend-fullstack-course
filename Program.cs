@@ -114,13 +114,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers()
     .AddFluentValidation();
 
-builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-// builder.Services.AddValidatorsFromAssemblyContaining<FileUploadRequestDtoValidator>();
-// builder.Services.AddValidatorsFromAssemblyContaining<HorseBreedValidator>();
-// builder.Services.AddValidatorsFromAssemblyContaining<LevelValidator>();
-// builder.Services.AddValidatorsFromAssemblyContaining<SalesAdRequestValidator>();
-// builder.Services.AddValidatorsFromAssemblyContaining<HorseFilterDtoValidator>();
+var assembly = Assembly.GetExecutingAssembly();
+
+builder.Services.AddValidatorsFromAssembly(assembly);
 
 // builder.Services.AddHangfire(config =>
 // {

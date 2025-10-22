@@ -36,7 +36,7 @@ public class GenericController<TEntity, TCreateDto, TDto> : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] TCreateDto dto)
-    {
+    {        
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 

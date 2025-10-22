@@ -25,7 +25,7 @@ namespace GameModel
             _context = context;
         }
 
-        public async Task<OperationResult<CompetitionResult>> GetCompetitionResult(Guid competitionId, List<Guid> horseIds)
+        public async Task<OperationResult<CompetitionResult>> GetCompetitionResult(Guid competitionId, List<Guid> horseIds, CancellationToken ct)
         {
             var result = new OperationResult<CompetitionResult>();
 
@@ -55,13 +55,13 @@ namespace GameModel
                 ))
                 .ToList();
 
-            await CreateCompResults(rankedHorses); //put in rabbitMQ?
+            await CreateCompResults(rankedHorses, ct); //put in rabbitMQ?
 
             var winners = rankedHorses
                             .Take(3)
                             .ToList();
 
-            await PayWinners(winners); //put in rabbitMQ?
+            await PayWinners(winners, ct); //put in rabbitMQ?
 
             result.Value = new CompetitionResult(rankedHorses);
             return result;
@@ -78,13 +78,13 @@ namespace GameModel
             return 0;
         }
 
-        public async Task PayWinners(List<RankedHorse> winners)
+        public async Task PayWinners(List<RankedHorse> winners, CancellationToken ct)
         {
             foreach (var winner in winners)
             {
                 if (winner.OwnerId is not null)
                 {
-                    var wallet = (await _walletService.FindAsync(w => w.OwnerId == winner.OwnerId)).FirstOrDefault();
+                    var wallet = (await _walletService.FindAsync(w => w.OwnerId == winner.OwnerId, ct)).FirstOrDefault();
                     if (wallet is not null)
                     {
                         wallet.Balance += winner.MoneyWon;
@@ -95,7 +95,7 @@ namespace GameModel
 
         }
 
-        public async Task CreateCompResults(List<RankedHorse> rankedHorses)
+        public async Task CreateCompResults(List<RankedHorse> rankedHorses, CancellationToken ct)
         {
             var compResults = rankedHorses.Select(horse => new CompResult
             {
@@ -106,7 +106,7 @@ namespace GameModel
                 CompetitionTime = DateTime.UtcNow    
             }).ToList();
 
-            await _compResultService.AddRangeAsync(compResults);
+            await _compResultService.AddRangeAsync(compResults, ct);
         }
     }
 
