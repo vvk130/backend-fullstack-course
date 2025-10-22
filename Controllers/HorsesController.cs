@@ -97,7 +97,9 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
                 (filter.Breeds == null || filter.Breeds.Contains(h.Breed)) &&
                 (!filter.MinAge.HasValue || h.Age >= filter.MinAge) &&
                 (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge) &&
-                (!filter.OwnerId.HasValue || h.OwnerId == filter.OwnerId);
+                (!filter.OwnerId.HasValue || h.OwnerId == filter.OwnerId) &&
+                (!filter.SireId.HasValue || h.SireId == filter.SireId) &&
+                (!filter.DamId.HasValue || h.DamId == filter.DamId);
 
             var result = await _genericService.GetPaginatedAsync<HorseShortDto>(request.Pagination, predicate);
             return Ok(result);

@@ -55,6 +55,7 @@
 | 22-10-2025 | 13:30 | 2,5 | CreateEntityDtos withoutId field, validation for Questions, refactoring
 | 22-10-2025 |  | 3 | Add CancellationToken CompetitionService, Ordering in pagination, refactoring
 | 22-10-2025 | | 1 | Horse search, refactoring
+| 22-10-2025 | | 1 | ImgStock
 
 
 Total time spent: 69,7h

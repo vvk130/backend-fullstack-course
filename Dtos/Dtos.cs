@@ -25,6 +25,8 @@ public record HorseFilterDto
     public double? MinAge { get; init; }
     public double? MaxAge { get; init; }
     public Guid? OwnerId { get; init; }
+    public Guid? SireId { get; init; }
+    public Guid? DamId { get; init; }
 }
 
 // public record CompFilterDto
@@ -74,4 +76,5 @@ public record OptionDto(string Text, bool IsRightAnswer);
 public record QuestionDto(Guid Id, string QuestionSentence, IList<OptionDto> Options, int Difficulty);
 public record QuestionCreateDto(string QuestionSentence, IList<OptionDto> Options, int Difficulty);
 
+public record StockImgDto(string imgUrl);
 }

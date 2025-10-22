@@ -31,6 +31,8 @@ public class MappingProfile : Profile
         CreateMap<Question, QuestionCreateDto>().ReverseMap();
 
         CreateMap<Option, OptionDto>().ReverseMap();
+
+        CreateMap<StockImg, StockImgDto>().ReverseMap();
     }
 }
 }

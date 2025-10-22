@@ -200,4 +200,20 @@ namespace YourProject.Controllers
             }
 
     }
+
+    [Route("api/stockImg")]
+    public class StockImgController : GenericController<StockImg, StockImgDto, StockImgDto>
+    {
+            private readonly IGenericService<StockImg> _stockImgService;
+            private readonly IMapper _mapper;
+
+            public StockImgController(
+                AppDbContext context,
+                IGenericService<StockImg> stockImgService,
+                IMapper mapper) : base(stockImgService, mapper)
+            {
+
+            }
+
+    }
 }

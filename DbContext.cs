@@ -17,6 +17,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SalesAd> SalesAds { get; set; }
     public DbSet<CompResult> CompResults { get; set; }
     public DbSet<Question> Questions { get; set; }
+    public DbSet<StockImg> StockImgs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
