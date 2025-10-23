@@ -57,7 +57,8 @@
 | 22-10-2025 | | 1 | Horse search, refactoring
 | 22-10-2025 | | 1 | ImgStock
 | 22-10-2025 | | 0,75 | Fixing bugs in code
-| 23-10-2025 | |  | Timetracked on frontend
+| 23-10-2025 | |  | Time tracked on frontend
+| 23-10-2025 | | 1 | CleanStablePayUser endpoint, fixing some bugs
 
 Total time spent: 69,7h
 17,5h per credit

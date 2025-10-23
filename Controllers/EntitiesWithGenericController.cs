@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 namespace YourProject.Controllers
 {
     [Route("api/competitions")]
-    [Authorize]
     public class CompetitionsController : GenericController<Competition, CompetitionCreateDto, CompetitionDto>
     {
         private readonly ICompetitionService _competitionService;
