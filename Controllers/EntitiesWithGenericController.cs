@@ -122,7 +122,7 @@ namespace YourProject.Controllers
                 if (ad is not null)
                     return BadRequest("This horse is already for sale, go to modify ad instead.");
 
-                var ad = new SalesAd
+                var newAd = new SalesAd
                 {
                     HorseId = request.HorseId,
                     OwnerId = request.OwnerId,
@@ -132,8 +132,8 @@ namespace YourProject.Controllers
                     AdType = request.AdType
                 };
 
-                await _adService.AddAsync(ad);
-                return Ok(ad);
+                await _adService.AddAsync(newAd);
+                return Ok(newAd);
             }
 
             [HttpPost("buy-horse")]

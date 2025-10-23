@@ -7,6 +7,8 @@ using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 
 // using Microsoft.AspNetCore.Authentication.JwtBearer;
 
@@ -112,8 +114,11 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers()
-    .AddFluentValidation();
-
+    .AddFluentValidation()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 var assembly = Assembly.GetExecutingAssembly();
 
