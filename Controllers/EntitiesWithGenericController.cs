@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace YourProject.Controllers
 {
@@ -211,12 +212,35 @@ namespace YourProject.Controllers
     {
             private readonly IGenericService<StockImg> _stockImgService;
             private readonly IMapper _mapper;
+            private readonly AppDbContext _context;
 
             public StockImgController(
                 AppDbContext context,
                 IGenericService<StockImg> stockImgService,
                 IMapper mapper) : base(stockImgService, mapper)
             {
+                _context = context;
+            }
+
+            [HttpPut("add-Img-If-Null")]
+            public async Task<IActionResult> AddImgToAllIfNull()
+            {
+                var horsesWithoutImage = await _context.Horses
+                    .ToListAsync();
+
+                var stockImages = await _context.StockImgs
+                    .Select(si => si.ImgUrl)
+                    .ToListAsync();
+
+                var rnd = new Random();
+
+                foreach (var horse in horsesWithoutImage)
+                {
+                    horse.ImgUrl = stockImages[rnd.Next(stockImages.Count)];
+                }
+
+                await _context.SaveChangesAsync();
+                return Ok("Done");
 
             }
 
