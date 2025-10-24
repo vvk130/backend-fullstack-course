@@ -43,8 +43,8 @@ namespace GameModel
 
     public double RandomHorseAge() => Math.Round(_random.NextDouble() * (21.0 - 3.0) + 3.0, 1);
 
-    public Horse CreateHorse(Guid id){
-            var chosenBreed = _faker.PickRandom<Breed>();
+    public Horse CreateHorse(Guid id, Breed? breed){
+            var chosenBreed = breed ?? _faker.PickRandom<Breed>();
             var chosenGender =_faker.PickRandom<Gender>();
             var horse = new Horse
             {

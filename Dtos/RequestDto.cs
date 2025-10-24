@@ -1,7 +1,7 @@
 namespace GameModel{
     public record PaginationRequest(int PageNumber = 1, int PageSize = 10);
 
-    public record PaginationSearchRequest(PaginationRequest Pagination, HorseFilterDto Filter);
+    public record PaginationSearchRequest(HorseFilterDto Filter, PaginationRequest Pagination);
 
     public record SalesAdRequest(int Price, AdType AdType, DateTime EndTime, Guid HorseId, Guid OwnerId);
 
