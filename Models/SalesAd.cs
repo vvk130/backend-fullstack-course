@@ -8,13 +8,15 @@ public class SalesAd {
     public required DateTime EndTime { get; set; }
     public required int Price { get; set; }
     public required Guid OwnerId { get; set; }
-    public required Guid HorseId { get; set; } 
+    public required Guid HorseId { get; set; }
+    public Guid? HighestBidderId { get; set; } 
 }
 
 public enum AdType
 {
     PaidAd,
-    NormalAd
+    NormalAd,
+    Auction
 }
 
 }

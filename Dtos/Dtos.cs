@@ -65,7 +65,7 @@ public record WalletDto(Guid Id, int Balance, Guid OwnerId);
 public record WalletCreateDto(int Balance, Guid OwnerId);
 
 public record SalesAdDto(Guid Id, int Price, DateTime EndTime, Guid HorseId, Guid OwnerId);
-public record SalesAdWithHorseDto(Guid Id, int Price, DateTime EndTime, Guid OwnerId, HorseShortDto? horse);
+public record SalesAdWithHorseDto(Guid Id, AdType type, int Price, DateTime EndTime, Guid OwnerId, HorseShortDto? horse);
 public record SalesAdCreateDto(int Price, DateTime EndTime, Guid HorseId, Guid OwnerId);
 
 public record CompResultDto(Guid Id, Guid HorseId, string HorseName, int Ranking, double MoneyWon);

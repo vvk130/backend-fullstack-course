@@ -116,10 +116,10 @@ namespace YourProject.Controllers
                 if (horse is null)
                     return Forbid("You don't own this horse.");
 
-                var ad = await _adService.FindAsync(a =>
-                    a.Id == request.HorseId && a.EndTime > DateTime.UtcNow);
+                var ads = await _adService.FindAsync(a =>
+                    a.HorseId == request.HorseId && a.EndTime > DateTime.UtcNow);
 
-                if (ad is not null)
+                if (ads.Any())
                     return BadRequest("This horse is already for sale, go to modify ad instead.");
 
                 var newAd = new SalesAd
@@ -134,6 +134,35 @@ namespace YourProject.Controllers
 
                 await _adService.AddAsync(newAd);
                 return Ok(newAd);
+            }
+
+            [HttpPost("resolve-auctions")]
+            public async Task<IActionResult> ResolveAuctions()
+            {
+                var ads = await _adService.FindAsync(a => 
+                    a.AdType == AdType.Auction && a.EndTime < DateTime.UtcNow);
+
+                if (ads == null || !ads.Any())
+                    return Ok("No expired auction ads to resolve.");
+
+                foreach (var ad in ads)
+                {
+                    var horse = await _horseService.GetByIdAsync(ad.HorseId);
+                    if (horse == null)
+                    {
+                        continue;
+                    }
+
+                    if (ad.HighestBidderId != null && horse != null)
+                    {
+                        horse.OwnerId = ad.HighestBidderId.Value;
+                        await _horseService.UpdateAsync(horse);
+                    }
+
+                    _context.SalesAds.Remove(ad);
+                }
+
+                return Ok("All expired auction ads resolved successfully.");
             }
 
             [HttpPost("buy-horse")]
@@ -159,27 +188,54 @@ namespace YourProject.Controllers
                         };
                         await _walletService.AddAsync(wallet);
                     }
-                    if (ad.Price > wallet.Balance)
-                        return BadRequest("Insufficient funds");
 
                     var horse = await _context.Horses.FindAsync(ad.HorseId);
                     if (horse is null)
                         return BadRequest("Horse not found.");
-        
-                    horse.OwnerId = request.BuyerId;
-                    wallet.Balance -= ad.Price;
+
+                    if (ad.AdType is not AdType.Auction)
+                        wallet.Balance -= ad.Price;
+
+                    if (ad.AdType is AdType.Auction)
+                        wallet.Balance -= request.Bid;
+
                     if(wallet.Balance < 0)
-                    {
                         return BadRequest("Insufficient funds");
+
+                    if (ad.AdType is not AdType.Auction)
+                        horse.OwnerId = request.BuyerId;
+
+                    if (ad.AdType is AdType.Auction && request.Bid < (ad.Price+200))
+                        return BadRequest("Bid needs to be 200 higher than previous price/bid");
+
+                    if (ad.AdType is AdType.Auction){
+                        var prevBidderWallet = await _context.Wallets.Where(w => w.OwnerId == ad.HighestBidderId).FirstOrDefaultAsync();
+                        if (prevBidderWallet is not null)
+                        {
+                            prevBidderWallet.Balance += ad.Price;
+                        }
                     }
-                    var sellerWallet = await _context.Wallets.Where(w => w.OwnerId == ad.OwnerId).FirstOrDefaultAsync();
-                    if (sellerWallet is not null)
+                    if (ad.AdType is AdType.Auction)
                     {
-                        sellerWallet.Balance += ad.Price;
+                        ad.HighestBidderId = request.BuyerId;
+                        ad.Price = request.Bid;
                     }
-                    _context.SalesAds.Remove(ad);
+                    if (ad.AdType is not AdType.Auction){
+                        var sellerWallet = await _context.Wallets.Where(w => w.OwnerId == ad.OwnerId).FirstOrDefaultAsync();
+                        if (sellerWallet is not null)
+                        {
+                            sellerWallet.Balance += ad.Price;
+                        }
+                    }
+                    if (ad.AdType is not AdType.Auction)
+                        _context.SalesAds.Remove(ad);
                     await transaction.CommitAsync();
-                    return Ok($"You bought horse with id {ad.HorseId}");
+
+                    var message = $"You bought horse with id {ad.HorseId}";
+                    if (ad.AdType is AdType.Auction)
+                        message = $"Your offer was placed successfully with id {ad.HorseId}";
+
+                    return Ok($"{message}");
                 }
                 catch (Exception)
                 {
@@ -206,6 +262,7 @@ namespace YourProject.Controllers
 
                 var items = list.Select(x => new SalesAdWithHorseDto(
                     x.Ad.Id,
+                    x.Ad.AdType,
                     x.Ad.Price,
                     x.Ad.EndTime,
                     x.Ad.OwnerId,

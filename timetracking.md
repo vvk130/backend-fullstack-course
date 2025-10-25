@@ -61,6 +61,8 @@
 | 23-10-2025 | | 1 | CleanStablePayUser endpoint, fixing some bugs
 | 24-10-2025 | |  | Time tracked on frontend
 | 25-10-2025 | | 2 | Innerjoin for salesAds and horses, adding some indexing to db, some refactoring, usercontroller endpoint
+| 25-10-2025 | | 2 | Fixing bug in buy horses controller
+| 25-10-2025 | | 3 | Auction functionality
 
 Total time spent: 69,7h
 17,5h per credit

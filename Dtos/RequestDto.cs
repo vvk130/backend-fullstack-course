@@ -5,7 +5,7 @@ namespace GameModel{
 
     public record SalesAdRequest(int Price, AdType AdType, DateTime EndTime, Guid HorseId, Guid OwnerId);
 
-    public record BuyRequest(Guid BuyerId, Guid AdId);
+    public record BuyRequest(Guid BuyerId, Guid AdId, int Bid = 0);
 
     public record CompResultStatisticsRequest(Guid HorseId);
 
