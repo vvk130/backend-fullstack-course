@@ -14,7 +14,7 @@ public class StableController : ControllerBase
     }
 
     [HttpPut("clean-stable-pay-user")]
-    public async Task<IActionResult> CleanStablePayUser(Guid id)
+    public async Task<IActionResult> CleanStablePayUser([FromQuery] Guid id)
     {
         var rowsUpdated = await _context.Wallets
             .Where(w => w.OwnerId == id)

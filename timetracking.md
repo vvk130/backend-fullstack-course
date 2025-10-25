@@ -59,6 +59,8 @@
 | 22-10-2025 | | 0,75 | Fixing bugs in code
 | 23-10-2025 | |  | Time tracked on frontend
 | 23-10-2025 | | 1 | CleanStablePayUser endpoint, fixing some bugs
+| 24-10-2025 | |  | Time tracked on frontend
+| 25-10-2025 | | 2 | Innerjoin for salesAds and horses, adding some indexing to db, some refactoring, usercontroller endpoint
 
 Total time spent: 69,7h
 17,5h per credit
@@ -75,6 +77,6 @@ Total time spent: 69,7h
 - [ ] Prepare documentation for the project
 - [ ] Get ready for submission
 
-Project features
+# Project features
 |--------|----------------------------------|
 |||

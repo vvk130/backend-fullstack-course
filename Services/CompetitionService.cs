@@ -50,7 +50,7 @@ namespace GameModel
                 .OrderByDescending(h => h.Capacity)
                 .Select((h, index) => new RankedHorse(
                     index + 1,
-                    new HorseShortDto(h.Id, h.Name, h.Breed, h.ImgUrl),
+                    new HorseShortDto(h.Id, h.Name, h.Breed, h.Gender, h.ImgUrl),
                     h.OwnerId,
                     competition.Id,
                     MoneyWon(index + 1)

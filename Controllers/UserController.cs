@@ -6,23 +6,35 @@ using System.Security.Claims;
 [ApiController]
 public class UserController : ControllerBase
 {
-    [Authorize(Roles = "User")]
-    [HttpGet("me")]
-    public IActionResult GetCurrentUserId()
-    {
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        private readonly AppDbContext _context;
 
-        if (userId == null)
-            return Unauthorized("User ID not found in token.");
+        public UserController(AppDbContext context)
+        {
+            _context = context;
+        }
 
-        return Ok(new { userId });
-    }
-    
-    [HttpGet("claims")]
-    public IActionResult GetClaims()
-    {
-        var claims = User.Claims.Select(c => new { c.Type, c.Value });
-        return Ok(claims);
-    }
+        [HttpGet("by-username")]
+        public IActionResult GetUserIdByUsername([FromQuery] string username)
+        {
+            if (string.IsNullOrEmpty(username))
+                return BadRequest("Username is required.");
+
+            var user = _context.Users
+                .Where(u => u.Email == username)
+                .Select(u => new { u.Id })
+                .FirstOrDefault();
+
+            if (user == null)
+                return NotFound("User not found.");
+
+            return Ok(user); 
+        }
+
+        [HttpGet("claims")]
+        public IActionResult GetClaims()
+        {
+            var claims = User.Claims.Select(c => new { c.Type, c.Value });
+            return Ok(claims);
+        }
 
 }

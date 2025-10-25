@@ -27,6 +27,13 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
                     .OwnsMany(h => h.Personalities);
 
         modelBuilder.Entity<Horse>()
+                    .HasIndex(h => h.SireId);
+        modelBuilder.Entity<Horse>()
+                    .HasIndex(h => h.DamId);
+        modelBuilder.Entity<Horse>()
+                    .HasIndex(h => new { h.OwnerId, h.Gender, h.Age });
+
+        modelBuilder.Entity<Horse>()
                     .OwnsMany(h => h.Fears);
 
         modelBuilder.Entity<PuzzleAnswer>()

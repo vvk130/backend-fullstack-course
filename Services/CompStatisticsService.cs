@@ -63,17 +63,16 @@ namespace GameModel
                 .ThenByDescending(c => c.HorseId)        
                 .Skip((request.PageNumber - 1) * request.PageSize)  
                 .Take(request.PageSize)
+                .Select(item => new CompResultStatisticsDto(
+                    item.HorseId,
+                    item.TotalMoneyWon,
+                    item.AverageRanking,
+                    item.BestRanking,
+                    item.CompEntryCount
+                ))
                 .ToListAsync();
 
-            var result = items.Select(item => new CompResultStatisticsDto(
-                item.HorseId,
-                item.TotalMoneyWon,
-                item.AverageRanking,
-                item.BestRanking,
-                item.CompEntryCount
-            )).ToList();
-
-            return new PaginatedResult<CompResultStatisticsDto>(result, totalCount, request.PageNumber, request.PageSize);
+            return new PaginatedResult<CompResultStatisticsDto>(items, totalCount, request.PageNumber, request.PageSize);
         }
 
     }

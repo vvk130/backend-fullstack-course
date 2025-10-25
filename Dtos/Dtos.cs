@@ -1,6 +1,6 @@
 namespace GameModel{
 
-public record HorseShortDto(Guid Id, string Name, Breed breed, string ImgUrl);
+public record HorseShortDto(Guid Id, string Name, Breed breed, Gender gender, string ImgUrl);
 public record HorseCreateDto(string Name, string ImgUrl);
 
 public record CompetitionDto(Guid Id, CompetitionType CompetitionType, DateTime EndTime);
@@ -65,6 +65,7 @@ public record WalletDto(Guid Id, int Balance, Guid OwnerId);
 public record WalletCreateDto(int Balance, Guid OwnerId);
 
 public record SalesAdDto(Guid Id, int Price, DateTime EndTime, Guid HorseId, Guid OwnerId);
+public record SalesAdWithHorseDto(Guid Id, int Price, DateTime EndTime, Guid OwnerId, HorseShortDto? horse);
 public record SalesAdCreateDto(int Price, DateTime EndTime, Guid HorseId, Guid OwnerId);
 
 public record CompResultDto(Guid Id, Guid HorseId, string HorseName, int Ranking, double MoneyWon);

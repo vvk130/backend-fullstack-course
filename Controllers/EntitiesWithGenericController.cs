@@ -172,6 +172,11 @@ namespace YourProject.Controllers
                     {
                         return BadRequest("Insufficient funds");
                     }
+                    var sellerWallet = await _context.Wallets.Where(w => w.OwnerId == ad.OwnerId).FirstOrDefaultAsync();
+                    if (sellerWallet is not null)
+                    {
+                        sellerWallet.Balance += ad.Price;
+                    }
                     _context.SalesAds.Remove(ad);
                     await transaction.CommitAsync();
                     return Ok($"You bought horse with id {ad.HorseId}");
@@ -180,6 +185,40 @@ namespace YourProject.Controllers
                 {
                     return BadRequest("Transaction failed");
                 }
+            }
+            [HttpGet("paginated-with-horse")]
+            public async Task<IActionResult> PaginatedWithHorse([FromQuery] PaginationRequest request)
+            {
+
+                var query = from ad in _context.SalesAds
+                            join horse in _context.Horses
+                                on ad.HorseId equals horse.Id
+                            select new { Ad = ad, Horse = horse };
+
+                var totalCount = await query.CountAsync();
+
+                var list = await query
+                    .OrderBy(x => x.Ad.Price)      
+                    .ThenBy(x => x.Ad.EndTime)
+                    .Skip((request.PageNumber - 1) * request.PageSize)
+                    .Take(request.PageSize)
+                    .ToListAsync();
+
+                var items = list.Select(x => new SalesAdWithHorseDto(
+                    x.Ad.Id,
+                    x.Ad.Price,
+                    x.Ad.EndTime,
+                    x.Ad.OwnerId,
+                    new HorseShortDto(
+                        x.Horse.Id,
+                        x.Horse.Name,
+                        x.Horse.Breed,
+                        x.Horse.Gender,
+                        x.Horse.ImgUrl
+                    )
+                )).ToList();
+
+                return Ok(new PaginatedResult<SalesAdWithHorseDto>(items, totalCount, request.PageNumber, request.PageSize));
             }
     }
 
