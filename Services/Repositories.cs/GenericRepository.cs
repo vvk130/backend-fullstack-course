@@ -106,20 +106,23 @@ namespace GameModel
                 .Where(a => a.ItemType == type)
                 .OrderByDescending(a => a.EndTime);
 
-            var items = _context.Set<TEntity>();
+            // var items = _context.Set<TEntity>();
+                            
+            // var query = from ad in ads
+            //             join item in items on ad.HorseId equals EF.Property<Guid>(item, "Id")
+            //             select new SalesAdShortDto<TDto>
+            //             {
+            //                 Id = ad.Id,
+            //                 AdType = ad.AdType,
+            //                 Price = ad.Price,
+            //                 EndTime = ad.EndTime,
+            //                 OwnerId = ad.OwnerId,
+            //                 Item = _mapper.Map<TDto>(item) 
+            //             };
 
-            var query =
-                from ad in ads
-                join item in items on ad.ItemId equals EF.Property<Guid>(item, "Id")
-                select new SalesAdShortDto<TEntity>
-                {
-                    SalesAd = ad,
-                    Item
-                };
+            var totalCount = await ads.CountAsync();
 
-            var totalCount = await query.CountAsync();
-
-            var paginated = await query
+            var paginated = await ads
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ProjectTo<SalesAdShortDto<TDto>>(_mapper.ConfigurationProvider)
@@ -127,6 +130,5 @@ namespace GameModel
 
             return new PaginatedResult<SalesAdShortDto<TDto>>(paginated, totalCount, pageNumber, pageSize);
         }
-
     }
 }

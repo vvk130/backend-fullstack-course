@@ -1,24 +1,11 @@
 namespace GameModel{
 
-public class Horse {
-    [Key]
-    public Guid Id { get; set; } = Guid.NewGuid(); 
-    public string? ImgUrl {get; set; }
-    public required string Name {get; set; }
-    public required double Age {get; set; } = 0.0;
+public class Horse : Animal {
     public required Color Color {get; set; }
-    public required Gender Gender {get; set; }
     public required Breed Breed {get; set; }
-    public required int Capacity { get; set; }
-    public required int Relationship { get; set; }
-    public required int Energy { get; set; }
     public required int Height { get; set; }
-    public Guid? OwnerId { get; set; }
-    public Guid? SireId { get; set; }
-    public Guid? DamId { get; set; }
     public required Qualities Qualities { get; set; }
     public required ICollection<FearType> Fears { get; set; } 
-    public required ICollection<PersonalityType> Personalities { get; set; }
 }
 
 [ComplexType]
@@ -110,30 +97,6 @@ public enum FearItem
     Balloons,
     Shadows,
     IndoorArenas
-}
-
-[Owned]
-public class PersonalityType
-{
-    public required PersonalityTrait PersonalityTrait { get; set; }
-    public required int Severity { get; set; } 
-    public required bool Discovered { get; set; }
-}
-
-public enum PersonalityTrait
-{
-    Bold,
-    Shy,
-    Curious,
-    Cuddly,
-    Calm,
-    Energetic,
-    Lazy,
-    Friendly,
-    Reserved,
-    Spooky,
-    Anxious,
-    Careful
 }
 
 }

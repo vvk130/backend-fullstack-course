@@ -15,10 +15,12 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
         private readonly IHorseBreedService _horseBreedService;
         private readonly IGenericService<Horse> _genericService;
         private readonly IMapper _mapper;
+        private readonly AppDbContext _context;
 
         public HorsesController(
             IHorseService horseService,
             IHorseBreedService horseBreedService,
+            AppDbContext context,
             IGenericService<Horse> genericService,
             IImageService imageService,
             IMapper mapper)
@@ -28,6 +30,7 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
             _horseBreedService = horseBreedService;
             _genericService = genericService;
             _imageService = imageService;
+            _context = context;
         }
 
         [HttpGet("random-name")]
@@ -103,7 +106,45 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
             var result = await _genericService.GetPaginatedAsync<HorseShortDto>(request.Pagination, predicate);
             return Ok(result);
         }
-    }
 
+        [HttpGet("search-ads")]
+        public async Task<IActionResult> SearchHorsesAds([FromQuery] PaginationRequest request)
+        {
+            var result = await _genericService.GetPaginatedAdsWithItemsAsync<Horse, HorseShortDto>(
+                ItemType.Horse,
+                request.PageNumber,
+                request.PageSize
+            );
+
+            return Ok(result);
+        }
+
+        [HttpDelete("horses/clear")]
+        public async Task<IActionResult> DeleteAllHorses()
+        {
+            try
+            {
+                // Retrieve all horses
+                var allHorses = await _context.Horses.ToListAsync();
+
+                if (!allHorses.Any())
+                    return NotFound("No horses found to delete.");
+
+                // Remove all
+                _context.Horses.RemoveRange(allHorses);
+
+                // Commit changes
+                await _context.SaveChangesAsync();
+
+                return Ok($"{allHorses.Count} horses deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception if you have logging
+                return StatusCode(500, $"Error deleting horses: {ex.Message}");
+            }
+        }
+
+}
 }
 

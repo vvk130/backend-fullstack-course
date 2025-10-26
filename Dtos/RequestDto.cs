@@ -10,4 +10,6 @@ namespace GameModel{
     public record CompResultStatisticsRequest(Guid HorseId);
 
     public record CompetitionRequest(Guid CompetitionId, List<Guid> HorseIds);
+
+    public record FoalHorseRequestDto(Guid SireId, Guid DamId, ItemType type);
 }

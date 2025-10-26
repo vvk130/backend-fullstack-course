@@ -62,7 +62,9 @@
 | 24-10-2025 | |  | Time tracked on frontend
 | 25-10-2025 | | 2 | Innerjoin for salesAds and horses, adding some indexing to db, some refactoring, usercontroller endpoint
 | 25-10-2025 | | 3 | Fixing bug in buy horses controller, Auction functionality
-| 26-10-2025 | | 3 | ADD WHAT YOU DID
+| 26-10-2025 | | 3 | Alpaca model, sales ad to generic repo starting with does not work yet
+| 26-10-2025 | | 2 | generic repo mapping problem
+| 26-10-2025 | | 2,5 | refactoring
 
 Total time spent: 69,7h
 17,5h per credit

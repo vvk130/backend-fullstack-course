@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace backend_fullstack_course.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251026152606_AddItemtypeSalesAd")]
+    partial class AddItemtypeSalesAd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,125 +24,6 @@ namespace backend_fullstack_course.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("GameModel.Alpaca", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("Age")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("AlpacaBreed")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("AlpacaColor")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("DamId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Energy")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ImgUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("OwnerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Relationship")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("SireId")
-                        .HasColumnType("uuid");
-
-                    b.ComplexProperty<Dictionary<string, object>>("AlpacaQualities", "GameModel.Alpaca.AlpacaQualities#AlpacaQualities", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<int>("Agility")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("Intelligence")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("JumpingAbility")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("Speed")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("WoolQuality")
-                                .HasColumnType("integer");
-                        });
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Alpacas");
-                });
-
-            modelBuilder.Entity("GameModel.Animal", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("Age")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("DamId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("character varying(8)");
-
-                    b.Property<int>("Energy")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ImgUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("OwnerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Relationship")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("SireId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Animal");
-
-                    b.HasDiscriminator().HasValue("Animal");
-
-                    b.UseTphMappingStrategy();
-                });
 
             modelBuilder.Entity("GameModel.ApplicationUser", b =>
                 {
@@ -262,6 +146,89 @@ namespace backend_fullstack_course.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Competitions");
+                });
+
+            modelBuilder.Entity("GameModel.Horse", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Age")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Breed")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Color")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("DamId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Energy")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ImgUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Relationship")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("SireId")
+                        .HasColumnType("uuid");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Qualities", "GameModel.Horse.Qualities#Qualities", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<int>("Agility")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Endurance")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Intelligence")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("JumpingAbility")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Speed")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Stamina")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Strength")
+                                .HasColumnType("integer");
+                        });
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DamId");
+
+                    b.HasIndex("SireId");
+
+                    b.HasIndex("OwnerId", "Gender", "Age");
+
+                    b.ToTable("Horses");
                 });
 
             modelBuilder.Entity("GameModel.HorseBreed", b =>
@@ -560,57 +527,37 @@ namespace backend_fullstack_course.Migrations
 
             modelBuilder.Entity("GameModel.Horse", b =>
                 {
-                    b.HasBaseType("GameModel.Animal");
-
-                    b.Property<int>("Breed")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Color")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("integer");
-
-                    b.ComplexProperty<Dictionary<string, object>>("Qualities", "GameModel.Horse.Qualities#Qualities", b1 =>
+                    b.OwnsMany("GameModel.FearType", "Fears", b1 =>
                         {
-                            b1.IsRequired();
+                            b1.Property<Guid>("HorseId")
+                                .HasColumnType("uuid");
 
-                            b1.Property<int>("Agility")
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
                                 .HasColumnType("integer");
 
-                            b1.Property<int>("Endurance")
+                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
+
+                            b1.Property<bool>("Discovered")
+                                .HasColumnType("boolean");
+
+                            b1.Property<int>("FearItem")
                                 .HasColumnType("integer");
 
-                            b1.Property<int>("Intelligence")
+                            b1.Property<int>("Severity")
                                 .HasColumnType("integer");
 
-                            b1.Property<int>("JumpingAbility")
-                                .HasColumnType("integer");
+                            b1.HasKey("HorseId", "Id");
 
-                            b1.Property<int>("Speed")
-                                .HasColumnType("integer");
+                            b1.ToTable("FearType");
 
-                            b1.Property<int>("Stamina")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("Strength")
-                                .HasColumnType("integer");
+                            b1.WithOwner()
+                                .HasForeignKey("HorseId");
                         });
 
-                    b.HasIndex("DamId");
-
-                    b.HasIndex("SireId");
-
-                    b.HasIndex("OwnerId", "Gender", "Age");
-
-                    b.HasDiscriminator().HasValue("Horse");
-                });
-
-            modelBuilder.Entity("GameModel.Alpaca", b =>
-                {
                     b.OwnsMany("GameModel.PersonalityType", "Personalities", b1 =>
                         {
-                            b1.Property<Guid>("AlpacaId")
+                            b1.Property<Guid>("HorseId")
                                 .HasColumnType("uuid");
 
                             b1.Property<int>("Id")
@@ -628,46 +575,15 @@ namespace backend_fullstack_course.Migrations
                             b1.Property<int>("Severity")
                                 .HasColumnType("integer");
 
-                            b1.HasKey("AlpacaId", "Id");
+                            b1.HasKey("HorseId", "Id");
 
-                            b1.ToTable("Alpacas_Personalities");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AlpacaId");
-                        });
-
-                    b.Navigation("Personalities");
-                });
-
-            modelBuilder.Entity("GameModel.Animal", b =>
-                {
-                    b.OwnsMany("GameModel.PersonalityType", "Personalities", b1 =>
-                        {
-                            b1.Property<Guid>("AnimalId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
-
-                            b1.Property<bool>("Discovered")
-                                .HasColumnType("boolean");
-
-                            b1.Property<int>("PersonalityTrait")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("Severity")
-                                .HasColumnType("integer");
-
-                            b1.HasKey("AnimalId", "Id");
-
-                            b1.ToTable("Animal_Personalities");
+                            b1.ToTable("PersonalityType");
 
                             b1.WithOwner()
-                                .HasForeignKey("AnimalId");
+                                .HasForeignKey("HorseId");
                         });
+
+                    b.Navigation("Fears");
 
                     b.Navigation("Personalities");
                 });
@@ -786,39 +702,6 @@ namespace backend_fullstack_course.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("GameModel.Horse", b =>
-                {
-                    b.OwnsMany("GameModel.FearType", "Fears", b1 =>
-                        {
-                            b1.Property<Guid>("HorseId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
-
-                            b1.Property<bool>("Discovered")
-                                .HasColumnType("boolean");
-
-                            b1.Property<int>("FearItem")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("Severity")
-                                .HasColumnType("integer");
-
-                            b1.HasKey("HorseId", "Id");
-
-                            b1.ToTable("FearType");
-
-                            b1.WithOwner()
-                                .HasForeignKey("HorseId");
-                        });
-
-                    b.Navigation("Fears");
                 });
 #pragma warning restore 612, 618
         }

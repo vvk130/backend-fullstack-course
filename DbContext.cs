@@ -18,12 +18,13 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<CompResult> CompResults { get; set; }
     public DbSet<Question> Questions { get; set; }
     public DbSet<StockImg> StockImgs { get; set; }
+    public DbSet<Alpaca> Alpacas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
-        modelBuilder.Entity<Horse>()
+
+         modelBuilder.Entity<Animal>()
                     .OwnsMany(h => h.Personalities);
 
         modelBuilder.Entity<Horse>()

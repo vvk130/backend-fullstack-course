@@ -18,15 +18,33 @@ namespace GameModel
             _horseService = horseService;
         }
 
-        public async Task<OperationResult<Horse>> FoalTaskHandler(Guid SireId, Guid DamId){
+        public async Task<OperationResult<Horse>> FoalTaskHandler(Guid SireId, Guid DamId, ItemType type){
             var result = new OperationResult<Horse>();
             
-            // Breed determined in the FoalGenerator, can be crossbred
             // TODO Check previous foal - is it too soon
             // TODO Create FoalingEvent db 
 
-            var sire = await _context.Horses.FindAsync(SireId);
-            var dam = await _context.Horses.FindAsync(DamId);
+            if (!Enum.IsDefined(typeof(ItemType), type))
+            {
+                result.AddError(nameof(type), "Not valid type");
+                return result;
+            }
+
+            var sire;
+            var dam;
+
+            switch (type)
+            {
+                case ItemType.Horse:
+                    sire = await _context.Horses.FindAsync(SireId);
+                    dam  = await _context.Horses.FindAsync(DamId);
+                    break;
+
+                case ItemType.Alpaca:
+                    sire = await _context.Alpacas.FindAsync(SireId);
+                    dam  = await _context.Alpacas.FindAsync(DamId);
+                    break;
+            }
 
             if (sire == null)
                 result.AddError(nameof(sire.Id), "Sire not found.");
@@ -53,6 +71,18 @@ namespace GameModel
                 return result;
 
             var foal = _horseService.CreateFoal(sire,dam);
+           switch (type)
+            {
+                case ItemType.Horse:
+                    sire = await _context.Horses.FindAsync(SireId);
+                    dam  = await _context.Horses.FindAsync(DamId);
+                    break;
+
+                case ItemType.Alpaca:
+                    sire = await _context.Alpacas.FindAsync(SireId);
+                    dam  = await _context.Alpacas.FindAsync(DamId);
+                    break;
+            }
 
             result.Value = foal;
             return result;

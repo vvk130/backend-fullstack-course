@@ -22,6 +22,5 @@ namespace GameModel
         Task<PaginatedResult<SalesAdShortDto<TDto>>> GetPaginatedAdsWithItemsAsync<TEntity, TDto>(
             ItemType type, int pageNumber, int pageSize) 
             where TEntity : class;
-
     }
 }

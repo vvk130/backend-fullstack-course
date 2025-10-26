@@ -4,7 +4,7 @@ public class SalesAd {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid(); 
     public required AdType AdType { get; set; }
-    public required ItemType ItemType { get; set; }
+    public ItemType? ItemType { get; set; }
     public required DateTime StartTime { get; set; } = DateTime.UtcNow;
     public required DateTime EndTime { get; set; }
     public required int Price { get; set; }

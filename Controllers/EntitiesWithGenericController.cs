@@ -129,7 +129,8 @@ namespace YourProject.Controllers
                     Price = request.Price,
                     StartTime = DateTime.UtcNow,
                     EndTime = request.EndTime,
-                    AdType = request.AdType
+                    AdType = request.AdType,
+                    ItemType = ItemType.Horse
                 };
 
                 await _adService.AddAsync(newAd);
@@ -229,11 +230,12 @@ namespace YourProject.Controllers
                     }
                     if (ad.AdType is not AdType.Auction)
                         _context.SalesAds.Remove(ad);
+                    await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
 
                     var message = $"You bought horse with id {ad.HorseId}";
                     if (ad.AdType is AdType.Auction)
-                        message = $"Your offer was placed successfully with on {ad.HorseId}";
+                        message = $"Your offer was placed successfully on {ad.HorseId}";
 
                     return Ok($"{message}");
                 }

@@ -61,5 +61,10 @@ public class GenericService<T> : IGenericService<T> where T : class
     
     public async Task<PaginatedResult<TDto>> GetPaginatedAsync<TDto>(PaginationRequest request, Expression<Func<T, bool>>? predicate = null)
         => await _repository.GetPaginatedAsync<TDto>(request, predicate);
+
+    public Task<PaginatedResult<SalesAdShortDto<TDto>>> GetPaginatedAdsWithItemsAsync<TEntity, TDto>(
+        ItemType type, int pageNumber, int pageSize)
+        where TEntity : class
+        => _repository.GetPaginatedAdsWithItemsAsync<TEntity, TDto>(type, pageNumber, pageSize);
 }
 }

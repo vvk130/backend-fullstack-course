@@ -13,8 +13,6 @@ public record BreedShortDto(Breed Breed);
 
 public record LevelShortDto(int LevelNumber, int EntryPoints);
 
-public record FoalHorseRequestDto(Guid SireId, Guid DamId);
-
 public record class FileUploadRequestDto
 {
     public required IFormFile File { get; init; }
