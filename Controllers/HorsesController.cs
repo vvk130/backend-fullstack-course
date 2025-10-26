@@ -62,6 +62,14 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
             return Ok(new { horse }); 
         }
 
+        [HttpPost("create-alpaca")]
+        public IActionResult CreateAlpaca(Guid id, AlpacaBreed? breed = null)
+        {
+            var alpaca = _horseService.CreateAlpaca(id, breed);
+
+            return Ok(new { alpaca }); 
+        }
+
         [HttpPatch("update-horses-energy")]
         public IActionResult EnergyUpdateHorses()
         {

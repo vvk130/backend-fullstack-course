@@ -65,6 +65,7 @@
 | 26-10-2025 | | 3 | Alpaca model, sales ad to generic repo starting with does not work yet
 | 26-10-2025 | | 2 | generic repo mapping problem
 | 26-10-2025 | | 2,5 | refactoring
+| 26-10-2025 | | 2 | Alpacas, generic animal model for salesAd creation and selling //rename HorseId to AnimalId
 
 Total time spent: 69,7h
 17,5h per credit

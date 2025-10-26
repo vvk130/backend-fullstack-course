@@ -3,7 +3,7 @@ namespace GameModel{
 public record HorseShortDto(Guid Id, string Name, Breed breed, Gender gender, string ImgUrl);
 public record HorseCreateDto(string Name, string ImgUrl);
 
-public record AlpacaShortDto(Guid Id, string Name, Breed breed, Gender gender, string ImgUrl);
+public record AlpacaShortDto(Guid Id, string Name, AlpacaBreed breed, Gender gender, string ImgUrl);
 public record AlpacaCreateDto(string Name, string ImgUrl);
 
 public record CompetitionDto(Guid Id, CompetitionType CompetitionType, DateTime EndTime);

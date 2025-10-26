@@ -7,11 +7,50 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace backend_fullstack_course.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate2 : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Animal",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ImgUrl = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Age = table.Column<double>(type: "double precision", nullable: false),
+                    Gender = table.Column<int>(type: "integer", nullable: false),
+                    Capacity = table.Column<int>(type: "integer", nullable: false),
+                    Relationship = table.Column<int>(type: "integer", nullable: false),
+                    Energy = table.Column<int>(type: "integer", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    SireId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DamId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Discriminator = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
+                    AlpacaColor = table.Column<int>(type: "integer", nullable: true),
+                    AlpacaBreed = table.Column<int>(type: "integer", nullable: true),
+                    AlpacaQualities_Agility = table.Column<int>(type: "integer", nullable: true),
+                    AlpacaQualities_Intelligence = table.Column<int>(type: "integer", nullable: true),
+                    AlpacaQualities_JumpingAbility = table.Column<int>(type: "integer", nullable: true),
+                    AlpacaQualities_Speed = table.Column<int>(type: "integer", nullable: true),
+                    AlpacaQualities_WoolQuality = table.Column<int>(type: "integer", nullable: true),
+                    Color = table.Column<int>(type: "integer", nullable: true),
+                    Breed = table.Column<int>(type: "integer", nullable: true),
+                    Height = table.Column<int>(type: "integer", nullable: true),
+                    Qualities_Agility = table.Column<int>(type: "integer", nullable: true),
+                    Qualities_Endurance = table.Column<int>(type: "integer", nullable: true),
+                    Qualities_Intelligence = table.Column<int>(type: "integer", nullable: true),
+                    Qualities_JumpingAbility = table.Column<int>(type: "integer", nullable: true),
+                    Qualities_Speed = table.Column<int>(type: "integer", nullable: true),
+                    Qualities_Stamina = table.Column<int>(type: "integer", nullable: true),
+                    Qualities_Strength = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Animal", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -31,9 +70,9 @@ namespace backend_fullstack_course.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -59,6 +98,7 @@ namespace backend_fullstack_course.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ScaryObject = table.Column<int[]>(type: "integer[]", nullable: false),
                     CompetitionType = table.Column<int>(type: "integer", nullable: false),
                     StartTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EndTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -66,6 +106,22 @@ namespace backend_fullstack_course.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Competitions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CompResults",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    HorseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CompId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Ranking = table.Column<int>(type: "integer", nullable: false),
+                    MoneyWon = table.Column<double>(type: "double precision", nullable: false),
+                    CompetitionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompResults", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,37 +137,6 @@ namespace backend_fullstack_course.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HorseBreeds", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Horses",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ImgUrl = table.Column<string>(type: "text", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Age = table.Column<double>(type: "double precision", nullable: false),
-                    Color = table.Column<int>(type: "integer", nullable: false),
-                    Gender = table.Column<int>(type: "integer", nullable: false),
-                    Breed = table.Column<int>(type: "integer", nullable: false),
-                    Capacity = table.Column<int>(type: "integer", nullable: false),
-                    Relationship = table.Column<int>(type: "integer", nullable: false),
-                    Energy = table.Column<int>(type: "integer", nullable: false),
-                    Height = table.Column<int>(type: "integer", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true),
-                    SireId = table.Column<Guid>(type: "uuid", nullable: true),
-                    DamId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Qualities_Agility = table.Column<int>(type: "integer", nullable: false),
-                    Qualities_Endurance = table.Column<int>(type: "integer", nullable: false),
-                    Qualities_Intelligence = table.Column<int>(type: "integer", nullable: false),
-                    Qualities_JumpingAbility = table.Column<int>(type: "integer", nullable: false),
-                    Qualities_Speed = table.Column<int>(type: "integer", nullable: false),
-                    Qualities_Stamina = table.Column<int>(type: "integer", nullable: false),
-                    Qualities_Strength = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Horses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,6 +156,118 @@ namespace backend_fullstack_course.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Levels", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PuzzleAnswers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PuzzleAnswers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Questions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    QuestionSentence = table.Column<string>(type: "text", nullable: false),
+                    Difficulty = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Questions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SalesAds",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    AdType = table.Column<int>(type: "integer", nullable: false),
+                    ItemType = table.Column<int>(type: "integer", nullable: true),
+                    StartTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Price = table.Column<int>(type: "integer", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    HorseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    HighestBidderId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesAds", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockImgs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ImgUrl = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockImgs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Wallets",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Balance = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Wallets", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Animal_Personalities",
+                columns: table => new
+                {
+                    AnimalId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PersonalityTrait = table.Column<int>(type: "integer", nullable: false),
+                    Severity = table.Column<int>(type: "integer", nullable: false),
+                    Discovered = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Animal_Personalities", x => new { x.AnimalId, x.Id });
+                    table.ForeignKey(
+                        name: "FK_Animal_Personalities_Animal_AnimalId",
+                        column: x => x.AnimalId,
+                        principalTable: "Animal",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FearType",
+                columns: table => new
+                {
+                    HorseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FearItem = table.Column<int>(type: "integer", nullable: false),
+                    Discovered = table.Column<bool>(type: "boolean", nullable: false),
+                    Severity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FearType", x => new { x.HorseId, x.Id });
+                    table.ForeignKey(
+                        name: "FK_FearType_Animal_HorseId",
+                        column: x => x.HorseId,
+                        principalTable: "Animal",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,70 +377,62 @@ namespace backend_fullstack_course.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Competitions_ScaryObject",
+                name: "PuzzlePiece",
                 columns: table => new
                 {
-                    CompetitionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PuzzleAnswerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FearItem = table.Column<int>(type: "integer", nullable: false),
-                    Discovered = table.Column<bool>(type: "boolean", nullable: false),
-                    Severity = table.Column<int>(type: "integer", nullable: false)
+                    XCoordinate = table.Column<int>(type: "integer", nullable: false),
+                    YCoordinate = table.Column<int>(type: "integer", nullable: false),
+                    ImgUrl = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Competitions_ScaryObject", x => new { x.CompetitionId, x.Id });
+                    table.PrimaryKey("PK_PuzzlePiece", x => new { x.PuzzleAnswerId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Competitions_ScaryObject_Competitions_CompetitionId",
-                        column: x => x.CompetitionId,
-                        principalTable: "Competitions",
+                        name: "FK_PuzzlePiece_PuzzleAnswers_PuzzleAnswerId",
+                        column: x => x.PuzzleAnswerId,
+                        principalTable: "PuzzleAnswers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Horses_Fears",
+                name: "Option",
                 columns: table => new
                 {
-                    HorseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uuid", nullable: false),
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FearItem = table.Column<int>(type: "integer", nullable: false),
-                    Discovered = table.Column<bool>(type: "boolean", nullable: false),
-                    Severity = table.Column<int>(type: "integer", nullable: false)
+                    Text = table.Column<string>(type: "text", nullable: false),
+                    IsRightAnswer = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Horses_Fears", x => new { x.HorseId, x.Id });
+                    table.PrimaryKey("PK_Option", x => new { x.QuestionId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Horses_Fears_Horses_HorseId",
-                        column: x => x.HorseId,
-                        principalTable: "Horses",
+                        name: "FK_Option_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PersonalityType",
-                columns: table => new
-                {
-                    HorseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PersonalityTrait = table.Column<int>(type: "integer", nullable: false),
-                    Severity = table.Column<int>(type: "integer", nullable: false),
-                    Discovered = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersonalityType", x => new { x.HorseId, x.Id });
-                    table.ForeignKey(
-                        name: "FK_PersonalityType_Horses_HorseId",
-                        column: x => x.HorseId,
-                        principalTable: "Horses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_Animal_DamId",
+                table: "Animal",
+                column: "DamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Animal_OwnerId_Gender_Age",
+                table: "Animal",
+                columns: new[] { "OwnerId", "Gender", "Age" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Animal_SireId",
+                table: "Animal",
+                column: "SireId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -347,6 +476,9 @@ namespace backend_fullstack_course.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Animal_Personalities");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -362,19 +494,34 @@ namespace backend_fullstack_course.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Competitions_ScaryObject");
+                name: "Competitions");
+
+            migrationBuilder.DropTable(
+                name: "CompResults");
+
+            migrationBuilder.DropTable(
+                name: "FearType");
 
             migrationBuilder.DropTable(
                 name: "HorseBreeds");
 
             migrationBuilder.DropTable(
-                name: "Horses_Fears");
-
-            migrationBuilder.DropTable(
                 name: "Levels");
 
             migrationBuilder.DropTable(
-                name: "PersonalityType");
+                name: "Option");
+
+            migrationBuilder.DropTable(
+                name: "PuzzlePiece");
+
+            migrationBuilder.DropTable(
+                name: "SalesAds");
+
+            migrationBuilder.DropTable(
+                name: "StockImgs");
+
+            migrationBuilder.DropTable(
+                name: "Wallets");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -383,10 +530,13 @@ namespace backend_fullstack_course.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Competitions");
+                name: "Animal");
 
             migrationBuilder.DropTable(
-                name: "Horses");
+                name: "Questions");
+
+            migrationBuilder.DropTable(
+                name: "PuzzleAnswers");
         }
     }
 }

@@ -22,74 +22,6 @@ namespace backend_fullstack_course.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("GameModel.Alpaca", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("Age")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("AlpacaBreed")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("AlpacaColor")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("DamId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Energy")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ImgUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("OwnerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Relationship")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("SireId")
-                        .HasColumnType("uuid");
-
-                    b.ComplexProperty<Dictionary<string, object>>("AlpacaQualities", "GameModel.Alpaca.AlpacaQualities#AlpacaQualities", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<int>("Agility")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("Intelligence")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("JumpingAbility")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("Speed")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("WoolQuality")
-                                .HasColumnType("integer");
-                        });
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Alpacas");
-                });
-
             modelBuilder.Entity("GameModel.Animal", b =>
                 {
                     b.Property<Guid>("Id")
@@ -558,6 +490,39 @@ namespace backend_fullstack_course.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GameModel.Alpaca", b =>
+                {
+                    b.HasBaseType("GameModel.Animal");
+
+                    b.Property<int>("AlpacaBreed")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AlpacaColor")
+                        .HasColumnType("integer");
+
+                    b.ComplexProperty<Dictionary<string, object>>("AlpacaQualities", "GameModel.Alpaca.AlpacaQualities#AlpacaQualities", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<int>("Agility")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Intelligence")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("JumpingAbility")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Speed")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("WoolQuality")
+                                .HasColumnType("integer");
+                        });
+
+                    b.HasDiscriminator().HasValue("Alpaca");
+                });
+
             modelBuilder.Entity("GameModel.Horse", b =>
                 {
                     b.HasBaseType("GameModel.Animal");
@@ -604,39 +569,6 @@ namespace backend_fullstack_course.Migrations
                     b.HasIndex("OwnerId", "Gender", "Age");
 
                     b.HasDiscriminator().HasValue("Horse");
-                });
-
-            modelBuilder.Entity("GameModel.Alpaca", b =>
-                {
-                    b.OwnsMany("GameModel.PersonalityType", "Personalities", b1 =>
-                        {
-                            b1.Property<Guid>("AlpacaId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
-
-                            b1.Property<bool>("Discovered")
-                                .HasColumnType("boolean");
-
-                            b1.Property<int>("PersonalityTrait")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("Severity")
-                                .HasColumnType("integer");
-
-                            b1.HasKey("AlpacaId", "Id");
-
-                            b1.ToTable("Alpacas_Personalities");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AlpacaId");
-                        });
-
-                    b.Navigation("Personalities");
                 });
 
             modelBuilder.Entity("GameModel.Animal", b =>

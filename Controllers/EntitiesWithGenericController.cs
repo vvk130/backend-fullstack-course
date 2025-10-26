@@ -69,6 +69,21 @@ namespace YourProject.Controllers
         {
             return BadRequest("Delete operation is not allowed for this entity.");
         }
+    }
+
+    [Route("api/alpaca")]
+    public class AlpacaController : GenericController<Alpaca, AlpacaCreateDto, AlpacaShortDto>
+    {
+        private readonly IMapper _mapper;
+
+        public AlpacaController(IGenericService<Alpaca> service, IMapper mapper) : base(service, mapper) {}
+
+        [HttpDelete("{id}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override async Task<IActionResult> Delete(Guid id)
+        {
+            return BadRequest("Delete operation is not allowed for this entity.");
+        }
 
     }
 
@@ -110,17 +125,17 @@ namespace YourProject.Controllers
 
                 // var userId = user.Id;
 
-                var horse = await _horseService.FindAsync(h =>
-                    h.Id == request.HorseId && h.OwnerId == request.OwnerId);
+                var horse = await _context.Set<Animal>().Where(h =>
+                    h.Id == request.HorseId && h.OwnerId == request.OwnerId).FirstOrDefaultAsync();
 
                 if (horse is null)
-                    return Forbid("You don't own this horse.");
+                    return Forbid("You don't own this animal.");
 
                 var ads = await _adService.FindAsync(a =>
                     a.HorseId == request.HorseId && a.EndTime > DateTime.UtcNow);
 
                 if (ads.Any())
-                    return BadRequest("This horse is already for sale, go to modify ad instead.");
+                    return BadRequest("This animal is already for sale, go to modify ad instead.");
 
                 var newAd = new SalesAd
                 {
@@ -129,8 +144,7 @@ namespace YourProject.Controllers
                     Price = request.Price,
                     StartTime = DateTime.UtcNow,
                     EndTime = request.EndTime,
-                    AdType = request.AdType,
-                    ItemType = ItemType.Horse
+                    AdType = request.AdType
                 };
 
                 await _adService.AddAsync(newAd);
@@ -190,9 +204,9 @@ namespace YourProject.Controllers
                         await _walletService.AddAsync(wallet);
                     }
 
-                    var horse = await _context.Horses.FindAsync(ad.HorseId);
+                    var horse = await _context.Set<Animal>().FindAsync(ad.HorseId);
                     if (horse is null)
-                        return BadRequest("Horse not found.");
+                        return BadRequest("Animal not found.");
 
                     if (ad.AdType is not AdType.Auction)
                         wallet.Balance -= ad.Price;
@@ -233,7 +247,7 @@ namespace YourProject.Controllers
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
 
-                    var message = $"You bought horse with id {ad.HorseId}";
+                    var message = $"You bought animal with id {ad.HorseId}";
                     if (ad.AdType is AdType.Auction)
                         message = $"Your offer was placed successfully on {ad.HorseId}";
 

@@ -9,6 +9,16 @@ public class MappingProfile : Profile
         CreateMap<Horse, HorseShortDto>().ReverseMap();
         CreateMap<Horse, HorseCreateDto>().ReverseMap();
 
+        CreateMap<Alpaca, AlpacaCreateDto>().ReverseMap();
+        CreateMap<Alpaca, AlpacaShortDto>()
+            .ConstructUsing(a => new AlpacaShortDto(
+                a.Id,
+                a.Name,
+                a.AlpacaBreed,
+                a.Gender,
+                a.ImgUrl
+            ));
+
         CreateMap<Competition, CompetitionDto>().ReverseMap();
         CreateMap<Competition, CompetitionCreateDto>().ReverseMap();
         

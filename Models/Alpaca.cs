@@ -1,7 +1,6 @@
 namespace GameModel{
 
 public class Alpaca : Animal {
-    [Key]
     public required AlpacaColor AlpacaColor {get; set; }
     public required AlpacaBreed AlpacaBreed {get; set; }
     public required AlpacaQualities AlpacaQualities { get; set; }
@@ -39,6 +38,7 @@ public class Alpaca : Animal {
 
     public enum AlpacaBreed
     {
+        Unknown,
         Huacaya,
         Suri
     }

@@ -1,6 +1,6 @@
 namespace GameModel{
 public interface IFoalCreationService
 {
-   Task<OperationResult<Horse>> FoalTaskHandler(Guid SireId, Guid DamId, ItemType type);
+   Task<OperationResult<Animal>> FoalTaskHandler(Guid SireId, Guid DamId, ItemType type);
 }
 }

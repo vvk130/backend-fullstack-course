@@ -18,8 +18,8 @@ namespace GameModel
             _horseService = horseService;
         }
 
-        public async Task<OperationResult<Horse>> FoalTaskHandler(Guid SireId, Guid DamId, ItemType type){
-            var result = new OperationResult<Horse>();
+        public async Task<OperationResult<Animal>> FoalTaskHandler(Guid SireId, Guid DamId, ItemType type){
+            var result = new OperationResult<Animal>();
             
             // TODO Check previous foal - is it too soon
             // TODO Create FoalingEvent db 
@@ -30,21 +30,13 @@ namespace GameModel
                 return result;
             }
 
-            var sire;
-            var dam;
+            var sire = await GetAnimalByTypeAsync(SireId, type);
+            var dam  = await GetAnimalByTypeAsync(DamId, type);
 
-            switch (type)
-            {
-                case ItemType.Horse:
-                    sire = await _context.Horses.FindAsync(SireId);
-                    dam  = await _context.Horses.FindAsync(DamId);
-                    break;
+            if (sire.GetType() != dam.GetType())
+                result.AddError("Not same species", "Sire and Dam must be of the same type");
 
-                case ItemType.Alpaca:
-                    sire = await _context.Alpacas.FindAsync(SireId);
-                    dam  = await _context.Alpacas.FindAsync(DamId);
-                    break;
-            }
+            // if ()
 
             if (sire == null)
                 result.AddError(nameof(sire.Id), "Sire not found.");
@@ -69,23 +61,26 @@ namespace GameModel
                 
             if (!result.Success)
                 return result;
-
-            var foal = _horseService.CreateFoal(sire,dam);
-           switch (type)
-            {
-                case ItemType.Horse:
-                    sire = await _context.Horses.FindAsync(SireId);
-                    dam  = await _context.Horses.FindAsync(DamId);
-                    break;
-
-                case ItemType.Alpaca:
-                    sire = await _context.Alpacas.FindAsync(SireId);
-                    dam  = await _context.Alpacas.FindAsync(DamId);
-                    break;
-            }
-
-            result.Value = foal;
+            
+            if (type == ItemType.Horse){
+                var foal = _horseService.CreateFoal((Horse)sire,(Horse)dam);
+                result.Value = foal;
+            } else {
+                var alpacaFoal = _horseService.CreateAlpacaFoal((Alpaca)sire,(Alpaca)dam);
+                result.Value = alpacaFoal;
+            }         
             return result;
         }
+
+        private async Task<Animal?> GetAnimalByTypeAsync(Guid id, ItemType type)
+        {
+            return type switch
+            {
+                ItemType.Horse  => await _context.Horses.FindAsync(id),
+                ItemType.Alpaca => await _context.Alpacas.FindAsync(id),
+                _ => null
+            };
+        }
+
     }
 }

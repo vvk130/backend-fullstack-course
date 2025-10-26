@@ -138,6 +138,65 @@ namespace GameModel
         return horse;
     }
 
+    public Alpaca CreateAlpaca(Guid id, AlpacaBreed? breed){
+            var chosenBreed = breed ?? _faker.PickRandom<AlpacaBreed>();
+            var chosenGender =_faker.PickRandom<Gender>();
+            var alpaca = new Alpaca
+            {
+                Name = GenerateRandomHorseName(chosenGender),
+                Age = RandomHorseAge(),
+                AlpacaBreed = chosenBreed,  
+                Gender = chosenGender,       
+                AlpacaColor = _faker.PickRandom<AlpacaColor>(),           
+                Capacity = _random.Next(130,151), 
+                Relationship = 0,
+                OwnerId = id,
+                Energy = 100,
+                AlpacaQualities = new AlpacaQualities { Agility = _random.Next(1,11), Speed = _random.Next(1,11), Intelligence = _random.Next(1,11), JumpingAbility = _random.Next(1,11), WoolQuality = _random.Next(1,11)},
+                Personalities = new List<PersonalityType> { 
+                    new PersonalityType { PersonalityTrait = _faker.PickRandom<PersonalityTrait>(), Discovered = false, Severity = _random.Next(1,11) },
+                    new PersonalityType { PersonalityTrait = _faker.PickRandom<PersonalityTrait>(), Discovered = true, Severity = _random.Next(1,11) },
+                    new PersonalityType { PersonalityTrait = _faker.PickRandom<PersonalityTrait>(), Discovered = false, Severity = _random.Next(1,11) }
+                }
+            };
+            _context.Alpacas.Add(alpaca);
+            _context.SaveChanges();
+        return alpaca;
+    }
+
+    public Alpaca CreateAlpacaFoal(Alpaca sire, Alpaca dam){
+            var chosenBreed = sire.AlpacaBreed == dam.AlpacaBreed 
+                            ? sire.AlpacaBreed 
+                            : AlpacaBreed.Unknown;
+
+            var chosenGender = PickRandomEnumValue(new[] { Gender.Stallion, Gender.Mare });
+
+            var chosenColor = PickRandomEnumValue(new[] { sire.AlpacaColor, dam.AlpacaColor });
+
+            var alpaca = new Alpaca
+            {
+                Name = GenerateRandomHorseName(chosenGender),
+                Age = 0.0,
+                AlpacaBreed = chosenBreed,  
+                Gender = chosenGender,       
+                AlpacaColor = chosenColor,           
+                Capacity = SafeRandomNext(sire.Capacity, dam.Capacity), 
+                Relationship = 0,
+                Energy = 100,
+                SireId = sire.Id,
+                DamId = dam.Id,
+                AlpacaQualities = new AlpacaQualities { Agility = _random.Next(1,11), Speed = _random.Next(1,11), Intelligence = _random.Next(1,11), JumpingAbility = _random.Next(1,11), WoolQuality = _random.Next(1,11)},
+                Personalities = new List<PersonalityType> { 
+                    new PersonalityType { PersonalityTrait = _faker.PickRandom<PersonalityTrait>(), Discovered = false, Severity = _random.Next(1,11) },
+                    new PersonalityType { PersonalityTrait = _faker.PickRandom<PersonalityTrait>(), Discovered = true, Severity = _random.Next(1,11) },
+                    new PersonalityType { PersonalityTrait = _faker.PickRandom<PersonalityTrait>(), Discovered = false, Severity = _random.Next(1,11) }
+                }
+            };
+            _context.Alpacas.Add(alpaca);
+            _context.SaveChanges();
+        return alpaca;
+    }
+
     public string GenerateRandomHorseName(Gender gender)
     {
         var fakerGender = MapToFakerGender(gender);
