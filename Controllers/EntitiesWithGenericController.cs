@@ -233,7 +233,7 @@ namespace YourProject.Controllers
 
                     var message = $"You bought horse with id {ad.HorseId}";
                     if (ad.AdType is AdType.Auction)
-                        message = $"Your offer was placed successfully with id {ad.HorseId}";
+                        message = $"Your offer was placed successfully with on {ad.HorseId}";
 
                     return Ok($"{message}");
                 }

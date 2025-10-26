@@ -95,5 +95,38 @@ namespace GameModel
 
             return new PaginatedResult<TDto>(items, totalCount, request.PageNumber, request.PageSize);
         }
+
+        public async Task<PaginatedResult<SalesAdShortDto<TDto>>> GetPaginatedAdsWithItemsAsync<TEntity, TDto>(
+            ItemType type,
+            int pageNumber,
+            int pageSize)
+            where TEntity : class
+        {
+            var ads = _context.Set<SalesAd>()
+                .Where(a => a.ItemType == type)
+                .OrderByDescending(a => a.EndTime);
+
+            var items = _context.Set<TEntity>();
+
+            var query =
+                from ad in ads
+                join item in items on ad.ItemId equals EF.Property<Guid>(item, "Id")
+                select new SalesAdShortDto<TEntity>
+                {
+                    SalesAd = ad,
+                    Item
+                };
+
+            var totalCount = await query.CountAsync();
+
+            var paginated = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ProjectTo<SalesAdShortDto<TDto>>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return new PaginatedResult<SalesAdShortDto<TDto>>(paginated, totalCount, pageNumber, pageSize);
+        }
+
     }
 }

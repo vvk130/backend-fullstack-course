@@ -19,5 +19,9 @@ namespace GameModel
         void RemoveRange(IEnumerable<T> entities);
         Task<int> SaveChangesAsync();
         Task<PaginatedResult<TDto>> GetPaginatedAsync<TDto>(PaginationRequest request, Expression<Func<T, bool>>? predicate = null);
+        Task<PaginatedResult<SalesAdShortDto<TDto>>> GetPaginatedAdsWithItemsAsync<TEntity, TDto>(
+            ItemType type, int pageNumber, int pageSize) 
+            where TEntity : class;
+
     }
 }

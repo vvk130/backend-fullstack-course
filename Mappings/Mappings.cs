@@ -24,6 +24,8 @@ public class MappingProfile : Profile
         CreateMap<SalesAd, SalesAdDto>().ReverseMap();
         CreateMap<SalesAd, SalesAdCreateDto>().ReverseMap();
 
+        CreateMap(typeof(SalesAdShortDto<>), typeof(SalesAdShortDto<>)); 
+
         CreateMap<Wallet, WalletDto>().ReverseMap();
         CreateMap<Wallet, WalletCreateDto>().ReverseMap();
 
