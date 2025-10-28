@@ -71,12 +71,12 @@ namespace YourProject.Controllers
         }
     }
 
-    [Route("api/alpaca")]
-    public class AlpacaController : GenericController<Alpaca, AlpacaCreateDto, AlpacaShortDto>
+    [Route("api/alpacas")]
+    public class AlpacasController : GenericController<Alpaca, AlpacaCreateDto, AlpacaShortDto>
     {
         private readonly IMapper _mapper;
 
-        public AlpacaController(IGenericService<Alpaca> service, IMapper mapper) : base(service, mapper) {}
+        public AlpacasController(IGenericService<Alpaca> service, IMapper mapper) : base(service, mapper) {}
 
         [HttpDelete("{id}")]
         [ApiExplorerSettings(IgnoreApi = true)]
@@ -87,8 +87,8 @@ namespace YourProject.Controllers
 
     }
 
-    [Route("api/salesad")]
-    public class SalesAdController : GenericController<SalesAd, SalesAdCreateDto, SalesAdDto>
+    [Route("api/salesads")]
+    public class SalesAdsController : GenericController<SalesAd, SalesAdCreateDto, SalesAdDto>
     {
             private readonly IGenericService<SalesAd> _adService;
             private readonly IGenericService<Horse> _horseService;
@@ -97,7 +97,7 @@ namespace YourProject.Controllers
             private readonly UserManager<ApplicationUser> _userManager;
             private readonly IMapper _mapper;
 
-            public SalesAdController(
+            public SalesAdsController(
                 AppDbContext context,
                 UserManager<ApplicationUser> userManager,
                 IGenericService<SalesAd> adService,
@@ -162,7 +162,7 @@ namespace YourProject.Controllers
 
                 foreach (var ad in ads)
                 {
-                    var horse = await _horseService.GetByIdAsync(ad.HorseId);
+                    var horse = await _context.Set<Animal>().FindAsync(ad.HorseId);
                     if (horse == null)
                     {
                         continue;
@@ -171,10 +171,10 @@ namespace YourProject.Controllers
                     if (ad.HighestBidderId != null && horse != null)
                     {
                         horse.OwnerId = ad.HighestBidderId.Value;
-                        await _horseService.UpdateAsync(horse);
                     }
 
                     _context.SalesAds.Remove(ad);
+                    await _context.SaveChangesAsync();
                 }
 
                 return Ok("All expired auction ads resolved successfully.");
@@ -295,15 +295,15 @@ namespace YourProject.Controllers
             }
     }
 
-    [Route("api/question")]
-    public class QuestionController : GenericController<Question, QuestionCreateDto, QuestionDto>
+    [Route("api/questions")]
+    public class QuestionsController : GenericController<Question, QuestionCreateDto, QuestionDto>
     {
             private readonly IGenericService<Question> _adService;
             // private readonly AppDbContext _context;
             // private readonly UserManager<ApplicationUser> _userManager;
             private readonly IMapper _mapper;
 
-            public QuestionController(
+            public QuestionsController(
                 AppDbContext context,
                 // UserManager<ApplicationUser> userManager,
                 IGenericService<Question> adService,
@@ -318,14 +318,14 @@ namespace YourProject.Controllers
 
     }
 
-    [Route("api/stockImg")]
-    public class StockImgController : GenericController<StockImg, StockImgDto, StockImgDto>
+    [Route("api/stockImgs")]
+    public class StockImgsController : GenericController<StockImg, StockImgDto, StockImgDto>
     {
             private readonly IGenericService<StockImg> _stockImgService;
             private readonly IMapper _mapper;
             private readonly AppDbContext _context;
 
-            public StockImgController(
+            public StockImgsController(
                 AppDbContext context,
                 IGenericService<StockImg> stockImgService,
                 IMapper mapper) : base(stockImgService, mapper)
@@ -352,7 +352,6 @@ namespace YourProject.Controllers
 
                 await _context.SaveChangesAsync();
                 return Ok("Done");
-
             }
 
     }
