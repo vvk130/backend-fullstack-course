@@ -66,7 +66,8 @@
 | 26-10-2025 | | 2 | generic repo mapping problem
 | 26-10-2025 | | 2,5 | refactoring
 | 26-10-2025 | | 2 | Alpacas, generic animal model for salesAd creation and selling //rename HorseId to AnimalId
-| 28-10-2025 | | 3 | Bug in the generate ad with Set<Animal>
+| 28-10-2025 | | 3 | Fixing Bug in the generate ad with Set<Animal>
+| 28-10-2025 | | 2 | Fixing Bug in the generate ad and buy Animal
 
 Total time spent: 69,7h
 17,5h per credit

@@ -123,12 +123,18 @@ namespace YourProject.Controllers
                 // if (user is null)
                 //     Forbid("User not found.");
 
-                // var userId = user.Id;
+                var ifExists = false;
 
-                var horse = await _context.Set<Animal>().Where(h =>
-                    h.Id == request.HorseId && h.OwnerId == request.OwnerId).FirstOrDefaultAsync();
+                if (request.ItemType == ItemType.Horse){
+                    ifExists = await _context.Horses
+                        .AnyAsync(h => h.Id == request.HorseId && h.OwnerId == request.OwnerId);
+                }
+                if (request.ItemType == ItemType.Alpaca){
+                    ifExists = await _context.Alpacas
+                        .AnyAsync(h => h.Id == request.HorseId && h.OwnerId == request.OwnerId);
+                }
 
-                if (horse is null)
+                if (!ifExists)
                     return Forbid("You don't own this animal.");
 
                 var ads = await _adService.FindAsync(a =>
@@ -204,7 +210,15 @@ namespace YourProject.Controllers
                         await _walletService.AddAsync(wallet);
                     }
 
-                    var horse = await _context.Set<Animal>().FindAsync(ad.HorseId);
+                    Animal? horse = null;
+                    if (request.ItemType == ItemType.Horse)
+                    {
+                        horse = await _context.Horses.FindAsync(ad.HorseId);
+                    }
+                    if (request.ItemType == ItemType.Alpaca)
+                    {
+                        horse = await _context.Alpacas.FindAsync(ad.HorseId);
+                    }
                     if (horse is null)
                         return BadRequest("Animal not found.");
 
@@ -253,9 +267,9 @@ namespace YourProject.Controllers
 
                     return Ok($"{message}");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return BadRequest("Transaction failed");
+                    return BadRequest($"Transaction failed {ex.Message}");
                 }
             }
             [HttpGet("paginated-with-horse")]
