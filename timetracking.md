@@ -69,6 +69,7 @@
 | 28-10-2025 | | 3 | Fixing Bug in the generate ad with Set<Animal>
 | 28-10-2025 | | 2 | Fixing Bug in the generate ad and buy Animal
 |03-11-2025 | | 0,5 | Validators
+|03-11-2025 | | 1 | trying to fix automapper inheritance probllem
 
 Total time spent: 69,7h
 17,5h per credit
