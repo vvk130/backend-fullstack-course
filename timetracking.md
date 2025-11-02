@@ -71,6 +71,8 @@
 |03-11-2025 | | 0,5 | Validators
 |03-11-2025 | | 1 | trying to fix automapper inheritance probllem
 
+https://docs.automapper.io/en/stable/Mapping-inheritance.html
+
 Total time spent: 69,7h
 17,5h per credit
 
