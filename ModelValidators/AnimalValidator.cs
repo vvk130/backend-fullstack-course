@@ -39,12 +39,12 @@ public class AnimalValidator : AbstractValidator<Animal>
             .WithMessage("OwnerId must be a valid GUID if provided.");
 
         RuleFor(x => x.SireId)
-            .Must(id => !id.HasValue || id.Value != Guid.Empty)
-            .WithMessage("SireId must be a valid GUID if provided.");
+            .Must(id => id == null)
+            .WithMessage("SireId cannot be set manually.");
 
         RuleFor(x => x.DamId)
-            .Must(id => !id.HasValue || id.Value != Guid.Empty)
-            .WithMessage("DamId must be a valid GUID if provided.");
+            .Must(id => id == null)
+            .WithMessage("DamId cannot be set manually.");
 
     }
 }

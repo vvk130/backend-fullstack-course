@@ -4,7 +4,21 @@ public record HorseShortDto(Guid Id, string Name, Breed breed, Gender gender, st
 public record HorseCreateDto(string Name, string ImgUrl);
 
 public record AlpacaShortDto(Guid Id, string Name, AlpacaBreed breed, Gender gender, string ImgUrl);
-public record AlpacaCreateDto(string Name, string ImgUrl);
+
+public record AlpacaCreateDto(
+    string Name,
+    string? ImgUrl,
+    double Age,
+    Gender Gender,
+    int Capacity,
+    int Relationship,
+    int Energy,
+    AlpacaColor AlpacaColor,
+    AlpacaBreed AlpacaBreed,
+    AlpacaQualities AlpacaQualities,
+    ICollection<PersonalityType> Personalities,
+    Guid? OwnerId = null 
+);
 
 public record CompetitionDto(Guid Id, CompetitionType CompetitionType, DateTime EndTime);
 public record CompetitionCreateDto(CompetitionType CompetitionType, IList<FearItem> ScaryObject, DateTime StartTime, DateTime EndTime);
