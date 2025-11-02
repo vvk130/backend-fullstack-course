@@ -4,6 +4,9 @@ public class CompetitionCreateDtoValidator : AbstractValidator<CompetitionCreate
 {
     public CompetitionCreateDtoValidator()
     {
+        RuleFor(x => x.CompetitionType)
+            .IsInEnum().WithMessage("Invalid CompetitionType");
+
         RuleFor(x => x.ScaryObject)
             .NotNull()
             .WithMessage("ScaryObject list must not be null.")

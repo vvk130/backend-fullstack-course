@@ -19,6 +19,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Question> Questions { get; set; }
     public DbSet<StockImg> StockImgs { get; set; }
     public DbSet<Alpaca> Alpacas { get; set; }
+    public DbSet<Animal> Animals { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

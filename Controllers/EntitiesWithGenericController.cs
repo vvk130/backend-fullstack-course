@@ -85,6 +85,27 @@ namespace YourProject.Controllers
             return BadRequest("Delete operation is not allowed for this entity.");
         }
 
+        // [HttpGet("search")]
+        // public async Task<IActionResult> SearchAlpacas([FromQuery] PaginationSearchRequest request)
+        // {
+        //     if (!ModelState.IsValid)
+        //         return BadRequest(ModelState); 
+
+        //     var filter = request.Filter;
+
+        //     Expression<Func<Alpaca, bool>> predicate = h =>
+        //         (filter.Genders == null || filter.Genders.Contains(h.Gender)) &&
+        //         (filter.AlpacaBreeds == null || filter.AlpacaBreeds.Contains(h.AlpacaBreed)) &&
+        //         (!filter.MinAge.HasValue || h.Age >= filter.MinAge) &&
+        //         (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge) &&
+        //         (!filter.OwnerId.HasValue || h.OwnerId == filter.OwnerId) &&
+        //         (!filter.SireId.HasValue || h.SireId == filter.SireId) &&
+        //         (!filter.DamId.HasValue || h.DamId == filter.DamId);
+
+        //     var result = await _genericService.GetPaginatedAsync<AlpacaShortDto>(request.Pagination, predicate);
+        //     return Ok(result);
+        // }
+
     }
 
     [Route("api/salesads")]

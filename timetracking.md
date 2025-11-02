@@ -87,3 +87,11 @@ Total time spent: 69,7h
 # Project features
 |--------|----------------------------------|
 |||
+
+Palautus checkpoints:
+[] Last step: ilmo / lomake /email ✅
+[] Remove comments, not used code ✅
+[] Deploy ✅
+[] Docker ✅
+[] Add total hours, link to timetracking ✅
+[] Add link to frontend repo ✅
