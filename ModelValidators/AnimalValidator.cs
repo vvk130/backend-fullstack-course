@@ -46,6 +46,12 @@ public class AnimalValidator : AbstractValidator<Animal>
             .Must(id => id == null)
             .WithMessage("DamId cannot be set manually.");
 
+        
+        // RuleFor(x => x.Contact).SetInheritanceValidator(v => 
+        // {
+        // v.Add<Alpaca>(new AlpacaValidator());
+        // });
+
     }
 }
 
