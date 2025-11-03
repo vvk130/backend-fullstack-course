@@ -10,6 +10,7 @@ public class MappingProfile : Profile
         CreateMap<Horse, HorseCreateDto>().ReverseMap();
 
         CreateMap<Alpaca, AlpacaCreateDto>().ReverseMap();
+
         CreateMap<Alpaca, AlpacaShortDto>()
             .ConstructUsing(a => new AlpacaShortDto(
                 a.Id,
@@ -45,6 +46,10 @@ public class MappingProfile : Profile
         CreateMap<Option, OptionDto>().ReverseMap();
 
         CreateMap<StockImg, StockImgDto>().ReverseMap();
+
+        CreateMap<AnimalCreateDto, Animal>().ReverseMap().IncludeAllDerived();
+        CreateMap<AnimalCreateDto, Alpaca>().ReverseMap();
+
     }
 }
 }

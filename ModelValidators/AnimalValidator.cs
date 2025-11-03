@@ -1,9 +1,10 @@
 using FluentValidation;
 using GameModel;
 
-public class AnimalValidator : AbstractValidator<Animal>
+namespace GameModel{
+public class AnimalCreateDtoValidator : AbstractValidator<AnimalCreateDto>
 {
-    public AnimalValidator()
+    public AnimalCreateDtoValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name is required.")
@@ -16,8 +17,7 @@ public class AnimalValidator : AbstractValidator<Animal>
             .IsInEnum();
 
         RuleFor(x => x.Capacity)
-            .GreaterThanOrEqualTo(130)
-            .LessThanOrEqualTo(151);
+            .InclusiveBetween(0, 100).WithMessage("Capacity must be between 130 and 151.");
 
         RuleFor(x => x.Age)
             .GreaterThanOrEqualTo(0).WithMessage("Age cannot be negative.")
@@ -38,13 +38,13 @@ public class AnimalValidator : AbstractValidator<Animal>
             .Must(id => !id.HasValue || id.Value != Guid.Empty)
             .WithMessage("OwnerId must be a valid GUID if provided.");
 
-        RuleFor(x => x.SireId)
-            .Must(id => id == null)
-            .WithMessage("SireId cannot be set manually.");
+        // RuleFor(x => x.SireId)
+        //     .Must(id => id == null)
+        //     .WithMessage("SireId cannot be set manually.");
 
-        RuleFor(x => x.DamId)
-            .Must(id => id == null)
-            .WithMessage("DamId cannot be set manually.");
+        // RuleFor(x => x.DamId)
+        //     .Must(id => id == null)
+        //     .WithMessage("DamId cannot be set manually.");
 
         
         // RuleFor(x => x.Contact).SetInheritanceValidator(v => 
@@ -63,4 +63,5 @@ public class PersonalityTypeValidator : AbstractValidator<PersonalityType>
         RuleFor(x => x.Severity).InclusiveBetween(0, 10).WithMessage("Severity must be between 0 and 10.");
         RuleFor(x => x.Discovered).NotNull().WithMessage("Discovered is required.");
     }
+}
 }

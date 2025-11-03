@@ -1,10 +1,14 @@
 using FluentValidation;
 using GameModel;
 
-public class AlpacaValidator : AbstractValidator<Alpaca>
+public class AlpacaCreateDtoValidator : AbstractValidator<AlpacaCreateDto>
 {
-    public AlpacaValidator()
+    public AlpacaCreateDtoValidator()
     {
+
+        RuleFor(x => x.Animal)
+            .SetValidator(new AnimalCreateDtoValidator());
+
         // RuleFor(x => x.Name)
         //     .NotEmpty().WithMessage("Name is required.")
         //     .MaximumLength(50).WithMessage("Name must be 50 characters or less.");
