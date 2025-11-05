@@ -70,7 +70,8 @@
 | 28-10-2025 | | 2 | Fixing Bug in the generate ad and buy Animal
 |03-11-2025 | | 0,5 | Validators
 |03-11-2025 | | 1 | trying to fix automapper inheritance problem
-|03-11-2025 | | 1 | fixing the nested inherited validator 
+|03-11-2025 | | 1 | fixing the nested inherited validator
+|05-11-2025 | | 0,5 | validators
 
 https://docs.automapper.io/en/stable/Mapping-inheritance.html
 
