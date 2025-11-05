@@ -3,7 +3,7 @@ namespace GameModel{
 
     public record PaginationSearchRequest(HorseFilterDto Filter, PaginationRequest Pagination);
 
-    public record SalesAdRequest(int Price, AdType AdType, DateTime EndTime, Guid HorseId, Guid OwnerId, ItemType ItemType);
+    public record SalesAdRequest(int Price, AdType AdType, int daysAdIsValid, Guid HorseId, Guid OwnerId, ItemType ItemType);
 
     public record BuyRequest(Guid BuyerId, Guid AdId, ItemType ItemType, int Bid = 0);
 

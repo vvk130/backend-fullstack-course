@@ -47,8 +47,8 @@ public class MappingProfile : Profile
 
         CreateMap<StockImg, StockImgDto>().ReverseMap();
 
-        CreateMap<AnimalCreateDto, Animal>().ReverseMap().IncludeAllDerived();
-        CreateMap<AnimalCreateDto, Alpaca>().ReverseMap();
+        CreateMap<AlpacaCreateDto, Animal>().ReverseMap().IncludeAllDerived();
+        CreateMap<AlpacaCreateDto, Alpaca>().ReverseMap();
 
     }
 }

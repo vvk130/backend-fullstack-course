@@ -156,7 +156,7 @@ namespace YourProject.Controllers
                 }
 
                 if (!ifExists)
-                    return Forbid("You don't own this animal.");
+                    return BadRequest("You don't own this animal.");
 
                 var ads = await _adService.FindAsync(a =>
                     a.HorseId == request.HorseId && a.EndTime > DateTime.UtcNow);
@@ -170,7 +170,7 @@ namespace YourProject.Controllers
                     OwnerId = request.OwnerId,
                     Price = request.Price,
                     StartTime = DateTime.UtcNow,
-                    EndTime = request.EndTime,
+                    EndTime = DateTime.UtcNow.AddDays(request.daysAdIsValid),
                     AdType = request.AdType
                 };
 
@@ -189,7 +189,7 @@ namespace YourProject.Controllers
 
                 foreach (var ad in ads)
                 {
-                    var horse = await _context.Set<Animal>().FindAsync(ad.HorseId);
+                    var horse = await _context.Animals.FindAsync(ad.HorseId);
                     if (horse == null)
                     {
                         continue;

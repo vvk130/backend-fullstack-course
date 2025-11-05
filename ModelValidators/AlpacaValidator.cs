@@ -1,13 +1,13 @@
-using FluentValidation;
-using GameModel;
+// using FluentValidation;
+// using GameModel;
 
-public class AlpacaCreateDtoValidator : AbstractValidator<AlpacaCreateDto>
-{
-    public AlpacaCreateDtoValidator()
-    {
+// public class AlpacaCreateDtoValidator : AbstractValidator<AlpacaCreateDto>
+// {
+//     public AlpacaCreateDtoValidator()
+//     {
 
-        RuleFor(x => x.Animal)
-            .SetValidator(new AnimalCreateDtoValidator());
+//         RuleFor(x => x.Animal)
+//             .SetValidator(new AnimalCreateDtoValidator());
 
         // RuleFor(x => x.Name)
         //     .NotEmpty().WithMessage("Name is required.")
@@ -50,26 +50,26 @@ public class AlpacaCreateDtoValidator : AbstractValidator<AlpacaCreateDto>
         //     .Must(id => id == null)
         //     .WithMessage("DamId cannot be set manually.");
 
-        RuleFor(x => x.AlpacaBreed)
-            .IsInEnum().WithMessage("Breed must be a valid Alpaca breed.");
+        // RuleFor(x => x.AlpacaBreed)
+        //     .IsInEnum().WithMessage("Breed must be a valid Alpaca breed.");
 
-        RuleFor(x => x.AlpacaColor)
-            .IsInEnum().WithMessage("Breed must be a valid Alpaca color.");
+        // RuleFor(x => x.AlpacaColor)
+        //     .IsInEnum().WithMessage("Breed must be a valid Alpaca color.");
         
-        RuleFor(x => x.AlpacaQualities).NotNull().WithMessage("AlpacaQualities is required.");
-        RuleFor(x => x.AlpacaQualities).SetValidator(new AlpacaQualitiesValidator());
-    }
-}
+        // RuleFor(x => x.AlpacaQualities).NotNull().WithMessage("AlpacaQualities is required.");
+        // RuleFor(x => x.AlpacaQualities).SetValidator(new AlpacaQualitiesValidator());
+//     }
+// }
 
-public class AlpacaQualitiesValidator : AbstractValidator<AlpacaQualities>
-{
-    public AlpacaQualitiesValidator()
-    {
-        RuleFor(x => x.Agility).InclusiveBetween(0, 10);
-        RuleFor(x => x.Speed).InclusiveBetween(0, 10);
-        RuleFor(x => x.Intelligence).InclusiveBetween(0, 10);
-        RuleFor(x => x.JumpingAbility).InclusiveBetween(0, 10);
-        RuleFor(x => x.WoolQuality).InclusiveBetween(0, 10);
-    }
-}
+// public class AlpacaQualitiesValidator : AbstractValidator<AlpacaQualities>
+// {
+//     public AlpacaQualitiesValidator()
+//     {
+//         RuleFor(x => x.Agility).InclusiveBetween(0, 10);
+//         RuleFor(x => x.Speed).InclusiveBetween(0, 10);
+//         RuleFor(x => x.Intelligence).InclusiveBetween(0, 10);
+//         RuleFor(x => x.JumpingAbility).InclusiveBetween(0, 10);
+//         RuleFor(x => x.WoolQuality).InclusiveBetween(0, 10);
+//     }
+// }
 

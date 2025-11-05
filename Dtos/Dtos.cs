@@ -6,13 +6,6 @@ public record HorseCreateDto(string Name, string ImgUrl);
 public record AlpacaShortDto(Guid Id, string Name, AlpacaBreed breed, Gender gender, string ImgUrl);
 
 public record AlpacaCreateDto(
-    AnimalCreateDto Animal,
-    AlpacaColor AlpacaColor,
-    AlpacaBreed AlpacaBreed,
-    AlpacaQualities AlpacaQualities
-);
-
-public record AnimalCreateDto(
     string Name,
     string? ImgUrl,
     double Age,
@@ -20,7 +13,6 @@ public record AnimalCreateDto(
     int Capacity,
     int Relationship,
     int Energy,
-    ICollection<PersonalityType> Personalities,
     Guid? OwnerId = null
 );
 
