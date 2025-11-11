@@ -37,4 +37,42 @@ public class UserController : ControllerBase
             return Ok(claims);
         }
 
+        [HttpPost("wallet-by-username")]
+        public async Task<IActionResult> GetOrCreateWalletByUsername([FromQuery] string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                return BadRequest("Username is required.");
+
+            var user = await _context.Users
+                .Where(u => u.UserName == username)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+                return NotFound("User not found.");
+
+            var ownerId = Guid.Parse(user.Id);
+
+            var wallet = await _context.Wallets
+                .FirstOrDefaultAsync(w => w.OwnerId == ownerId);
+
+            if (wallet == null)
+            {
+                wallet = new Wallet
+                {
+                    OwnerId = ownerId,
+                    Balance = 5000
+                };
+
+                _context.Wallets.Add(wallet);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(new
+            {
+                wallet.Id,
+                wallet.OwnerId,
+                wallet.Balance
+            });
+        }
+
 }

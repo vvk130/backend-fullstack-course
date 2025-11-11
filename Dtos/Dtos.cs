@@ -17,7 +17,7 @@ public record AlpacaCreateDto(
 );
 
 public record CompetitionDto(Guid Id, CompetitionType CompetitionType, DateTime EndTime);
-public record CompetitionCreateDto(CompetitionType CompetitionType, IList<FearItem> ScaryObject, DateTime StartTime, DateTime EndTime);
+public record CompetitionCreateDto(CompetitionType CompetitionType, DateTime StartTime, DateTime EndTime);
 
 public record BreedShortDto(Breed Breed);
 
