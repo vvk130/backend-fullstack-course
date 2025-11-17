@@ -73,6 +73,7 @@
 |03-11-2025 | | 1 | fixing the nested inherited validator
 |05-11-2025 | | 0,5 | validators
 |11-11-2025 | | | refactoring, timetracked in front end repo
+|17-11-2025|
 
 https://docs.automapper.io/en/stable/Mapping-inheritance.html
 
