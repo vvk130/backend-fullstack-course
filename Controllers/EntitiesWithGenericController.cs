@@ -139,11 +139,6 @@ namespace YourProject.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                // var user = await _userManager.GetUserAsync(User);
-
-                // if (user is null)
-                //     Forbid("User not found.");
-
                 var ifExists = false;
 
                 if (request.ItemType == ItemType.Horse){
