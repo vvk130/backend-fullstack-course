@@ -22,12 +22,14 @@ namespace YourProject.Controllers
         }
 
             [HttpPost("compete-horses")]
-            public async Task<IActionResult> CompeteHorses([FromBody] CompetitionRequest request, CancellationToken ct)
+            public async Task<IActionResult> CompeteHorses([FromBody] CompetitionFrontEndRequest request, CancellationToken ct)
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _competitionService.GetCompetitionResult(request.CompetitionId, request.HorseIds, ct);
+                var horseIds = new List<Guid> { request.HorseId1, request.HorseId2, request.HorseId3 };
+
+                var result = await _competitionService.GetCompetitionResult(request.CompetitionId, horseIds, ct);
                 return Ok(result);
             }
 
@@ -78,13 +80,6 @@ namespace YourProject.Controllers
 
         public AlpacasController(IGenericService<Alpaca> service, IMapper mapper) : base(service, mapper) {}
 
-        [HttpDelete("{id}")]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public override async Task<IActionResult> Delete(Guid id)
-        {
-            return BadRequest("Delete operation is not allowed for this entity.");
-        }
-
         // [HttpGet("search")]
         // public async Task<IActionResult> SearchAlpacas([FromQuery] PaginationSearchRequest request)
         // {
@@ -134,10 +129,12 @@ namespace YourProject.Controllers
             }
 
             [HttpPost("create-sales-ad")]
-            public async Task<IActionResult> Create([FromBody] SalesAdRequest request)
+            public async Task<ActionResult<OperationResult<SalesAd>>> Create([FromBody] SalesAdRequest request)
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                var result = new OperationResult<SalesAd>();
+                
+                // if (!ModelState.IsValid)
+                //     return BadRequest(ModelState);
 
                 var ifExists = false;
 
@@ -150,14 +147,18 @@ namespace YourProject.Controllers
                         .AnyAsync(h => h.Id == request.HorseId && h.OwnerId == request.OwnerId);
                 }
 
-                if (!ifExists)
-                    return BadRequest("You don't own this animal.");
+                if (!ifExists){
+                    result.AddError(nameof(request.HorseId), "You don't own this animal.");
+                    return BadRequest(result);
+                }
 
                 var ads = await _adService.FindAsync(a =>
                     a.HorseId == request.HorseId && a.EndTime > DateTime.UtcNow);
 
-                if (ads.Any())
-                    return BadRequest("This animal is already for sale, go to modify ad instead.");
+                if (ads.Any()){
+                    result.AddError(nameof(request.HorseId), "This animal is already for sale, go to modify ad instead.");
+                    return BadRequest(result);
+                }
 
                 var newAd = new SalesAd
                 {
@@ -170,7 +171,8 @@ namespace YourProject.Controllers
                 };
 
                 await _adService.AddAsync(newAd);
-                return Ok(newAd);
+                result.Value = newAd; 
+                return Ok(result);
             }
 
             [HttpPost("resolve-auctions")]

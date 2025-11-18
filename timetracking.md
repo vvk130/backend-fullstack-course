@@ -87,8 +87,9 @@ Total time spent: 69,7h
 - [x] Ordering in pagination (Upgrade version?) ✅
 - [ ] Competition service overfetching fix (fetches whole horse model?)
 - [ ] Docker setup
-- [ ] Host on Render
+- [x] Host on Netlify
 - [x] Add CancellationToken support ✅
+- [] Competition add horses in separate fields
 - [ ] Prepare documentation for the project
 - [ ] Get ready for submission
 
@@ -97,9 +98,16 @@ Total time spent: 69,7h
 |||
 
 Palautus checkpoints:
+[] Horse add, edit, delete
+[] Alpaca add, edit, delete
+[] Market ad add, edit, delete
+[] Compete horses
+[] Check comp stats
+[] Wallet add remove money
+[] Upload image
+
 [] Last step: ilmo / lomake /email ✅
 [] Remove comments, not used code ✅
-[] Deploy ✅
-[] Docker ✅
+[X] Deploy ✅
 [] Add total hours, link to timetracking ✅
 [] Add link to frontend repo ✅
