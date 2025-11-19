@@ -17,7 +17,7 @@ public record AlpacaCreateDto(
 );
 
 public record CompetitionDto(Guid Id, CompetitionType CompetitionType, DateTime EndTime);
-public record CompetitionCreateDto(CompetitionType CompetitionType, DateTime StartTime, DateTime EndTime);
+public record CompetitionCreateDto(CompetitionType CompetitionType, int DaysToStart, int DaysToEnd);
 
 public record BreedShortDto(Breed Breed);
 
@@ -75,7 +75,7 @@ public record CompetitionResult(List<RankedHorse> Results);
 public record WalletDto(Guid Id, int Balance, Guid OwnerId);
 public record WalletCreateDto(int Balance, Guid OwnerId);
 
-public record SalesAdDto(Guid Id, int Price, DateTime EndTime, Guid HorseId, Guid OwnerId);
+public record SalesAdDto(Guid Id, int Price, AdType AdType, ItemType? ItemType, DateTime EndTime, Guid HorseId, Guid OwnerId);
 public record SalesAdWithHorseDto(Guid Id, AdType type, int Price, DateTime EndTime, Guid OwnerId, HorseShortDto? horse);
 public record SalesAdShortDto<TDto>(
     Guid Id,

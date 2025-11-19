@@ -1,9 +1,11 @@
-## About application
+## About the application
 
 Game application where you can buy horses and alpacas and sell them
 
-Net backend: uses FluentValidation, Generic Controller, for deleting, adding, editing Items and fetching paginated list7
-Animal baseclass for Alpaca and Horse  
+Net backend: uses FluentValidation, Generic Controller, for deleting, adding, editing Items and fetching paginated list
+Animal baseclass for Alpaca and Horse
+
+
 
 ## 1 Register and log in
 Start by going to the homepage, register and then log in. You need a strong password and unique username. (There was a problem with the net login endpoints, so basically it just creates a user for you.)
@@ -13,3 +15,32 @@ Start by going to the homepage, register and then log in. You need a strong pass
 
 ## Upload an image
 
+## Update horse 
+
+## Update alpaca
+
+## Delete horse, delete alpaca
+
+## Sell horse / alpaca
+
+## Buy horse / alpaca
+
+## Create competition
+
+Go to competitions page, click link create new competition, then fill out the form
+
+![alt text](image-1.png)
+
+## Update competition
+
+## Compete horses
+
+Go to competitions, pick the competition and paste 3 horse ids in the fields (you don't have to own horses). Send the same form 3x times, to get better leaderboard results.
+
+![alt text](image-2.png)
+
+## Check the competition LeaderBoard
+
+Check the horse Guids to show up on the leaderboard
+
+![alt text](image-3.png)

@@ -15,10 +15,12 @@ namespace YourProject.Controllers
     {
         private readonly ICompetitionService _competitionService;
         private readonly IMapper _mapper;
+        private readonly AppDbContext _context;
 
-        public CompetitionsController(ICompetitionService competitionService, IGenericService<Competition> service, IMapper mapper) : base(service, mapper) 
+        public CompetitionsController(ICompetitionService competitionService, IGenericService<Competition> service, IMapper mapper, AppDbContext context) : base(service, mapper) 
         { 
             _competitionService = competitionService;
+            _context = context;
         }
 
             [HttpPost("compete-horses")]
@@ -33,30 +35,45 @@ namespace YourProject.Controllers
                 return Ok(result);
             }
 
+            [HttpPut("{id}")]
+            public override async Task<IActionResult> Update(Guid id, [FromBody] CompetitionCreateDto dto)
+            {
+                var competition = await _context.Competitions.FindAsync(id);
+                if (competition == null)
+                    return NotFound();
+
+                if (!ModelState.IsValid)
+                    return ValidationProblem(ModelState);
+
+                competition.CompetitionType = dto.CompetitionType;
+                competition.StartTime = DateTime.UtcNow.AddDays(dto.DaysToStart);
+                competition.EndTime = DateTime.UtcNow.AddDays(dto.DaysToEnd);
+
+                await _context.SaveChangesAsync();
+
+                return Ok(competition);
+            }
+
+            [HttpPost]
+            public override async Task<IActionResult> Create([FromBody] CompetitionCreateDto dto)
+            {
+                if (!ModelState.IsValid)
+                    return ValidationProblem(ModelState);
+
+                var competition = new Competition
+                {
+                    CompetitionType = dto.CompetitionType,
+                    StartTime = DateTime.UtcNow.AddDays(dto.DaysToStart),
+                    EndTime = DateTime.UtcNow.AddDays(dto.DaysToEnd)
+                };
+
+                _context.Competitions.Add(competition);
+                await _context.SaveChangesAsync();
+
+                return Ok(competition); 
+            }
+
     }
-
-    // [Route("api/horsebreeds")]
-    // public class HorseBreedsController : GenericController<HorseBreed, HorseCreateBreed, BreedShortDto>
-    // {
-    //     private readonly IMapper _mapper;
-
-    //     public HorseBreedsController(IGenericService<HorseBreed> service, IMapper mapper) : base(service, mapper) {}
-
-    // }
-
-    // [Route("api/levels")]
-    // public class LevelsController : GenericController<Level, LevelCreateDto, LevelShortDto>
-    // {
-    //     private readonly IMapper _mapper;
-        
-    //     public LevelsController(IGenericService<Level> service, IMapper mapper) : base(service, mapper) { }
-
-    //     // [HttpPut("clean-stable")]
-    //     // public override async Task<IActionResult> CleanStable(Guid userId)
-    //     // {
-            
-    //     // }
-    // }
 
     [Route("api/wallet")]
     public class WalletController : GenericController<Wallet, WalletCreateDto, WalletDto>
@@ -167,7 +184,8 @@ namespace YourProject.Controllers
                     Price = request.Price,
                     StartTime = DateTime.UtcNow,
                     EndTime = DateTime.UtcNow.AddDays(request.daysAdIsValid),
-                    AdType = request.AdType
+                    AdType = request.AdType,
+                    ItemType = request.ItemType
                 };
 
                 await _adService.AddAsync(newAd);

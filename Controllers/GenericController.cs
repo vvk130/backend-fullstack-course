@@ -35,7 +35,7 @@ public class GenericController<TEntity, TCreateDto, TDto> : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] TCreateDto dto)
+    public virtual async Task<IActionResult> Create([FromBody] TCreateDto dto)
     {        
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -46,7 +46,7 @@ public class GenericController<TEntity, TCreateDto, TDto> : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] TCreateDto dto)
+    public virtual async Task<IActionResult> Update(Guid id, [FromBody] TCreateDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

@@ -89,7 +89,7 @@ Total time spent: 69,7h
 - [ ] Docker setup
 - [x] Host on Netlify
 - [x] Add CancellationToken support ✅
-- [] Competition add horses in separate fields
+- [x] Competition add horses in separate fields
 - [ ] Prepare documentation for the project
 - [ ] Get ready for submission
 

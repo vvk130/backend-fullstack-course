@@ -5,14 +5,19 @@ public class CompetitionCreateDtoValidator : AbstractValidator<CompetitionCreate
     public CompetitionCreateDtoValidator()
     {
         RuleFor(x => x.CompetitionType)
-            .IsInEnum().WithMessage("Invalid CompetitionType");
+            .IsInEnum()
+            .WithMessage("Invalid CompetitionType.");
 
-        RuleFor(x => x.StartTime)
-            .LessThan(x => x.EndTime)
-            .WithMessage("Start time must be before end time.");
+        RuleFor(x => x.DaysToStart)
+            .GreaterThanOrEqualTo(0)
+            .WithMessage("DaysToStart must be 0 or greater.");
 
-        RuleFor(x => x.EndTime)
-            .GreaterThan(x => x.StartTime)
-            .WithMessage("End time must be after start time.");
+        RuleFor(x => x.DaysToEnd)
+            .GreaterThan(1)
+            .WithMessage("DaysToEnd must be greater than 1.");
+
+        RuleFor(x => x)
+            .Must(x => x.DaysToStart < x.DaysToEnd)
+            .WithMessage("DaysToStart must be less than DaysToEnd.");
     }
 }
