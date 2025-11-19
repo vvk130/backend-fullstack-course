@@ -15,13 +15,15 @@ Start by going to the homepage, register and then log in. You need a strong pass
 
 ## Upload an image
 
-## Update horse 
+## Update horse/alpaca
 
-## Update alpaca
+Go to an alpaca's page, select the Update tab, and update a field of your choice. The serverside validation let's you know if the data you input is valid. Horses have less field's that can be updated.  
+
+![alt text](image-10.png)
 
 ## Delete horse, delete alpaca
 
-Go to an animal's page, click Delete, and then click delete button
+Go to an animal's page, click Delete, and then click delete button. There is no cascading delete implemented, so salesads and leaderboard results are shown even though the animal has been deleted.
 
 ![alt text](image-7.png)
 
