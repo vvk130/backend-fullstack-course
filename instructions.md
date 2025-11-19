@@ -29,6 +29,12 @@ You can sell horses or alpacas that you own, that are not already for sale. Go t
 
 ## Buy horse / alpaca
 
+Then you can buy the animal you just bought click Buy/bid link. Then fill out the form with correct price and ItemType. If the ad was NOT an auction, it should disappear from the list.
+
+![alt text](image-5.png)
+
+![alt text](image-6.png)
+
 ## Create competition
 
 Go to competitions page, click link create new competition, then fill out the form
