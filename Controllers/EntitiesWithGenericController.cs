@@ -35,6 +35,25 @@ namespace YourProject.Controllers
                 return Ok(result);
             }
 
+            [HttpGet("dto/{id}")]
+            public async Task<IActionResult> GetCompetition(Guid id)
+            {
+                var competition = await _context.Competitions.FindAsync(id);
+                if (competition == null)
+                    return NotFound();
+
+                var now = DateTime.UtcNow;
+
+                var dto = new CompetitionCreateDto(
+                    competition.CompetitionType,
+                    DaysToStart: (int)Math.Round((competition.StartTime - now).TotalDays),
+                    DaysToEnd: (int)Math.Round((competition.EndTime - now).TotalDays)
+                );
+
+                return Ok(dto);
+            }
+
+
             [HttpPut("{id}")]
             public override async Task<IActionResult> Update(Guid id, [FromBody] CompetitionCreateDto dto)
             {

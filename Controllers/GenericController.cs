@@ -27,7 +27,7 @@ public class GenericController<TEntity, TCreateDto, TDto> : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<TEntity>> GetById(Guid id)
+    public virtual async Task<ActionResult<TEntity>> GetById(Guid id)
     {
         var entity = await _genericService.GetByIdAsync(id);
         if (entity == null) return NotFound();
