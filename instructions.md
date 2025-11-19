@@ -23,6 +23,10 @@ Start by going to the homepage, register and then log in. You need a strong pass
 
 ## Sell horse / alpaca
 
+You can sell horses or alpacas that you own, that are not already for sale. Go to your horses pick an id and paste to form. You get your userId from the bar below navigation. The ItemType needs to be Horse or Alpaca, depending on which animal you are selling. 
+
+![alt text](image-4.png)
+
 ## Buy horse / alpaca
 
 ## Create competition
