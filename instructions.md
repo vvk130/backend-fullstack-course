@@ -7,7 +7,7 @@ Animal baseclass for Alpaca and Horse
 
 
 
-## 1 Register and log in
+## Register and log in
 Start by going to the homepage, register and then log in. You need a strong password and unique username. (There was a problem with the net login endpoints, so basically it just creates a user for you.)
 ![alt text](image.png)
 
@@ -21,6 +21,14 @@ Start by going to the homepage, register and then log in. You need a strong pass
 
 ## Delete horse, delete alpaca
 
+Go to an animal's page, click Delete, and then click delete button
+
+![alt text](image-7.png)
+
+![alt text](image-8.png)
+
+![alt text](image-9.png)
+
 ## Sell horse / alpaca
 
 You can sell horses or alpacas that you own, that are not already for sale. Go to your horses pick an id and paste to form. You get your userId from the bar below navigation. The ItemType needs to be Horse or Alpaca, depending on which animal you are selling. 
@@ -29,7 +37,7 @@ You can sell horses or alpacas that you own, that are not already for sale. Go t
 
 ## Buy horse / alpaca
 
-Then you can buy the animal you just bought click Buy/bid link. Then fill out the form with correct price and ItemType. If the ad was NOT an auction, it should disappear from the list.
+Then you can buy the animal you just bought by clicking the Buy/bid link. Then fill out the form with correct price and ItemType. If the ad was NOT an auction, it should disappear from the list.
 
 ![alt text](image-5.png)
 
