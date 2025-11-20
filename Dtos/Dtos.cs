@@ -83,6 +83,18 @@ public record SalesAdShortDto<TDto>(
     TDto? Item
 );
 
+public class HorseCreateForUserDto
+{
+    public Guid Id { get; set; }
+    public Breed? Breed { get; set; } = null;
+}
+
+public class AlpacaCreateForUserDto
+{
+    public Guid Id { get; set; }
+    public AlpacaBreed? AlpacaBreed { get; set; } = null;
+}
+
 public record SalesAdCreateDto(int Price, DateTime EndTime, Guid HorseId, Guid OwnerId);
 
 public record CompResultDto(Guid Id, Guid HorseId, string HorseName, int Ranking, double MoneyWon);

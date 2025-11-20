@@ -55,17 +55,23 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
         }
 
         [HttpPost("create-horse")]
-        public IActionResult CreateHorse(Guid id, Breed? breed = null)
+        public IActionResult CreateHorse([FromBody] HorseCreateForUserDto dto)
         {
-            var horse = _horseService.CreateHorse(id, breed);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var horse = _horseService.CreateHorse(dto.Id, dto.Breed);
 
             return Ok(new { horse }); 
         }
 
         [HttpPost("create-alpaca")]
-        public IActionResult CreateAlpaca(Guid id, AlpacaBreed? breed = null)
+        public IActionResult CreateAlpaca([FromBody] AlpacaCreateForUserDto dto)
         {
-            var alpaca = _horseService.CreateAlpaca(id, breed);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var alpaca = _horseService.CreateAlpaca(dto.Id, dto.AlpacaBreed);
 
             return Ok(new { alpaca }); 
         }

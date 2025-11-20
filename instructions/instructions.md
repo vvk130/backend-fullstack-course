@@ -5,17 +5,15 @@ Game application where you can buy horses and alpacas and sell them
 Net backend: uses FluentValidation, Generic Controller, for deleting, adding, editing Items and fetching paginated list
 Animal baseclass for Alpaca and Horse
 
-
-
 ## Register and log in
 Start by going to the homepage, register and then log in. You need a strong password and unique username. (There was a problem with the net login endpoints, so basically it just creates a user for you.)
 ![alt text](image.png)
 
 ## Create horse / create alpaca
 
-## Create foal for horse / alpaca
+Go to your alpacas and create and alpaca. Same for horses. 
 
-## Upload an image
+![alt text](image-16.png)
 
 ## Change image for a horse
 
@@ -44,7 +42,7 @@ You can sell horses or alpacas that you own, that are not already for sale. Go t
 
 ## Buy horse / alpaca
 
-Then you can buy the animal you just bought by clicking the Buy/bid link. Then fill out the form with correct price and ItemType. If the ad was NOT an auction, it should disappear from the list.
+Then you can buy the animal you just bought by clicking the Buy/bid link. Then fill out the form with correct price and ItemType. If the ad was NOT an auction, it should disappear from the list. If the ad is a Auction type, the price is updated to the higher price. In Auctions the bid needs to be 200 higher than the current price of the ad. If the ad is not an auction, the bid amount will be ignored. 
 
 ![alt text](image-5.png)
 
