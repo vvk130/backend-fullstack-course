@@ -12,11 +12,11 @@ Start by going to the homepage, register and then log in. You need a strong pass
 ## Create horse / create alpaca
 
 Go to your alpacas and create an alpaca. Same for horses. 
-Allowed alpaca breeds:         
+ - Allowed alpaca breeds:         
         Unknown,
         Huacaya,
         Suri
-Allowed horse breeds:
+- Allowed horse breeds:
     Unknown,
     Arabian,
     Thoroughbred,
