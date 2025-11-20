@@ -57,13 +57,13 @@ namespace GameModel
                 ))
                 .ToList();
 
-            await CreateCompResults(rankedHorses, ct); //put in rabbitMQ?
+            await CreateCompResults(rankedHorses, ct); 
 
             var winners = rankedHorses
                             .Take(3)
                             .ToList();
 
-            await PayWinners(winners, ct); //put in rabbitMQ?
+            await PayWinners(winners, ct);
 
             result.Value = new CompetitionResult(rankedHorses);
             return result;

@@ -10,8 +10,6 @@ using System.Reflection;
 using Newtonsoft.Json.Converters;
 using System.Text.Json.Serialization;
 
-// using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,31 +28,7 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>(options =>
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = true;
 })
-// .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<AppDbContext>();
-// .AddApiEndpoints();
-
-// builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
-// .AddJwtBearer(jwtOptions => 
-// {
-//     jwtOptions.Authority = ""
-//     jwtOptions.Audience = ""
-// });
-// 
-
-// builder.Services.Configure<Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions>(
-//     IdentityConstants.BearerScheme,
-//     options => {
-//         options.RequireHttpsMetadata = false;
-//     });
-
-// builder.Services.AddAuthorizationBuilder();
-
-// builder.Services.ConfigureApplicationCookie(options =>
-// {
-//     options.ExpireTimeSpan = TimeSpan.FromHours(12); 
-//     options.SlidingExpiration = true;                
-// });
 
 builder.Services.AddSingleton(provider =>
 {
@@ -109,7 +83,6 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowRabbitMQ", policy =>
     {
         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-            // ONLY TESTING
     });
 });
 
@@ -123,12 +96,6 @@ builder.Services.AddControllers()
 var assembly = Assembly.GetExecutingAssembly();
 
 builder.Services.AddValidatorsFromAssembly(assembly);
-
-// builder.Services.AddHangfire(config =>
-// {
-//     config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("Default"));
-// });
-// builder.Services.AddHangfireServer();
 
 builder.Services.AddScoped<IHorseService, HorseService>();
 builder.Services.AddScoped<IHorseBreedService, HorseBreedService>();
@@ -150,66 +117,10 @@ var app = builder.Build();
 
 app.UseCors("AllowRabbitMQ");
 
-// app.UseHangfireDashboard();
-// app.UseHangfireServer();
 app.MapIdentityApi<ApplicationUser>();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-// app.Lifetime.ApplicationStarted.Register(async () =>
-// {
-//     using var scope = app.Services.CreateScope();
-//     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-//     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    
-//     string[] roles = [ "Admin", "User" ];
-
-//     foreach (var role in roles)
-//     {
-//         if (!await roleManager.RoleExistsAsync(role))
-//         {
-//             await roleManager.CreateAsync(new IdentityRole(role));
-//         }
-//     }
-
-//     var adminEmail = "admin@example.com";
-//     var adminPassword = "VeryVeryGoodPassword123!"; 
-
-//     var adminUser = await userManager.FindByEmailAsync(adminEmail);
-//     if (adminUser == null)
-//     {
-//         adminUser = new ApplicationUser
-//         {
-//             UserName = adminEmail,
-//             Email = adminEmail,
-//             EmailConfirmed = true
-//         };
-
-//         var result = await userManager.CreateAsync(adminUser, adminPassword);
-//         if (result.Succeeded)
-//         {
-//             await userManager.AddToRoleAsync(adminUser, "Admin");
-//         }
-//         }
-//         else
-//         {
-//             if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
-//             {
-//                 await userManager.AddToRoleAsync(adminUser, "Admin");
-//             }
-//         }
-
-//         var basicUser = await userManager.FindByEmailAsync("my@email.com");
-
-//         // var allUsers = userManager.Users.ToList();
-
-//         if (!await userManager.IsInRoleAsync(basicUser, "User"))
-//         {
-//             await userManager.AddToRoleAsync(basicUser, "User");
-//         }
-
-// });
 
 app.UseSwagger();
 app.UseSwaggerUI();

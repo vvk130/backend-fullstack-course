@@ -181,8 +181,8 @@ namespace YourProject.Controllers
             {
                 var result = new OperationResult<SalesAd>();
                 
-                // if (!ModelState.IsValid)
-                //     return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
                 var ifExists = false;
 
@@ -380,21 +380,13 @@ namespace YourProject.Controllers
     public class QuestionsController : GenericController<Question, QuestionCreateDto, QuestionDto>
     {
             private readonly IGenericService<Question> _adService;
-            // private readonly AppDbContext _context;
-            // private readonly UserManager<ApplicationUser> _userManager;
             private readonly IMapper _mapper;
 
             public QuestionsController(
                 AppDbContext context,
-                // UserManager<ApplicationUser> userManager,
                 IGenericService<Question> adService,
                 IMapper mapper) : base(adService, mapper)
             {
-                // _adService = adService;
-                // _horseService = horseService;
-                // _walletService = walletService;
-                // _context = context;
-                // _userManager = userManager;
             }
 
     }

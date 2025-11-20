@@ -14,17 +14,6 @@ public class PuzzleController : GenericController<PuzzleAnswer, PuzzleAnswerCrea
         _puzzleService = puzzleService;
     }
 
-    // [HttpGet(puzzle-pieces-paginated)]
-    // public async Task<IActionResult> PuzzlePiecesPaginated([FromQuery] Guid id)
-    // {
-    //     var puzzleExists = await _puzzleService.GetByIdAsync(request.Id);
-        
-    //     if (puzzleExists)
-    //         return BadRequest("Puzzle not found");
-
-        // return await _repository.GetPaginatedAsync<TDto>(request)
-    // }
-
     [HttpPost("generate-puzzle")]
     public async Task<IActionResult> CreatePuzzle([FromBody] string imgUrl)
     {
@@ -39,10 +28,6 @@ public class PuzzleController : GenericController<PuzzleAnswer, PuzzleAnswerCrea
     [HttpPost("check-all-pieces")]
     public async Task<IActionResult> CheckAllPieces([FromBody] PuzzleCorrectionRequest request)
     {
-        // var puzzleExists = await _puzzleService.GetByIdAsync(request.Id);
-        
-        // if (puzzleExists)
-        //     return BadRequest("Puzzle not found");
 
         var isCorrect = await _puzzleService.CheckAllPieces(request);
 

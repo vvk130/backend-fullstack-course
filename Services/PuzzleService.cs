@@ -37,16 +37,6 @@ public class PuzzleService : IPuzzleService
     {
         var result = new OperationResult<PuzzleUnsolved>();
 
-        // var resizeResult = await _imageService.ResizeImageAsync(originalImgUrl, 500, 500);
-
-        // if(!resizeResult.Success)
-        // {
-        //     result.AddError("file", "Image not found");
-        //     return result;
-        // }
-
-        // var resizedImgUrl = resizeResult.Value;
-
         var pieces = GeneratePuzzlePieces(originalImgUrl);
 
         var puzzleAnswer = new PuzzleAnswer

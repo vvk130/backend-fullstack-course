@@ -20,9 +20,6 @@ namespace GameModel
 
         public async Task<OperationResult<Animal>> FoalTaskHandler(Guid SireId, Guid DamId, ItemType type){
             var result = new OperationResult<Animal>();
-            
-            // TODO Check previous foal - is it too soon
-            // TODO Create FoalingEvent db 
 
             if (!Enum.IsDefined(typeof(ItemType), type))
             {

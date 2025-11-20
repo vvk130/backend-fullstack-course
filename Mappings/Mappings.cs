@@ -23,12 +23,6 @@ public class MappingProfile : Profile
         CreateMap<Competition, CompetitionDto>().ReverseMap();
         CreateMap<Competition, CompetitionCreateDto>().ReverseMap();
         
-        // CreateMap<Level, LevelShortDto>().ReverseMap();
-        // CreateMap<Level, LevelCreateDto>().ReverseMap();
-        
-        // CreateMap<Breed, BreedShortDto>().ReverseMap();
-        // CreateMap<Breed, BreedCreateDto>().ReverseMap();
-        
         CreateMap<PuzzleAnswer, PuzzleAnswerShortDto>().ReverseMap();
         CreateMap<PuzzleAnswer, PuzzleAnswerCreateDto>().ReverseMap();
 

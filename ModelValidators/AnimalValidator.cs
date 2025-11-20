@@ -29,39 +29,10 @@ public class AnimalCreateDtoValidator : AbstractValidator<AlpacaCreateDto>
         RuleFor(x => x.Relationship)
             .InclusiveBetween(0, 100).WithMessage("Relationship must be between 0 and 100.");
 
-        // RuleFor(x => x.Personalities)
-        //     .NotNull().WithMessage("Personalities cannot be null.")
-        //     .Must(p => p.Count == 3).WithMessage("There must be exactly 3 personalities.")
-        //     .ForEach(personality => personality.SetValidator(new PersonalityTypeValidator()));
-
         RuleFor(x => x.OwnerId)
             .Must(id => !id.HasValue || id.Value != Guid.Empty)
             .WithMessage("OwnerId must be a valid GUID if provided.");
 
-        // RuleFor(x => x.SireId)
-        //     .Must(id => id == null)
-        //     .WithMessage("SireId cannot be set manually.");
-
-        // RuleFor(x => x.DamId)
-        //     .Must(id => id == null)
-        //     .WithMessage("DamId cannot be set manually.");
-
-        
-        // RuleFor(x => x.Contact).SetInheritanceValidator(v => 
-        // {
-        // v.Add<Alpaca>(new AlpacaValidator());
-        // });
-
     }
 }
 }
-// public class PersonalityTypeValidator : AbstractValidator<PersonalityType>
-// {
-//     public PersonalityTypeValidator()
-//     {
-//         RuleFor(x => x.PersonalityTrait).IsInEnum().WithMessage("Invalid PersonalityTrait.");
-//         RuleFor(x => x.Severity).InclusiveBetween(0, 10).WithMessage("Severity must be between 0 and 10.");
-//         RuleFor(x => x.Discovered).NotNull().WithMessage("Discovered is required.");
-//     }
-// }
-// }

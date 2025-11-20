@@ -106,20 +106,6 @@ namespace GameModel
                 .Where(a => a.ItemType == type)
                 .OrderByDescending(a => a.EndTime);
 
-            // var items = _context.Set<TEntity>();
-                            
-            // var query = from ad in ads
-            //             join item in items on ad.HorseId equals EF.Property<Guid>(item, "Id")
-            //             select new SalesAdShortDto<TDto>
-            //             {
-            //                 Id = ad.Id,
-            //                 AdType = ad.AdType,
-            //                 Price = ad.Price,
-            //                 EndTime = ad.EndTime,
-            //                 OwnerId = ad.OwnerId,
-            //                 Item = _mapper.Map<TDto>(item) 
-            //             };
-
             var totalCount = await ads.CountAsync();
 
             var paginated = await ads

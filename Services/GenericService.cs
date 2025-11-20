@@ -56,9 +56,6 @@ public class GenericService<T> : IGenericService<T> where T : class
     public async Task<int> SaveChangesAsync()
         => await _repository.SaveChangesAsync();    
     
-    // public async Task<PaginatedResult<TDto>> GetPaginatedAsync<TDto>(PaginationRequest request)
-    //     => await _repository.GetPaginatedAsync<TDto>(request);
-    
     public async Task<PaginatedResult<TDto>> GetPaginatedAsync<TDto>(PaginationRequest request, Expression<Func<T, bool>>? predicate = null)
         => await _repository.GetPaginatedAsync<TDto>(request, predicate);
 

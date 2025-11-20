@@ -138,23 +138,17 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
         {
             try
             {
-                // Retrieve all horses
                 var allHorses = await _context.Horses.ToListAsync();
 
                 if (!allHorses.Any())
                     return NotFound("No horses found to delete.");
-
-                // Remove all
                 _context.Horses.RemoveRange(allHorses);
-
-                // Commit changes
                 await _context.SaveChangesAsync();
 
                 return Ok($"{allHorses.Count} horses deleted successfully.");
             }
             catch (Exception ex)
             {
-                // Log the exception if you have logging
                 return StatusCode(500, $"Error deleting horses: {ex.Message}");
             }
         }
