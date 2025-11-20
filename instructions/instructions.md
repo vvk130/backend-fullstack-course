@@ -11,7 +11,33 @@ Start by going to the homepage, register and then log in. You need a strong pass
 
 ## Create horse / create alpaca
 
-Go to your alpacas and create and alpaca. Same for horses. 
+Go to your alpacas and create an alpaca. Same for horses. 
+Allowed alpaca breeds:         
+        Unknown,
+        Huacaya,
+        Suri
+Allowed horse breeds:
+    Unknown,
+    Arabian,
+    Thoroughbred,
+    QuarterHorse,
+    Andalusian,
+    Appaloosa,
+    Mustang,
+    Friesian,
+    Hanoverian,
+    Clydesdale,
+    Shire,
+    Belgian,
+    Percheron,
+    Paint,
+    ShetlandPony,
+    WelshPony,
+    Icelandic,
+    Fjord,
+    AkhalTeke,
+    Lusitano,
+    Finnhorse
 
 ![alt text](image-16.png)
 
