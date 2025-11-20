@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace YourProject.Controllers
 {
@@ -113,29 +114,40 @@ namespace YourProject.Controllers
     public class AlpacasController : GenericController<Alpaca, AlpacaCreateDto, AlpacaShortDto>
     {
         private readonly IMapper _mapper;
+        private readonly IGenericService<Alpaca> _genericService;
+        private readonly AppDbContext _context;
 
-        public AlpacasController(IGenericService<Alpaca> service, IMapper mapper) : base(service, mapper) {}
+        public AlpacasController(
+            AppDbContext context,
+            IGenericService<Alpaca> genericService,
+            IMapper mapper)
+            : base(genericService, mapper) 
+        {
+            _genericService = genericService;
+            _mapper = mapper;
+            _context = context;
+        }
 
-        // [HttpGet("search")]
-        // public async Task<IActionResult> SearchAlpacas([FromQuery] PaginationSearchRequest request)
-        // {
-        //     if (!ModelState.IsValid)
-        //         return BadRequest(ModelState); 
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchAlpacas([FromQuery] PaginationAlpacaSearchRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState); 
 
-        //     var filter = request.Filter;
+            var filter = request.Filter;
 
-        //     Expression<Func<Alpaca, bool>> predicate = h =>
-        //         (filter.Genders == null || filter.Genders.Contains(h.Gender)) &&
-        //         (filter.AlpacaBreeds == null || filter.AlpacaBreeds.Contains(h.AlpacaBreed)) &&
-        //         (!filter.MinAge.HasValue || h.Age >= filter.MinAge) &&
-        //         (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge) &&
-        //         (!filter.OwnerId.HasValue || h.OwnerId == filter.OwnerId) &&
-        //         (!filter.SireId.HasValue || h.SireId == filter.SireId) &&
-        //         (!filter.DamId.HasValue || h.DamId == filter.DamId);
+            Expression<Func<Alpaca, bool>> predicate = h =>
+                (filter.Genders == null || filter.Genders.Contains(h.Gender)) &&
+                (filter.AlpacaBreeds == null || filter.AlpacaBreeds.Contains(h.AlpacaBreed)) &&
+                (!filter.MinAge.HasValue || h.Age >= filter.MinAge) &&
+                (!filter.MaxAge.HasValue || h.Age <= filter.MaxAge) &&
+                (!filter.OwnerId.HasValue || h.OwnerId == filter.OwnerId) &&
+                (!filter.SireId.HasValue || h.SireId == filter.SireId) &&
+                (!filter.DamId.HasValue || h.DamId == filter.DamId);
 
-        //     var result = await _genericService.GetPaginatedAsync<AlpacaShortDto>(request.Pagination, predicate);
-        //     return Ok(result);
-        // }
+            var result = await _genericService.GetPaginatedAsync<AlpacaShortDto>(request.Pagination, predicate);
+            return Ok(result);
+        }
 
     }
 

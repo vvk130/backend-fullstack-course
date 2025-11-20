@@ -43,6 +43,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<Question>()
                     .OwnsMany(p => p.Options);
+
 }
 
 }

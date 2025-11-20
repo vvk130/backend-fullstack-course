@@ -33,14 +33,6 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
             _context = context;
         }
 
-        //testing testing
-        [HttpGet("all-animals")]
-        public IActionResult GetAllAnimals()
-        {
-            var animals = _context.Animals.ToList();
-            return Ok(new {items = animals});
-        }
-
         [HttpGet("random-name")]
         public IActionResult GetRandomHorseName(Gender gender)
         {

@@ -11,25 +11,30 @@ Animal baseclass for Alpaca and Horse
 Start by going to the homepage, register and then log in. You need a strong password and unique username. (There was a problem with the net login endpoints, so basically it just creates a user for you.)
 ![alt text](image.png)
 
-## Create a random horse and alpaca
+## Create horse / create alpaca
+
+## Create foal for horse / alpaca
 
 ## Upload an image
+
+## Change image for a horse
+
+Go to images page, and copy url of an image, go back to horse individual page and update the imageUrl
+
+![alt text](image-14.png)
+![alt text](image-15.png)
+
+## Clean the stable
+
+Click the link Clean Stable in the navigation, and then click the button to clean the stable. Do you get some money for doing it? No. Maybe you get some good karma, who knows? 
+
+![alt text](image-13.png)
 
 ## Update horse/alpaca
 
 Go to an alpaca's page, select the Update tab, and update a field of your choice. The serverside validation let's you know if the data you input is valid. Horses have less field's that can be updated.  
 
 ![alt text](image-10.png)
-
-## Delete horse, delete alpaca
-
-Go to an animal's page, click Delete, and then click delete button. There is no cascading delete implemented, so salesads and leaderboard results are shown even though the animal has been deleted.
-
-![alt text](image-7.png)
-
-![alt text](image-8.png)
-
-![alt text](image-9.png)
 
 ## Sell horse / alpaca
 
@@ -70,3 +75,13 @@ Go to competitions, pick the competition and paste 3 horse ids in the fields (yo
 Check the horse Guids to show up on the leaderboard
 
 ![alt text](image-3.png)
+
+## Delete horse, delete alpaca
+
+Go to an animal's page, click Delete, and then click delete button. There is no cascading delete implemented, so salesads and leaderboard results are shown even though the animal has been deleted. Therefore it is recommended to do the deletions as a last step.
+
+![alt text](image-7.png)
+
+![alt text](image-8.png)
+
+![alt text](image-9.png)

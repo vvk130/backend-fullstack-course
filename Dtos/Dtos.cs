@@ -40,19 +40,16 @@ public record HorseFilterDto
     public Guid? DamId { get; init; }
 }
 
-// public record CompFilterDto
-// {
-//     public List<Gender>? Genders { get; init; }
-//     public List<Breed>? Breeds { get; init; }
-//     public double? MinAge { get; init; }
-//     public double? MaxAge { get; init; }
-//     public Guid? OwnerId { get; init; }
-// }
-
-// public record SalesAdFilterDto
-// {
-
-// }
+public record AlpacaFilterDto
+{
+    public List<Gender>? Genders { get; init; }
+    public List<AlpacaBreed>? AlpacaBreeds { get; init; }
+    public double? MinAge { get; init; }
+    public double? MaxAge { get; init; }
+    public Guid? OwnerId { get; init; }
+    public Guid? SireId { get; init; }
+    public Guid? DamId { get; init; }
+}
 
 public record ItemCreatedEvent(
     Guid ItemId,
