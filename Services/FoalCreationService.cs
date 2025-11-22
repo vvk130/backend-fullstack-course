@@ -30,16 +30,17 @@ namespace GameModel
             var sire = await GetAnimalByTypeAsync(SireId, type);
             var dam  = await GetAnimalByTypeAsync(DamId, type);
 
-            if (sire.GetType() != dam.GetType())
-                result.AddError("Not same species", "Sire and Dam must be of the same type");
-
-            // if ()
-
             if (sire == null)
                 result.AddError(nameof(sire.Id), "Sire not found.");
 
             if (dam == null)
                 result.AddError(nameof(dam.Id), "Dam not found.");
+
+            if (!result.Success)
+                return result;
+
+            if (sire.GetType() != dam.GetType())
+                result.AddError(nameof(sire.Id), "Sire and Dam must be of the same animal type");
 
             if (sire?.Gender != Gender.Stallion)
                 result.AddError(nameof(sire.Gender), "Sire must be a stallion.");

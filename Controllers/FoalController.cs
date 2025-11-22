@@ -19,7 +19,7 @@ public class FoalsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateFoal([FromBody] FoalHorseRequestDto Request, ItemType type)
+    public async Task<IActionResult> CreateFoal([FromBody] FoalHorseRequestDto Request)
     {
         var result = await _foalCreationService.FoalTaskHandler(Request.SireId, Request.DamId, Request.type);
 

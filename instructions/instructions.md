@@ -41,6 +41,13 @@ Go to your alpacas and create an alpaca. Same for horses.
 
 ![alt text](image-16.png)
 
+## Breed horses and alpacas
+
+The animals need to be over 3 years old, they don't need to be the same breed, and the user doesn't need to owne the animals in question. The owner of the foal will the same as the owner of mare.
+Covering can just randomly fail, and then the user gets an error "natural failure". Then just retry. 
+
+![alt text](image-17.png)
+
 ## Change image for a horse
 
 Go to images page, and copy url of an image, go back to horse individual page and update the imageUrl
