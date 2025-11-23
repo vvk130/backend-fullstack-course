@@ -43,10 +43,15 @@ Go to your alpacas and create an alpaca. Same for horses.
 
 ## Breed horses and alpacas
 
-The animals need to be over 3 years old, they don't need to be the same breed, and the user doesn't need to owne the animals in question. The owner of the foal will the same as the owner of mare.
-Covering can just randomly fail, and then the user gets an error "natural failure". Then just retry. 
+The animals need to be over 3 years old, they don't need to be the same breed, and the user doesn't need to own the animals in question. The owner of the foal will the same as the owner of mare.
+Covering can just randomly fail, and then the user gets an error "natural failure". Then just retry. To see the foal, choose the mare or stallion, and go to the foals tab.
 
 ![alt text](image-17.png)
+![alt text](image-19.png)
+
+Horses have filters, alpacas have the backend filter but not implemented in the front end.
+
+![alt text](image-20.png)
 
 ## Change image for a horse
 
@@ -61,9 +66,9 @@ Click the link Clean Stable in the navigation, and then click the button to clea
 
 ![alt text](image-13.png)
 
-## Update horse/alpaca
+## Update horse/alpaca information
 
-Go to an alpaca's page, select the Update tab, and update a field of your choice. The serverside validation let's you know if the data you input is valid. Horses have less field's that can be updated.  
+Go to an alpaca's page, select the Update tab, and update a field of your choice. The serverside validation let's you know if the data you input is valid. Horses have less field's that can be updated. If the fields are null, like for images, the form submits the name 2 times instead, so don't leave empty fields as the form does not handle them gracefully. 
 
 ![alt text](image-10.png)
 
@@ -97,9 +102,15 @@ Choose competition to update, edit the competition and follow the serverside val
 
 ## Compete horses
 
-Go to competitions, pick the competition and paste 3 horse ids in the fields (you don't have to own horses). Send the same form 3x times, to get better leaderboard results.
+Go to competitions, pick the competition and paste 3 horse ids in the fields (you don't have to own horses). Send the same form 3x times, to get better leaderboard results. Some error so the validation alert is empty, but the form still works. 
 
 ![alt text](image-2.png)
+
+## Check the Results tab in the Horse page
+
+Check the Results tab to see how the competitions went.
+
+![alt text](image-21.png)
 
 ## Check the competition LeaderBoard
 
@@ -109,7 +120,7 @@ Check the horse Guids to show up on the leaderboard
 
 ## Delete horse, delete alpaca
 
-Go to an animal's page, click Delete, and then click delete button. There is no cascading delete implemented, so salesads and leaderboard results are shown even though the animal has been deleted. Therefore it is recommended to do the deletions as a last step.
+Go to an animal's page, click Delete, and then click delete button. There is no cascading delete implemented, so salesads and leaderboard results are shown even though the animal has been deleted. Therefore, it is recommended to do the deletions as a last step.
 
 ![alt text](image-7.png)
 

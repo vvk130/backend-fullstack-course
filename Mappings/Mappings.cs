@@ -44,6 +44,8 @@ public class MappingProfile : Profile
         CreateMap<AlpacaCreateDto, Animal>().ReverseMap().IncludeAllDerived();
         CreateMap<AlpacaCreateDto, Alpaca>().ReverseMap();
 
+        CreateMap<CompResult, CompResultPaginatedDto>().ReverseMap();
+
     }
 }
 }

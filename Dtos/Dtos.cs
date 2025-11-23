@@ -29,6 +29,12 @@ public record class FileUploadRequestDto
     public required string FolderName { get; init; }
 }
 
+public record CompResultFilterDto
+{
+    public Guid? HorseId { get; init; }
+}
+
+
 public record HorseFilterDto
 {
     public List<Gender>? Genders { get; init; }
@@ -70,7 +76,7 @@ public record RankedHorse(int Ranking, HorseShortDto Horse, Guid? OwnerId, Guid 
 public record CompetitionResult(List<RankedHorse> Results);
 
 public record WalletDto(Guid Id, int Balance, Guid OwnerId);
-public record WalletCreateDto(int Balance, Guid OwnerId);
+public record WalletCreateDto(Guid Id, int Balance);
 
 public record SalesAdDto(Guid Id, int Price, AdType AdType, ItemType? ItemType, DateTime EndTime, Guid HorseId, Guid OwnerId);
 public record SalesAdWithHorseDto(Guid Id, AdType type, int Price, DateTime EndTime, Guid OwnerId, HorseShortDto? horse);
@@ -96,6 +102,8 @@ public class AlpacaCreateForUserDto
 }
 
 public record SalesAdCreateDto(int Price, DateTime EndTime, Guid HorseId, Guid OwnerId);
+
+public record CompResultPaginatedDto(Guid Id, Guid HorseId, int Ranking, double MoneyWon, DateTime CompetitionTime);
 
 public record CompResultDto(Guid Id, Guid HorseId, string HorseName, int Ranking, double MoneyWon);
 

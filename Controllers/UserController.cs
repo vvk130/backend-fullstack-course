@@ -60,7 +60,7 @@ public class UserController : ControllerBase
                 wallet = new Wallet
                 {
                     OwnerId = ownerId,
-                    Balance = 5000
+                    Balance = 75000
                 };
 
                 _context.Wallets.Add(wallet);

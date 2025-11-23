@@ -95,6 +95,41 @@ namespace YourProject.Controllers
 
     }
 
+    [Route("api/compresult")]
+    public class CompResultController : GenericController<CompResult, CompResultPaginatedDto, CompResultPaginatedDto>
+    {
+        private readonly IMapper _mapper;
+        private readonly IGenericService<CompResult> _genericService;
+
+        public CompResultController(IGenericService<CompResult> genericService, IMapper mapper) : base(genericService, mapper) 
+        {
+            _genericService = genericService;
+        }
+
+
+        [HttpDelete("{id}")]
+            [ApiExplorerSettings(IgnoreApi = true)]
+            public override async Task<IActionResult> Delete(Guid id)
+            {
+                return BadRequest("Delete operation is not allowed for this entity.");
+            }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchCompResults([FromQuery] PaginationCompResultSearchRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState); 
+
+            var filter = request.Filter;
+
+            Expression<Func<CompResult, bool>> predicate = h =>
+                (!filter.HorseId.HasValue || h.HorseId == filter.HorseId);
+
+            var result = await _genericService.GetPaginatedAsync<CompResultPaginatedDto>(request.Pagination, predicate);
+            return Ok(result);
+        }
+    }
+
     [Route("api/wallet")]
     public class WalletController : GenericController<Wallet, WalletCreateDto, WalletDto>
     {
@@ -102,12 +137,15 @@ namespace YourProject.Controllers
 
         public WalletController(IGenericService<Wallet> service, IMapper mapper) : base(service, mapper) {}
 
-        [HttpDelete("{id}")]
+
+    [HttpDelete("{id}")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public override async Task<IActionResult> Delete(Guid id)
         {
             return BadRequest("Delete operation is not allowed for this entity.");
         }
+
+
     }
 
     [Route("api/alpacas")]
