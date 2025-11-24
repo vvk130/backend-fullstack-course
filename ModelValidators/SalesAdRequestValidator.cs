@@ -16,6 +16,10 @@ public class SalesAdRequestValidator : AbstractValidator<SalesAdRequest>
             .InclusiveBetween(1, 60)
             .WithMessage("Days valid must be between 1 and 60.");
 
+        RuleFor(x => x.AdType)
+            .IsInEnum()
+            .WithMessage("AdType must be NormalAd, Auction or PaidAd.");
+
         RuleFor(x => x.ItemType)
             .IsInEnum()
             .WithMessage("ItemType must be either Horse or Alpaca.");

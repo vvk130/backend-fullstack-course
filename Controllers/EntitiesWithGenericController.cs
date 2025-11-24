@@ -144,8 +144,6 @@ namespace YourProject.Controllers
         {
             return BadRequest("Delete operation is not allowed for this entity.");
         }
-
-
     }
 
     [Route("api/alpacas")]
@@ -292,18 +290,24 @@ namespace YourProject.Controllers
             }
 
             [HttpPost("buy-horse")]
-            public async Task<IActionResult> BuyHorse([FromBody] BuyRequest request)
+            public async Task<ActionResult<OperationResult<string>>> BuyHorse([FromBody] BuyRequest request)
             {
+                var result = new OperationResult<string>();
+                
                 await using var transaction = await _context.Database.BeginTransactionAsync();
                 try
                 {
                     var ad = await _context.SalesAds.FindAsync(request.AdId);
-                    if (ad is null)
-                        return BadRequest("Add not found.");
+                    if (ad is null){
+                        result.AddError("Ad", "Add not found.");
+                        return BadRequest(result);
+                    }
 
                     var user = await _userManager.FindByIdAsync(request.BuyerId.ToString());
-                    if (user is null)
-                        return BadRequest("User not found.");
+                    if (user is null){
+                        result.AddError(nameof(request.BuyerId), "User not found.");
+                        return BadRequest(result);
+                    }
 
                     var wallet = await _context.Wallets.Where(w => w.OwnerId == request.BuyerId).FirstOrDefaultAsync();
                     if (wallet is null)
@@ -324,8 +328,10 @@ namespace YourProject.Controllers
                     {
                         horse = await _context.Alpacas.FindAsync(ad.HorseId);
                     }
-                    if (horse is null)
-                        return BadRequest("Animal not found.");
+                    if (horse is null){
+                        result.AddError("Ad", "Animal not found.");
+                        return BadRequest(result);
+                    }
 
                     if (ad.AdType is not AdType.Auction)
                         wallet.Balance -= ad.Price;
@@ -333,14 +339,18 @@ namespace YourProject.Controllers
                     if (ad.AdType is AdType.Auction)
                         wallet.Balance -= request.Bid;
 
-                    if(wallet.Balance < 0)
-                        return BadRequest("Insufficient funds");
+                    if(wallet.Balance < 0){
+                        result.AddError(nameof(request.BuyerId), "Insufficient funds");
+                        return BadRequest(result);
+                    }
 
                     if (ad.AdType is not AdType.Auction)
                         horse.OwnerId = request.BuyerId;
 
-                    if (ad.AdType is AdType.Auction && request.Bid < (ad.Price+200))
-                        return BadRequest("Bid needs to be 200 higher than previous price/bid");
+                    if (ad.AdType is AdType.Auction && request.Bid < (ad.Price+200)){
+                        result.AddError("Bid", "Bid needs to be 200 higher than previous price/bid");
+                        return BadRequest(result);
+                    }
 
                     if (ad.AdType is AdType.Auction){
                         var prevBidderWallet = await _context.Wallets.Where(w => w.OwnerId == ad.HighestBidderId).FirstOrDefaultAsync();
@@ -366,11 +376,11 @@ namespace YourProject.Controllers
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
 
-                    var message = $"You bought animal with id {ad.HorseId}";
+                    result.Value = $"You bought animal with id {ad.HorseId}";
                     if (ad.AdType is AdType.Auction)
-                        message = $"Your offer was placed successfully on {ad.HorseId}";
+                        result.Value = $"Your offer was placed successfully on {ad.HorseId}";
 
-                    return Ok($"{message}");
+                    return Ok(result);
                 }
                 catch (Exception ex)
                 {

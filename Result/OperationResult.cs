@@ -3,6 +3,8 @@ public class OperationResult<T>
     public bool Success => !ValidationErrors.Any();
     
     public T? Value { get; set; }
+
+    public string? message { get; set; }
     
     public Dictionary<string, string[]> ValidationErrors { get; } = new();
 
