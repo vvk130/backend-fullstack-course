@@ -22,6 +22,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowRabbitMQ", policy =>
     {
         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+
+        policy.WithOrigins("https://frontend-fullstck.netlify.app")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
     });
 });
 
