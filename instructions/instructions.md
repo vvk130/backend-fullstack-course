@@ -127,3 +127,25 @@ Go to an animal's page, click Delete, and then click delete button. There is no 
 ![alt text](image-8.png)
 
 ![alt text](image-9.png)
+
+## Delete competition
+
+Click competitions and pick an competition to delete
+
+![alt text](image-22.png)
+
+## Delete salesad
+
+Click buyhorses and pick an competition to delete
+
+![alt text](image-23.png)
+
+## There is an image upload in swagger that works, not implemented in frontend, and a lot of other functions unfortunately
+
+You can check that in swagger, and then you get the image url you can update on a horse. Image size is restricted and validated upon upload.
+
+!IMPORTANT: NO WAY FOR A USER TO DELETE IMAGES, SO UPLOAD CAREFULLY
+
+![alt text](image-24.png)
+
+![alt text](image-25.png)
