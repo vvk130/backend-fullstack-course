@@ -2,6 +2,6 @@ namespace GameModel{
 public interface IPuzzleService
 {
     Task<bool> CheckAllPieces(PuzzleCorrectionRequest request);
-    Task<OperationResult<PuzzleUnsolved>> PuzzleGenerator(string originalImgUrl);
+    Task<OperationResult<PuzzleAnswer>> PuzzleGenerator(string originalImgUrl);
 }
 }

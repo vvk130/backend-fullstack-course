@@ -18,4 +18,6 @@ namespace GameModel{
     public record CompetitionRequest(Guid CompetitionId, List<Guid> HorseIds);
 
     public record FoalHorseRequestDto(Guid SireId, Guid DamId, ItemType type);
+
+    public record PuzzleRequestDto(string ImgUrl);
 }

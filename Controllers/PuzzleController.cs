@@ -15,9 +15,9 @@ public class PuzzleController : GenericController<PuzzleAnswer, PuzzleAnswerCrea
     }
 
     [HttpPost("generate-puzzle")]
-    public async Task<IActionResult> CreatePuzzle([FromBody] string imgUrl)
+    public async Task<IActionResult> CreatePuzzle([FromBody] PuzzleRequestDto request)
     {
-        var result = await _puzzleService.PuzzleGenerator(imgUrl);
+        var result = await _puzzleService.PuzzleGenerator(request.ImgUrl);
 
         if (!result.Success)
             return BadRequest(result.ValidationErrors);

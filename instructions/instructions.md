@@ -140,6 +140,15 @@ Click buyhorses and pick an competition to delete
 
 ![alt text](image-23.png)
 
+## Create puzzle
+Go to Images and pick an url. Paste the url in the form and create a puzzle! If the url doesn't exist, you get an error. Then click the see puzzle and see the puzzle pieces, you can copy an imgurl to see the puzzles were really created.
+
+![alt text](image-27.png)
+
+![alt text](image-28.png)
+
+![alt text](image-29.png)
+
 ## There is an image upload in swagger that works, not implemented in frontend, and a lot of other functions unfortunately
 
 You can check that in swagger, and then you get the image url you can update on a horse. Image size is restricted and validated upon upload.
@@ -149,3 +158,5 @@ You can check that in swagger, and then you get the image url you can update on 
 ![alt text](image-24.png)
 
 ![alt text](image-25.png)
+
+

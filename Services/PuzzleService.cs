@@ -33,9 +33,9 @@ public class PuzzleService : IPuzzleService
         return true; 
     }
 
-    public async Task<OperationResult<PuzzleUnsolved>> PuzzleGenerator(string originalImgUrl)
+    public async Task<OperationResult<PuzzleAnswer>> PuzzleGenerator(string originalImgUrl)
     {
-        var result = new OperationResult<PuzzleUnsolved>();
+        var result = new OperationResult<PuzzleAnswer>();
 
         var pieces = GeneratePuzzlePieces(originalImgUrl);
 
@@ -47,12 +47,7 @@ public class PuzzleService : IPuzzleService
         _context.PuzzleAnswers.Add(puzzleAnswer);
         await _context.SaveChangesAsync();
 
-        var puzzleUnsolved = new PuzzleUnsolved(
-                puzzleAnswer.Id,
-                puzzleAnswer.PuzzlePieces.Select(p => p.ImgUrl).ToList()
-            );
-
-        result.Value = puzzleUnsolved;
+        result.Value = puzzleAnswer;
 
         return result;
     }
@@ -61,6 +56,9 @@ public class PuzzleService : IPuzzleService
     {
         List<PuzzleAnswer.PuzzlePiece> puzzlePieces = new();        
         
+        var afterUpload = originalImgUrl.Split("upload/")[1];
+        var publicId = afterUpload.Substring(afterUpload.IndexOf('/') + 1);
+
         for (int i = 0; i < 10; i++) 
         {
             for (int j = 0; j < 10; j++) 
@@ -74,7 +72,7 @@ public class PuzzleService : IPuzzleService
                     .X(x)        
                     .Y(y)       
                     .Crop("crop") 
-                ).BuildImageTag(originalImgUrl);
+                ).BuildUrl(publicId);
 
                 puzzlePieces.Add(new PuzzleAnswer.PuzzlePiece
                 {
