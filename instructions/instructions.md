@@ -141,7 +141,7 @@ Click buyhorses and pick an competition to delete
 ![alt text](image-23.png)
 
 ## Create puzzle
-Go to Images and pick an url. Paste the url in the form and create a puzzle! If the url doesn't exist, you get an error. Then click the see puzzle and see the puzzle pieces, you can copy an imgurl to see the puzzles were really created.
+Go to Images and pick an url. Paste the url in the form and create a puzzle! If the url doesn't exist, you get an error. Then click the see puzzle and see the puzzle pieces, you can copy an imgurl to see the puzzles were really created. The application uses the Cloudinary api to crop the images.
 
 ![alt text](image-27.png)
 
