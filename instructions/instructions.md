@@ -2,12 +2,36 @@
 
 Game application where you can buy horses and alpacas and sell them
 
-Net backend: uses FluentValidation, Generic Controller, for deleting, adding, editing Items and fetching paginated list
-Animal baseclass for Alpaca and Horse
+- Net backend: uses FluentValidation, Generic Controller, for deleting, adding, editing Items and fetching paginated list
+- Animal baseclass for Alpaca and Horse
 
 ## Register and log in
-Start by going to the homepage, register and then log in. You need a strong password and unique username. (There was a problem with the net login endpoints, so basically it just creates a user for you.)
+Start by going to the homepage, register and then log in. You need a strong password and unique username. (There was a problem with the net login endpoints, so basically it just creates a user for you.) No logout endpoint, clear localStorage to start over. Unfortunately, there might be delay before the UserId/Wallet bar is visible, if so you can either:
+
+- call the wallet by username endpoint to get your userId https://horsegame.somee.com/ 
+- Or use some of the existing userIds:
+
+newUser@example.com
+{
+  "id": "84c76733-3708-49da-b699-f30efabcb071",
+  "ownerId": "dc611df3-ff7d-4154-944a-7b67eb7b8b19",
+  "balance": 75500
+}
+YourUserName@example.com
+{
+  "id": "406db3eb-69df-449d-9805-af7475f6cdb6",
+  "ownerId": "f39da8b2-60d6-491f-9435-4e648c3ebd30",
+  "balance": 75000
+}
+
+![alt text](image-30.png)
 ![alt text](image.png)
+
+## Logout
+
+Removes info from localstorage, like said problems with the login system
+
+![alt text](image-31.png)
 
 ## Create horse / create alpaca
 
@@ -44,7 +68,7 @@ Go to your alpacas and create an alpaca. Same for horses.
 ## Breed horses and alpacas
 
 The animals need to be over 3 years old, they don't need to be the same breed, and the user doesn't need to own the animals in question. The owner of the foal will the same as the owner of mare.
-Covering can just randomly fail, and then the user gets an error "natural failure". Then just retry. To see the foal, choose the mare or stallion, and go to the foals tab.
+Covering can just randomly fail, and then the user gets an error "natural failure". Then just retry. To see the foal, choose the mare or stallion, and go to the foals tab. Foals inherit all qualities from their parents.
 
 ![alt text](image-17.png)
 ![alt text](image-19.png)
