@@ -94,6 +94,8 @@ Click the link Clean Stable in the navigation, and then click the button to clea
 
 Go to an alpaca's page, select the Update tab, and update a field of your choice. The serverside validation let's you know if the data you input is valid. Horses have less field's that can be updated. If the fields are null, like for images, the form submits the name 2 times instead, so don't leave empty fields as the form does not handle them gracefully. 
 
+! This used just a fetch and not tanstack query so you need to reload the page
+
 ![alt text](image-10.png)
 
 ## Sell horse / alpaca
