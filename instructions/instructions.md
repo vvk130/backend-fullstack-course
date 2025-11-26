@@ -135,7 +135,7 @@ Choose competition to update, edit the competition and follow the serverside val
 
 ## Compete horses
 
-Go to competitions, pick the competition and paste 3 horse ids in the fields (you don't have to own horses). Send the same form 3x times, to get better leaderboard results. Some error so the validation alert is empty, but the form still works. 
+Go to competitions, pick the competition and paste 3 horse ids in the fields (you don't have to own horses). Send the same form 3x times, to get better leaderboard results. 
 
 ![alt text](image-2.png)
 

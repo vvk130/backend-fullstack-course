@@ -34,7 +34,6 @@ public record CompResultFilterDto
     public Guid? HorseId { get; init; }
 }
 
-
 public record HorseFilterDto
 {
     public List<Gender>? Genders { get; init; }
