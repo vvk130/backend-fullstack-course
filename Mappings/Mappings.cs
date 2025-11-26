@@ -34,9 +34,6 @@ public class MappingProfile : Profile
         CreateMap<Wallet, WalletDto>().ReverseMap();
         CreateMap<Wallet, WalletCreateDto>().ReverseMap();
 
-        CreateMap<Question, QuestionDto>().ReverseMap();
-        CreateMap<Question, QuestionCreateDto>().ReverseMap();
-
         CreateMap<Option, OptionDto>().ReverseMap();
 
         CreateMap<StockImg, StockImgDto>().ReverseMap();

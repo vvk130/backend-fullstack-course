@@ -15,24 +15,6 @@ public class PuzzleService : IPuzzleService
         _context = context;
     }
 
-    public async Task<bool> CheckAllPieces(PuzzleCorrectionRequest request)
-    {
-        
-        var puzzleAnswer = await _context.PuzzleAnswers.FindAsync(request.Id);
-        if (puzzleAnswer == null)
-            return false; 
-        
-        foreach (var requestPiece in request.Pieces)
-        {
-            var piece = request.Pieces.FirstOrDefault(p => p.ImgUrl == requestPiece.ImgUrl);
-
-            if (piece == null || piece.XCoordinate != requestPiece.XCoordinate || piece.YCoordinate != requestPiece.YCoordinate)
-                return false; 
-        }
-
-        return true; 
-    }
-
     public async Task<OperationResult<PuzzleAnswer>> PuzzleGenerator(string originalImgUrl)
     {
         var result = new OperationResult<PuzzleAnswer>();

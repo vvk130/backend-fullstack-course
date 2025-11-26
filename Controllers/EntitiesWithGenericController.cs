@@ -240,7 +240,7 @@ namespace YourProject.Controllers
                     a.HorseId == request.HorseId && a.EndTime > DateTime.UtcNow);
 
                 if (ads.Any()){
-                    result.AddError(nameof(request.HorseId), "This animal is already for sale, go to modify ad instead.");
+                    result.AddError(nameof(request.HorseId), "This animal is already for sale.");
                     return BadRequest(result);
                 }
 
@@ -422,21 +422,6 @@ namespace YourProject.Controllers
 
                 return Ok(new PaginatedResult<SalesAdWithHorseDto>(items, totalCount, request.PageNumber, request.PageSize));
             }
-    }
-
-    [Route("api/questions")]
-    public class QuestionsController : GenericController<Question, QuestionCreateDto, QuestionDto>
-    {
-            private readonly IGenericService<Question> _adService;
-            private readonly IMapper _mapper;
-
-            public QuestionsController(
-                AppDbContext context,
-                IGenericService<Question> adService,
-                IMapper mapper) : base(adService, mapper)
-            {
-            }
-
     }
 
     [Route("api/stockImgs")]

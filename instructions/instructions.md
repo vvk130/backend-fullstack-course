@@ -119,6 +119,12 @@ Then you can buy the animal you just bought by clicking the Buy/bid link. Then f
 
 ![alt text](image-6.png)
 
+## You can also buy horses from the site that show additional ad information
+
+You can also buy horses from the another view with more detailed information
+
+![alt text](image-32.png)
+
 ## Create competition
 
 Go to competitions page, click link create new competition, then fill out the form
@@ -182,7 +188,7 @@ Go to Images and pick an url. Paste the url in the form and create a puzzle! If 
 
 ![alt text](image-29.png)
 
-## There is an image upload in swagger that works, not implemented in frontend, and a lot of other functions unfortunately
+## There is an image upload in swagger that works, not implemented in frontend
 
 You can check that in swagger, and then you get the image url you can update on a horse. Image size is restricted and validated upon upload.
 

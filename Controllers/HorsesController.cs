@@ -12,14 +12,12 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
 {
         private readonly IHorseService _horseService;
         private readonly IImageService _imageService;
-        private readonly IHorseBreedService _horseBreedService;
         private readonly IGenericService<Horse> _genericService;
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
 
         public HorsesController(
             IHorseService horseService,
-            IHorseBreedService horseBreedService,
             AppDbContext context,
             IGenericService<Horse> genericService,
             IImageService imageService,
@@ -27,31 +25,9 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
             : base(genericService, mapper) 
         {
             _horseService = horseService;
-            _horseBreedService = horseBreedService;
             _genericService = genericService;
             _imageService = imageService;
             _context = context;
-        }
-
-        [HttpGet("random-name")]
-        public IActionResult GetRandomHorseName(Gender gender)
-        {
-            var name = _horseService.GenerateRandomHorseName(gender);
-            return Ok(new { horseName = name });
-        }
-
-        [HttpGet("random-height-for-breed")]
-        public IActionResult GetRandomHorseHeight([FromQuery] Breed breed)
-        {
-            var height = _horseBreedService.GetRandomHeightForBreed(breed);
-            return Ok(new { horseHeight = height });
-        }
-
-        [HttpGet("random-color-for-breed")]
-        public IActionResult GetRandomHorseColor([FromQuery] Breed breed)
-        {
-            var color = _horseBreedService.GetRandomColorForBreed(breed);
-            return Ok(new { horseColor = color });
         }
 
         [HttpPost("create-horse")]
@@ -131,26 +107,6 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
             );
 
             return Ok(result);
-        }
-
-        [HttpDelete("horses/clear")]
-        public async Task<IActionResult> DeleteAllHorses()
-        {
-            try
-            {
-                var allHorses = await _context.Horses.ToListAsync();
-
-                if (!allHorses.Any())
-                    return NotFound("No horses found to delete.");
-                _context.Horses.RemoveRange(allHorses);
-                await _context.SaveChangesAsync();
-
-                return Ok($"{allHorses.Count} horses deleted successfully.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error deleting horses: {ex.Message}");
-            }
         }
 
 }

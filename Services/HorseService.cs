@@ -198,18 +198,5 @@ namespace GameModel
         };
     }
 
-    
-    public void BatchHorsesEnergyUpdate()
-    {
-        _context.Horses.ExecuteUpdateAsync(h =>
-            h.SetProperty(h => h.Energy, h => 100));
-    }
-
-    public void BatchHorsesAgeUpdate()
-    {
-        _context.Horses.ExecuteUpdateAsync(h =>
-            h.SetProperty(h => h.Age, h => h.Age + 0.1));
-    }
-
     }
 }

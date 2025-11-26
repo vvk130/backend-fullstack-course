@@ -25,16 +25,5 @@ public class PuzzleController : GenericController<PuzzleAnswer, PuzzleAnswerCrea
         return Ok(result.Value);
     }
 
-    [HttpPost("check-all-pieces")]
-    public async Task<IActionResult> CheckAllPieces([FromBody] PuzzleCorrectionRequest request)
-    {
-
-        var isCorrect = await _puzzleService.CheckAllPieces(request);
-
-        if (isCorrect)
-            return Ok("All pieces are in the correct positions.");
-
-        return BadRequest("One or more pieces are in the wrong position.");
-    }
 }
 
