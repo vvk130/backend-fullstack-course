@@ -4,6 +4,13 @@ Game application where you can buy horses and alpacas and sell them
 
 - Net backend: uses FluentValidation, Generic Controller, for deleting, adding, editing Items and fetching paginated list
 - Animal baseclass for Alpaca and Horse
+- App uses Cloud Hosted RabbitMQ to send a notification after foal creation endpoint, (it is not connected to the front end), but the service has maintanance 2nd of Decemeber so during that day the app may be down
+- AutoMapper is used for Dto Mapping
+
+## Go to address [https://frontend-fullstck.netlify.app/](https://frontend-fullstck.netlify.app/)
+
+## Project live: [https://frontend-fullstck.netlify.app/](https://frontend-fullstck.netlify.app/)
+## Backend live: [https://horsegame.somee.com/swagger/index.html](https://horsegame.somee.com/swagger/index.html)
 
 ## Register and log in
 Start by going to the homepage, register and then log in. You need a strong password and unique username. (There was a problem with the net login endpoints, so basically it just creates a user for you.) If you face any problems:
@@ -184,3 +191,4 @@ You can check that in swagger, and then you get the image url you can update on 
 ![alt text](image-24.png)
 
 ![alt text](image-25.png)
+

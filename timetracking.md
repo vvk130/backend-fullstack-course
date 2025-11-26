@@ -125,10 +125,3 @@ Frontend timetracking
 
 Total time spent: 182,980h
 17,5h per credit
-
-
-[] Last step: [x] ilmo / [x] lomake / []email ✅
-[x] Remove comments, not used code ✅
-[X] Deploy ✅
-[x] Add total hours, link to timetracking ✅
-[] Add link to frontend repo ✅
