@@ -6,7 +6,7 @@ Game application where you can buy horses and alpacas and sell them
 - Animal baseclass for Alpaca and Horse
 
 ## Register and log in
-Start by going to the homepage, register and then log in. You need a strong password and unique username. (There was a problem with the net login endpoints, so basically it just creates a user for you.) No logout endpoint, clear localStorage to start over. Unfortunately, there might be delay before the UserId/Wallet bar is visible, if so you can either:
+Start by going to the homepage, register and then log in. You need a strong password and unique username. (There was a problem with the net login endpoints, so basically it just creates a user for you.) If you face any problems:
 
 - call the wallet by username endpoint to get your userId https://horsegame.somee.com/ 
 - Or use some of the existing userIds:
@@ -100,7 +100,7 @@ Go to an alpaca's page, select the Update tab, and update a field of your choice
 
 ## Sell horse / alpaca
 
-You can sell horses or alpacas that you own, that are not already for sale. Go to your horses pick an id and paste to form. You get your userId from the bar below navigation. The ItemType needs to be Horse or Alpaca, depending on which animal you are selling. 
+You can sell horses or alpacas that you own, that are not already for sale. Go to your horses pick an id and paste to form. You get your userId from the bar below navigation. The ItemType needs to be Horse or Alpaca, depending on which animal you are selling.
 
 ![alt text](image-4.png)
 
@@ -184,5 +184,3 @@ You can check that in swagger, and then you get the image url you can update on 
 ![alt text](image-24.png)
 
 ![alt text](image-25.png)
-
-
