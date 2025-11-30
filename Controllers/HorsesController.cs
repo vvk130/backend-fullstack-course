@@ -52,20 +52,6 @@ public class HorsesController : GenericController<Horse, HorseCreateDto, HorseSh
             return Ok(new { alpaca }); 
         }
 
-        [HttpPatch("update-horses-energy")]
-        public IActionResult EnergyUpdateHorses()
-        {
-            BackgroundJob.Enqueue<IHorseService>(s => s.BatchHorsesAgeUpdate());
-            return Ok(new { message = "Horses energy updated" }); 
-        }
-
-        [HttpPatch("update-horses-age")]
-        public IActionResult AgeUpdateHorses()
-        {
-            BackgroundJob.Enqueue<IHorseService>(s => s.BatchHorsesAgeUpdate());
-            return Ok(new { message = "Horses age updated" }); 
-        }
-
         [HttpPost("upload")]
         public async Task<IActionResult> UploadImage([FromForm] FileUploadRequestDto request)
         {

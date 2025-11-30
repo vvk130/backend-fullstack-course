@@ -1,3 +1,7 @@
+## Important information
+
+The images where removed from the paginated view to ensure the app will run within the limits of free tier (image didn't have compressed thumnailsizes version like there would be in a real world application).
+
 ## About the application
 
 Game application where you can buy horses and alpacas and sell them

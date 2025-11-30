@@ -118,7 +118,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile)); 
 
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+});
+
 var app = builder.Build();
+
+app.UseResponseCompression();
 
 app.UseCors("AllowRabbitMQ");
 
