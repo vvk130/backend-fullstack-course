@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace backend_fullstack_course.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260105204945_IdentityUserUpdate")]
+    partial class IdentityUserUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,10 +68,6 @@ namespace backend_fullstack_course.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DamId");
-
-                    b.HasIndex("SireId");
 
                     b.ToTable("Animals");
 
@@ -172,10 +171,6 @@ namespace backend_fullstack_course.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompId");
-
-                    b.HasIndex("HorseId");
 
                     b.ToTable("CompResults");
                 });
@@ -326,8 +321,6 @@ namespace backend_fullstack_course.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("HorseId");
 
                     b.ToTable("SalesAds");
                 });
@@ -568,6 +561,10 @@ namespace backend_fullstack_course.Migrations
                                 .HasColumnType("integer");
                         });
 
+                    b.HasIndex("DamId");
+
+                    b.HasIndex("SireId");
+
                     b.HasIndex("OwnerId", "Gender", "Age");
 
                     b.HasDiscriminator().HasValue("Horse");
@@ -575,16 +572,6 @@ namespace backend_fullstack_course.Migrations
 
             modelBuilder.Entity("GameModel.Animal", b =>
                 {
-                    b.HasOne("GameModel.Animal", null)
-                        .WithMany()
-                        .HasForeignKey("DamId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("GameModel.Animal", null)
-                        .WithMany()
-                        .HasForeignKey("SireId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.OwnsMany("GameModel.PersonalityType", "Personalities", b1 =>
                         {
                             b1.Property<Guid>("AnimalId")
@@ -614,21 +601,6 @@ namespace backend_fullstack_course.Migrations
                         });
 
                     b.Navigation("Personalities");
-                });
-
-            modelBuilder.Entity("GameModel.CompResult", b =>
-                {
-                    b.HasOne("GameModel.Competition", null)
-                        .WithMany()
-                        .HasForeignKey("CompId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GameModel.Animal", null)
-                        .WithMany()
-                        .HasForeignKey("HorseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("GameModel.PuzzleAnswer", b =>
@@ -694,15 +666,6 @@ namespace backend_fullstack_course.Migrations
                         });
 
                     b.Navigation("Options");
-                });
-
-            modelBuilder.Entity("GameModel.SalesAd", b =>
-                {
-                    b.HasOne("GameModel.Animal", null)
-                        .WithMany()
-                        .HasForeignKey("HorseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

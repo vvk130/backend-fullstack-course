@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Newtonsoft.Json.Converters;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 DotNetEnv.Env.Load();
 
@@ -30,9 +32,13 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder();
 
-builder.Services.AddIdentityApiEndpoints<ApplicationUser>(options =>
+builder.Services
+    .AddIdentityApiEndpoints<ApplicationUser>()
+    .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.Configure<IdentityOptions>(options =>
 {
     options.SignIn.RequireConfirmedEmail = false;
     options.Password.RequiredLength = 12;
@@ -40,8 +46,9 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = true;
-})
-.AddEntityFrameworkStores<AppDbContext>();
+});
+
+
 
 builder.Services.AddSingleton(provider =>
 {
@@ -131,8 +138,8 @@ app.UseCors("AllowRabbitMQ");
 
 app.MapIdentityApi<ApplicationUser>();
 
-app.UseAuthentication();
-app.UseAuthorization();
+// app.UseAuthentication();
+// app.UseAuthorization();
 
 app.UseSwagger();
 app.UseSwaggerUI();

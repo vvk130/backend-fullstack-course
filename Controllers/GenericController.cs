@@ -34,6 +34,7 @@ public class GenericController<TEntity, TCreateDto, TDto> : ControllerBase
         return Ok(entity);
     }
 
+    [Authorize]
     [HttpPost]
     public virtual async Task<IActionResult> Create([FromBody] TCreateDto dto)
     {        
@@ -45,6 +46,7 @@ public class GenericController<TEntity, TCreateDto, TDto> : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = entity.GetType().GetProperty("Id")?.GetValue(entity) }, entity);
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     public virtual async Task<IActionResult> Update(Guid id, [FromBody] TCreateDto dto)
     {
@@ -62,6 +64,7 @@ public class GenericController<TEntity, TCreateDto, TDto> : ControllerBase
         return Ok(id);
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public virtual async Task<IActionResult> Delete(Guid id)
     {

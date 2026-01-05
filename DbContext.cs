@@ -44,6 +44,35 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<Question>()
                     .OwnsMany(p => p.Options);
 
+        modelBuilder.Entity<CompResult>()
+            .HasOne<Animal>()
+            .WithMany()
+            .HasForeignKey(cr => cr.HorseId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<SalesAd>()
+            .HasOne<Animal>()
+            .WithMany()
+            .HasForeignKey(sa => sa.HorseId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Animal>()
+            .HasOne<Animal>()
+            .WithMany()
+            .HasForeignKey(h => h.SireId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Animal>()
+            .HasOne<Animal>()
+            .WithMany()
+            .HasForeignKey(h => h.DamId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<CompResult>()
+            .HasOne<Competition>()
+            .WithMany()
+            .HasForeignKey(cr => cr.CompId)
+            .OnDelete(DeleteBehavior.Cascade);
 }
 
 }
