@@ -48,8 +48,6 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = true;
 });
 
-
-
 builder.Services.AddSingleton(provider =>
 {
     var url = Environment.GetEnvironmentVariable("CLOUDINARY_URL");
