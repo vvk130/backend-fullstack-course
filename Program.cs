@@ -70,31 +70,31 @@ builder.Services.AddSingleton(provider =>
     return new Cloudinary(account);
 });
 
-var host = Environment.GetEnvironmentVariable("RABBITMQ_HOST");
-var vhost = Environment.GetEnvironmentVariable("RABBITMQ_VHOST");
-var username = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME");
-var password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD");
+// var host = Environment.GetEnvironmentVariable("RABBITMQ_HOST");
+// var vhost = Environment.GetEnvironmentVariable("RABBITMQ_VHOST");
+// var username = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME");
+// var password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD");
 
-builder.Services.AddMassTransit(x =>
-{
-    x.AddConsumer<ItemCreatedConsumer>();
+// builder.Services.AddMassTransit(x =>
+// {
+//     x.AddConsumer<ItemCreatedConsumer>();
 
-    x.UsingRabbitMq((context, cfg) =>
-    {
-        cfg.Host(host, vhost, h =>
-        {
-            h.Username(username);
-            h.Password(password);
-        });
+//     x.UsingRabbitMq((context, cfg) =>
+//     {
+//         cfg.Host(host, vhost, h =>
+//         {
+//             h.Username(username);
+//             h.Password(password);
+//         });
 
-        cfg.ReceiveEndpoint("item-created-event", e =>
-        {
-            e.ConfigureConsumer<ItemCreatedConsumer>(context);
-        });
-    });
-});
+//         cfg.ReceiveEndpoint("item-created-event", e =>
+//         {
+//             e.ConfigureConsumer<ItemCreatedConsumer>(context);
+//         });
+//     });
+// });
 
-builder.Services.AddMassTransitHostedService();
+// builder.Services.AddMassTransitHostedService();
 
 builder.Services.AddControllers()
     .AddFluentValidation()
