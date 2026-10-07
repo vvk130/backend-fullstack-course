@@ -212,6 +212,7 @@ namespace YourProject.Controllers
                 _userManager = userManager;
             }
 
+            [Authorize]
             [HttpPost("create-sales-ad")]
             public async Task<ActionResult<OperationResult<SalesAd>>> Create([FromBody] SalesAdRequest request)
             {
@@ -219,6 +220,7 @@ namespace YourProject.Controllers
                 
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
+                    
 
                 var ifExists = false;
 
@@ -231,10 +233,10 @@ namespace YourProject.Controllers
                         .AnyAsync(h => h.Id == request.HorseId && h.OwnerId == request.OwnerId);
                 }
 
-                if (!ifExists){
-                    result.AddError(nameof(request.HorseId), "You don't own this animal.");
-                    return BadRequest(result);
-                }
+                // if (!ifExists){
+                //     result.AddError(nameof(request.HorseId), "You don't own this animal.");
+                //     return BadRequest(result);
+                // }
 
                 var ads = await _adService.FindAsync(a =>
                     a.HorseId == request.HorseId && a.EndTime > DateTime.UtcNow);

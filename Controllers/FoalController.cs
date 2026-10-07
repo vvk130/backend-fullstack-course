@@ -32,12 +32,12 @@ public class FoalsController : ControllerBase
             });
         }
 
-        var @event = new ItemCreatedEvent(
-        result.Value!.Id,
-        result.Value!.Name
-        );
+        // var @event = new ItemCreatedEvent(
+        // result.Value!.Id,
+        // result.Value!.Name
+        // );
 
-        await _publishEndpoint.Publish(@event);
+        // await _publishEndpoint.Publish(@event);
 
         return CreatedAtAction(
         nameof(GetFoal),
