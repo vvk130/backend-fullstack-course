@@ -19,17 +19,13 @@ public class FoalsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateFoal([FromBody] FoalHorseRequestDto Request)
+    public async Task<ActionResult<OperationResult<Animal>>> CreateFoal([FromBody] FoalHorseRequestDto Request)
     {
         var result = await _foalCreationService.FoalTaskHandler(Request.SireId, Request.DamId, Request.type);
 
         if (!result.Success)
         {
-            return ValidationProblem(new ValidationProblemDetails(result.ValidationErrors)
-            {
-                Title = "Foal creation failed",
-                Status = StatusCodes.Status400BadRequest
-            });
+            return BadRequest(result);
         }
 
         // var @event = new ItemCreatedEvent(
@@ -39,10 +35,7 @@ public class FoalsController : ControllerBase
 
         // await _publishEndpoint.Publish(@event);
 
-        return CreatedAtAction(
-        nameof(GetFoal),
-        new { id = result.Value!.Id },
-        result.Value);
+        return Ok(result);
     }
 
     [HttpGet("{id}")]

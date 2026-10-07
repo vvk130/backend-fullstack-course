@@ -219,8 +219,7 @@ namespace YourProject.Controllers
                 var result = new OperationResult<SalesAd>();
                 
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-                    
+                    return BadRequest(ModelState);    
 
                 var ifExists = false;
 
