@@ -132,10 +132,10 @@ app.UseResponseCompression();
 
 app.UseCors("AllowRabbitMQ");
 
-app.MapIdentityApi<ApplicationUser>();
+app.UseAuthentication();
+app.UseAuthorization();
 
-// app.UseAuthentication();
-// app.UseAuthorization();
+app.MapIdentityApi<ApplicationUser>();
 
 app.UseSwagger();
 app.UseSwaggerUI();
